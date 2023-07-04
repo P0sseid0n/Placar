@@ -20,14 +20,14 @@
 }
 
 .ContainerCard {
-   background: rgba(245, 245, 255, 0.025);
+   background: rgba(245, 245, 255, 0.04);
    border: 1px solid rgba(245, 245, 255, 0.05);
 
    transition: background 0.25s;
 
    &:hover {
-      background: rgba(245, 245, 255, 0.04);
-      border: 1px solid rgba(245, 245, 255, 0.065);
+      background: rgba(245, 245, 255, 0.08);
+      border: 1px solid rgba(245, 245, 255, 0.09);
    }
 }
 
@@ -36,10 +36,10 @@
    width: 100vw;
 
    background: rgb(15, 15, 20);
-   background: -moz-linear-gradient(180deg, rgba(15, 15, 20, 1) 10%, rgba(5, 20, 52, 1) 500%);
-   background: -webkit-linear-gradient(180deg, rgba(15, 15, 20, 1) 10%, rgba(5, 20, 52, 1) 500%);
-   background: linear-gradient(180deg, rgba(15, 15, 20, 1) 10%, rgba(5, 20, 52, 1) 500%);
-   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0a0a0a", endColorstr="#020b34", GradientType=1);
+   // background: -moz-linear-gradient(180deg, rgba(15, 15, 20, 1) 10%, rgba(5, 20, 52, 1) 500%);
+   // background: -webkit-linear-gradient(180deg, rgba(15, 15, 20, 1) 10%, rgba(5, 20, 52, 1) 500%);
+   // background: linear-gradient(180deg, rgba(15, 15, 20, 1) 10%, rgba(5, 20, 52, 1) 500%);
+   // filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0a0a0a", endColorstr="#020b34", GradientType=1);
 
    color: white;
 }

@@ -31,7 +31,7 @@ watch(id, () => {
       </div>
       <h4>Ou</h4>
       <div id="Visitor">
-         <input type="text" placeholder="Digite o ID da Sala" v-model="id" maxlength="7" />
+         <input class="ContainerCard" type="text" placeholder="Digite o ID do Placar" v-model="id" maxlength="7" />
       </div>
    </div>
 </template>
@@ -102,11 +102,9 @@ input {
    height: 48px;
 
    border-radius: 8px;
-   border: none;
 
    padding: 8px 16px;
 
-   background: rgb(25, 25, 30);
    font-size: 14px;
    color: white;
    text-align: center;
