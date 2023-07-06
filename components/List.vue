@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import PlusIcon from '../components/icons/PlusIcon.vue'
-import ArrowRightIcon from '../components/icons/ArrowRightIcon.vue'
+import PlusIcon from './icons/PlusIcon.vue'
+import ArrowRightIcon from './icons/ArrowRightIcon.vue'
+import UserIcon from './icons/UserIcon.vue'
+import ExitIcon from './icons/ExitIcon.vue'
+
+import { useUserStore } from '../stores/user'
+
+const userStore = useUserStore()
 
 const PLACAR = {
    id: 'ABC123',
@@ -20,7 +26,21 @@ const placarList = Array(30).fill(PLACAR)
 <template>
    <div id="List">
       <header>
+         <div>
+            <button class="ContainerCard" @click="userStore.signOut">
+               <ExitIcon />
+               <span>
+                  Sair
+               </span>
+            </button>
+         </div>
+
          <h1>Placar</h1>
+
+         <div>
+            <UserIcon />
+            <span>matheuspossidoniom@outlook.com</span>
+         </div>
       </header>
       <main>
 
@@ -62,17 +82,8 @@ const placarList = Array(30).fill(PLACAR)
    flex-direction: column;
 }
 
-header {
-   height: 128px;
-
-   display: flex;
-   align-items: center;
-   justify-content: center;
-
-   h1 {
-      font-size: 40px;
-      font-weight: 700;
-   }
+header>div:first-of-type svg {
+   transform: rotateY(180deg)
 }
 
 main {
@@ -119,22 +130,22 @@ main {
 
       &:hover {
          .arrow {
-            opacity: 0.6;
+            opacity: 0.5;
          }
       }
 
       .arrow {
          opacity: 0;
          position: absolute;
-         top: 0px;
-         right: 8px;
+         top: 4px;
+         right: 0px;
 
          width: 32px;
          height: 32px;
          border-radius: 4px;
 
 
-         font-size: 40px;
+         font-size: 24px;
 
          transition: all 0.3s;
 

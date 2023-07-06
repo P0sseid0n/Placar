@@ -1,11 +1,23 @@
 import { defineStore } from 'pinia'
 
+interface IUser {
+	email: string
+}
+
 export const useUserStore = defineStore('user', () => {
-	const isLogged = ref(false)
+	const user = ref<IUser>()
+
+	const isLogged = computed(() => !!user.value)
 
 	function signIn() {
-		isLogged.value = true
+		user.value = {
+			email: 'p0sseid0n@outlook.com',
+		}
 	}
 
-	return { isLogged, signIn }
+	function signOut() {
+		user.value = undefined
+	}
+
+	return { isLogged, signIn, signOut }
 })
