@@ -1,23 +1,38 @@
 import { defineStore } from 'pinia'
 
-interface IUser {
-	email: string
-}
-
 export const useUserStore = defineStore('user', () => {
-	const user = ref<IUser>()
+	const user = useSupabaseUser()
+	const client = useSupabaseAuthClient()
+	const loading = ref(false)
+
+	client.auth.onAuthStateChange((event, session) => {
+		if (event === 'INITIAL_SESSION' && session !== null) {
+			loading.value = true
+		}
+	})
 
 	const isLogged = computed(() => !!user.value)
 
-	function signIn() {
-		user.value = {
-			email: 'p0sseid0n@outlook.com',
+	async function signIn() {
+		loading.value = true
+		const { data, error } = await client.auth.signInWithOAuth({
+			provider: 'discord',
+			options: { skipBrowserRedirect: false, redirectTo: '' },
+		})
+
+		if (error) {
+			throw new Error(error.message)
 		}
 	}
 
-	function signOut() {
-		user.value = undefined
+	async function signOut() {
+		loading.value = false
+		const { error } = await client.auth.signOut()
+
+		if (error) {
+			throw new Error(error.message)
+		}
 	}
 
-	return { isLogged, signIn, signOut }
+	return { user, isLogged, signIn, signOut, loading }
 })

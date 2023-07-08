@@ -39,7 +39,7 @@ const placarList = Array(30).fill(PLACAR)
 
          <div>
             <UserIcon />
-            <span>matheuspossidoniom@outlook.com</span>
+            <span> {{ userStore.user?.email }} </span>
          </div>
       </header>
       <main>
@@ -80,10 +80,6 @@ const placarList = Array(30).fill(PLACAR)
 
    display: flex;
    flex-direction: column;
-}
-
-header>div:first-of-type svg {
-   transform: rotateY(180deg)
 }
 
 main {

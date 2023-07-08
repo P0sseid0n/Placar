@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import DiscordIcon from './icons/DiscordIcon.vue'
+import LoadingIcon from './icons/LoadingIcon.vue';
 import { useUserStore } from '../stores/user';
 
 const userStore = useUserStore()
 
 const id = ref('')
+
+onMounted(() => {
+   userStore.loading = false
+})
 
 watch(id, () => {
    id.value = id.value.toUpperCase()
@@ -20,19 +25,23 @@ watch(id, () => {
          Placar
       </h1>
 
-      <h4>Entre com uma conta para criar um placar</h4>
-      <div id="SocialLogin">
-         <button id="DiscordSignIn" @click="userStore.signIn">
-            <DiscordIcon />
-            <span>
-               Entrar com Discord
-            </span>
-         </button>
-      </div>
-      <h4>Ou</h4>
-      <div id="Visitor">
-         <input class="ContainerCard" type="text" placeholder="Digite o ID do Placar" v-model="id" maxlength="7" />
-      </div>
+      <LoadingIcon v-if="userStore.loading" />
+      <template v-else>
+         <h4>Entre com uma conta para criar um placar</h4>
+         <div id="SocialLogin">
+            <button id="DiscordSignIn" @click="userStore.signIn">
+               <DiscordIcon />
+               <span>
+                  Entrar com Discord
+               </span>
+            </button>
+         </div>
+         <h4>Ou</h4>
+         <div id="Visitor">
+            <input class="ContainerCard" type="text" placeholder="Digite o ID do Placar" v-model="id" maxlength="7" />
+         </div>
+      </template>
+
    </div>
 </template>
 
