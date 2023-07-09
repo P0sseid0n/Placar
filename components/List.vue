@@ -4,6 +4,8 @@ import ArrowRightIcon from './icons/ArrowRightIcon.vue'
 import UserIcon from './icons/UserIcon.vue'
 import ExitIcon from './icons/ExitIcon.vue'
 
+import CreatePlacarModal from './CreatePlacarModal.vue'
+
 import { useUserStore } from '../stores/user'
 
 const userStore = useUserStore()
@@ -20,10 +22,13 @@ const PLACAR = {
    }
 }
 
+const createPlacarModal = ref(false)
+
 const placarList = Array(30).fill(PLACAR)
 </script>
 
 <template>
+   <CreatePlacarModal v-model="createPlacarModal" />
    <div id="List">
       <header>
          <div>
@@ -64,7 +69,7 @@ const placarList = Array(30).fill(PLACAR)
          </NuxtLink>
       </main>
       <footer>
-         <button class="ContainerCard">
+         <button class="ContainerCard" @click="createPlacarModal = true">
             <PlusIcon />
             <span>
                Criar Placar

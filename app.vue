@@ -8,6 +8,10 @@
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
+:root {
+   --success-color: #3080e2;
+}
+
 /* width */
 ::-webkit-scrollbar {
    width: 8px;
