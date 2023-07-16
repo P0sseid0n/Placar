@@ -7,24 +7,15 @@ import ExitIcon from './icons/ExitIcon.vue'
 import CreatePlacarModal from './CreatePlacarModal.vue'
 
 import { useUserStore } from '../stores/user'
+import { usePlacarStore } from '../stores/placar'
 
 const userStore = useUserStore()
+const placarStore = usePlacarStore()
 
-const PLACAR = {
-   id: 'ABC123',
-   team_a: {
-      name: 'Time A',
-      score: 0
-   },
-   team_b: {
-      name: 'Time B',
-      score: 0
-   }
-}
+const placares = await placarStore.getAllPlacar()
 
 const createPlacarModal = ref(false)
 
-const placarList = Array(30).fill(PLACAR)
 </script>
 
 <template>
@@ -49,7 +40,7 @@ const placarList = Array(30).fill(PLACAR)
       </header>
       <main>
 
-         <NuxtLink :to="`/${placar.id}`" class="card ContainerCard" v-for="placar in placarList">
+         <NuxtLink :to="`/${placar.id}`" class="card ContainerCard" v-for="placar in placares">
             <div class="arrow">
                <ArrowRightIcon />
             </div>
@@ -58,15 +49,16 @@ const placarList = Array(30).fill(PLACAR)
             </h3>
             <div class="card-content">
                <div class="team">
-                  <h4>{{ placar.team_a.name }}</h4>
-                  <h2>{{ placar.team_a.score }}</h2>
+                  <h4>{{ placar.team_a_name }}</h4>
+                  <h2>{{ placar.team_a_score }}</h2>
                </div>
                <div class="team">
-                  <h4>{{ placar.team_b.name }}</h4>
-                  <h2>{{ placar.team_b.score }}</h2>
+                  <h4>{{ placar.team_b_name }}</h4>
+                  <h2>{{ placar.team_b_score }}</h2>
                </div>
             </div>
          </NuxtLink>
+
       </main>
       <footer>
          <button class="ContainerCard" @click="createPlacarModal = true">

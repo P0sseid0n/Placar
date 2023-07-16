@@ -3,6 +3,10 @@ import DiscordIcon from './icons/DiscordIcon.vue'
 import LoadingIcon from './icons/LoadingIcon.vue';
 import { useUserStore } from '../stores/user';
 
+useHead({
+   title: 'Placar',
+})
+
 const userStore = useUserStore()
 
 const id = ref('')

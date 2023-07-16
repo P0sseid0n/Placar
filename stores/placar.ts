@@ -1,14 +1,57 @@
 import { defineStore } from 'pinia'
 import { nanoid } from 'nanoid'
 
-export const usePlacarStore = defineStore('placar', () => {
-	const client = useSupabaseClient()
+import { Database } from '../DatabaseDefinitions'
 
-	function createPlacar() {
+export const usePlacarStore = defineStore('placar', () => {
+	const user = useSupabaseUser()
+	const client = useSupabaseClient<Database>()
+
+	async function createPlacar(payload: { score: number; teamA: string; teamB: string }) {
 		const id = nanoid(6)
+
+		if (!user.value) throw new Error('Usuário não logado')
+
+		const { error } = await client.from('placar').insert([
+			{
+				id,
+				creator: user.value.id,
+				score_increment: payload.score,
+				team_a_name: payload.teamA,
+				team_a_score: 0,
+				team_b_name: payload.teamB,
+				team_b_score: 0,
+			},
+		])
+
+		if (error) {
+			throw error
+		}
 
 		return id
 	}
 
-	return { createPlacar }
+	async function getAllPlacar() {
+		const placares = await client.from('placar').select('*')
+
+		if (placares.error) throw placares.error
+
+		return placares.data
+	}
+
+	async function getPlacarById(id: string) {
+		const placar = await client.from('placar').select('*').eq('id', id).single()
+
+		if (placar.error) {
+			console.log(placar.error.code, placar.error.code === 'PGRST116')
+
+			if (placar.error.code === 'PGRST116') return null
+
+			throw placar.error
+		}
+
+		return placar.data
+	}
+
+	return { createPlacar, getAllPlacar, getPlacarById }
 })

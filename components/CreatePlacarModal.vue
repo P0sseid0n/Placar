@@ -15,14 +15,18 @@ const emit = defineEmits<{
 
 const teamA = ref('')
 const teamB = ref('')
-const score = ref<number>()
+const score = ref<number>(1)
 
 const isValidForm = computed(() => teamA.value.trim() !== '' && teamB.value.trim() !== '' && score.value !== undefined && score.value > 0)
 
 async function handleCreate() {
    if (!isValidForm.value) return
 
-   const placarId = await placarStore.createPlacar()
+   const placarId = await placarStore.createPlacar({
+      score: score.value,
+      teamA: teamA.value,
+      teamB: teamB.value
+   })
 
    emit('update:modelValue', false)
 
