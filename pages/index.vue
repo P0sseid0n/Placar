@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Login from '../components/Login.vue'
-import List from '../components/List.vue'
+import Login from '../components/LoginPage.vue'
+import List from '../components/ListPage.vue'
 
 import { useUserStore } from '../stores/user'
 
