@@ -33,6 +33,14 @@ async function handleCreate() {
    router.push(`/${placarId}`)
 }
 
+function handleCancel() {
+   teamA.value = ''
+   teamB.value = ''
+   score.value = 1
+
+   emit('update:modelValue', false)
+}
+
 </script>
 
 <template>
@@ -52,7 +60,7 @@ async function handleCreate() {
             <input id="Score" type="number" placeholder="1" v-model="score" />
          </div>
          <div id="Submit">
-            <button class="cancel" @click="emit('update:modelValue', false)">Cancelar</button>
+            <button class="cancel" @click="handleCancel">Cancelar</button>
             <button :class="{ valid: isValidForm, ContainerCard: true }" :disabled="!isValidForm"
                @click="handleCreate">Criar</button>
          </div>

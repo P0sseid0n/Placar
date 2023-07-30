@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { nanoid } from 'nanoid'
+import { customAlphabet } from 'nanoid'
 
 import { Database } from '../DatabaseDefinitions'
 
@@ -8,7 +8,9 @@ export const usePlacarStore = defineStore('placar', () => {
 	const client = useSupabaseClient<Database>()
 
 	async function createPlacar(payload: { score: number; teamA: string; teamB: string }) {
-		const id = nanoid(6)
+		const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+		const nanoid = customAlphabet(alphabet, 10)
+		const id = nanoid()
 
 		if (!user.value) throw new Error('Usuário não logado')
 
@@ -43,8 +45,6 @@ export const usePlacarStore = defineStore('placar', () => {
 		const placar = await client.from('placar').select('*').eq('id', id).single()
 
 		if (placar.error) {
-			console.log(placar.error.code, placar.error.code === 'PGRST116')
-
 			if (placar.error.code === 'PGRST116') return null
 
 			throw placar.error
