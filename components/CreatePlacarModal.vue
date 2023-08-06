@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { usePlacarStore } from '../stores/placar'
+import LoadingIcon from './icons/LoadingIcon.vue';
 const router = useRouter()
 
 const placarStore = usePlacarStore()
@@ -17,20 +18,33 @@ const teamA = ref('')
 const teamB = ref('')
 const score = ref<number>(1)
 
+const loading = ref(false)
+
 const isValidForm = computed(() => teamA.value.trim() !== '' && teamB.value.trim() !== '' && score.value !== undefined && score.value > 0)
 
 async function handleCreate() {
    if (!isValidForm.value) return
 
-   const placarId = await placarStore.createPlacar({
+   loading.value = true
+
+   placarStore.createPlacar({
       score: score.value,
       teamA: teamA.value,
       teamB: teamB.value
    })
+      .then(placarId => {
+         emit('update:modelValue', false)
 
-   emit('update:modelValue', false)
+         router.push(`/${placarId}`)
+      })
+      .catch((error) => {
+         console.log('error')
+         console.log(error)
+      })
+      .finally(() => {
+         loading.value = false
+      })
 
-   router.push(`/${placarId}`)
 }
 
 function handleCancel() {
@@ -49,20 +63,25 @@ function handleCancel() {
          <h1>Criando Placar</h1>
          <div>
             <label for="Team1">Nome do time 1</label>
-            <input id="Team1" type="text" placeholder="ABC" v-model="teamA" />
+            <input id="Team1" type="text" placeholder="ABC" v-model="teamA" :disabled="loading" />
          </div>
          <div>
             <label for="Team2">Nome do time 2</label>
-            <input id="Team2" type="text" placeholder="ABC" v-model="teamB" />
+            <input id="Team2" type="text" placeholder="ABC" v-model="teamB" :disabled="loading" />
          </div>
          <div>
             <label for="Score">Valor da pontuação</label>
-            <input id="Score" type="number" placeholder="1" v-model="score" />
+            <input id="Score" type="number" placeholder="1" v-model="score" :disabled="loading" />
          </div>
          <div id="Submit">
-            <button class="cancel" @click="handleCancel">Cancelar</button>
-            <button :class="{ valid: isValidForm, ContainerCard: true }" :disabled="!isValidForm"
-               @click="handleCreate">Criar</button>
+            <button class="cancel" @click="handleCancel" :disabled="loading">Cancelar</button>
+            <button :class="[{ valid: isValidForm, }, 'ContainerCard', 'create']" :disabled="!isValidForm || loading"
+               @click="handleCreate">
+               <LoadingIcon v-if="loading" />
+               <span v-else>
+                  Criar
+               </span>
+            </button>
          </div>
       </div>
    </div>
@@ -149,7 +168,14 @@ button.cancel {
    }
 }
 
-button.valid {
-   background: var(--success-color);
+button.create {
+   svg {
+      width: 32px;
+      height: 32px;
+   }
+
+   &.valid {
+      background: var(--success-color);
+   }
 }
 </style>
