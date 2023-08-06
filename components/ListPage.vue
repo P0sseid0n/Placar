@@ -16,6 +16,10 @@ const placares = await placarStore.getAllPlacar()
 
 const createPlacarModal = ref(false)
 
+useHead({
+   title: 'Placar',
+})
+
 </script>
 
 <template>
@@ -198,8 +202,9 @@ button {
    font-size: 24px;
 
    span {
-      font-size: 13px;
-      font-weight: 400;
+      font-size: 14px;
+      font-weight: 500;
+      padding-bottom: 2px;
    }
 }
 </style>

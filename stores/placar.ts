@@ -8,8 +8,8 @@ export const usePlacarStore = defineStore('placar', () => {
 	const client = useSupabaseClient<Database>()
 
 	async function createPlacar(payload: { score: number; teamA: string; teamB: string }) {
-		const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-		const nanoid = customAlphabet(alphabet, 10)
+		const alphabet = '0123456789abcdefghijklmnopqrstuvwxyz'
+		const nanoid = customAlphabet(alphabet, 6)
 		const id = nanoid()
 
 		if (!user.value) throw new Error('Usuário não logado')
