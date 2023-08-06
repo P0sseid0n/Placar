@@ -2,4 +2,8 @@
 export default defineNuxtConfig({
 	devtools: { enabled: true },
 	modules: ['@pinia/nuxt', '@nuxtjs/supabase'],
+
+	supabase: {
+		redirect: false,
+	},
 })

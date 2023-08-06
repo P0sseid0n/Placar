@@ -6,13 +6,14 @@
 		"dev": "nuxt dev",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
-		"postinstall": "nuxt prepare"
+		"postinstall": "nuxt prepare",
+		"database": "supabase gen types typescript --project-id pzficlbhjivvldwbqzne > DatabaseDefinitions.ts"
 	},
 	"devDependencies": {
 		"@nuxt/devtools": "latest",
-		"@nuxtjs/supabase": "^0.3.8",
-		"@types/node": "^18",
-		"nuxt": "^3.6.1"
+		"@nuxtjs/supabase": "^1.0.2",
+		"@types/node": "^20",
+		"nuxt": "^3.6.5"
 	},
 	"overrides": {
 		"vue": "latest"
@@ -20,7 +21,7 @@
 	"dependencies": {
 		"@pinia/nuxt": "^0.4.11",
 		"nanoid": "^4.0.2",
-		"pinia": "^2.1.4",
-		"sass": "^1.63.6"
+		"pinia": "^2.1.6",
+		"sass": "^1.64.2"
 	}
 }

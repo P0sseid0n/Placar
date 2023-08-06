@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('user', () => {
 	const user = useSupabaseUser()
-	const client = useSupabaseAuthClient()
+	const client = useSupabaseClient()
 	const loading = ref(false)
 
 	client.auth.onAuthStateChange((event, session) => {
@@ -17,7 +17,6 @@ export const useUserStore = defineStore('user', () => {
 		loading.value = true
 		const { data, error } = await client.auth.signInWithOAuth({
 			provider: 'discord',
-			options: { skipBrowserRedirect: false, redirectTo: '' },
 		})
 
 		if (error) {
