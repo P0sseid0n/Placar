@@ -11,17 +11,18 @@
 	},
 	"devDependencies": {
 		"@nuxt/devtools": "latest",
-		"@nuxtjs/supabase": "^1.0.2",
-		"@types/node": "^20",
-		"nuxt": "^3.6.5"
+		"@nuxtjs/supabase": "^1.4.0",
+		"@pinia/nuxt": "^0.5.4",
+		"@types/node": "^22",
+		"nuxt": "^3.13.2",
+		"supabase": "^1.192.5"
 	},
 	"overrides": {
 		"vue": "latest"
 	},
 	"dependencies": {
-		"@pinia/nuxt": "^0.4.11",
-		"nanoid": "^4.0.2",
-		"pinia": "^2.1.6",
-		"sass": "^1.64.2"
+		"nanoid": "^5.0.7",
+		"pinia": "^2.2.2",
+		"sass": "^1.78.0"
 	}
 }
