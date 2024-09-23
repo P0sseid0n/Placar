@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.container-card {
+		@apply border-0 ring-1 ring-inset  dark:ring-gray-600 dark:bg-zinc-800 dark:bg-opacity-10 dark:ring-opacity-50 hover:dark:bg-opacity-25 hover:dark:ring-opacity-75;
+	}
+}

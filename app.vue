@@ -1,126 +1,90 @@
 <template>
-   <div id="App">
-      <NuxtPage />
-   </div>
+	<div class="bg-zinc-900">
+		<NuxtPage />
+	</div>
 </template>
 
-
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
-
 :root {
-   --success-color: #3080e2;
+	--success-color: #3080e2;
 }
 
 /* width */
 ::-webkit-scrollbar {
-   width: 8px;
+	width: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-   background: transparent;
+	background: transparent;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-   background: rgba(245, 245, 250, 0.2);
-   border-radius: 40px;
+	background: rgba(245, 245, 250, 0.2);
+	border-radius: 40px;
 
-   &:hover {
-      background: rgba(245, 245, 250, 0.4);
-   }
+	&:hover {
+		background: rgba(245, 245, 250, 0.4);
+	}
 }
 
+// #App > div > header,
+// #App > div > div > header {
+// 	height: 128px;
 
-* {
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-   font-family: 'Open Sans', sans-serif;
+// 	display: flex;
+// 	align-items: center;
+// 	justify-content: space-between;
+// 	padding: 0 3%;
 
-   -webkit-font-smoothing: antialiased;
-   -moz-osx-font-smoothing: grayscale;
-}
+// 	h1 {
+// 		font-size: 40px;
+// 		font-weight: 700;
+// 	}
 
-.ContainerCard {
-   background: rgba(245, 245, 255, 0.03);
-   border: 1px solid rgba(245, 245, 255, 0.06);
+// 	a,
+// 	button {
+// 		text-decoration: none;
+// 		color: white;
+// 		cursor: pointer;
 
-   transition: background 0.25s;
+// 		height: 40px;
+// 		padding: 0 32px;
+// 		display: inline-flex;
 
-   &:hover {
-      background: rgba(245, 245, 255, 0.07);
-      border: 1px solid rgba(245, 245, 255, 0.1);
-   }
-}
+// 		border-radius: 8px;
+// 	}
 
-#App {
-   height: 100vh;
-   width: 100vw;
+// 	> div {
+// 		flex: 1;
 
-   background: rgb(15, 15, 20);
+// 		&:last-of-type {
+// 			text-align: right;
+// 			justify-content: flex-end;
+// 		}
+// 	}
 
-   color: white;
-}
+// 	a,
+// 	button,
+// 	> div:has(> span) {
+// 		align-items: center;
+// 		justify-content: center;
+// 		gap: 8px;
 
-#App>div>header,
-#App>div>div>header {
-   height: 128px;
+// 		font-size: 24px;
 
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   padding: 0 3%;
+// 		span {
+// 			font-size: 16px;
+// 		}
+// 	}
 
-   h1 {
-      font-size: 40px;
-      font-weight: 700;
-   }
+// 	> div:has(> span) {
+// 		display: flex;
 
-   a,
-   button {
-      text-decoration: none;
-      color: white;
-      cursor: pointer;
-
-      height: 40px;
-      padding: 0 32px;
-      display: inline-flex;
-
-      border-radius: 8px;
-   }
-
-   >div {
-      flex: 1;
-
-      &:last-of-type {
-         text-align: right;
-         justify-content: flex-end;
-      }
-
-   }
-
-   a,
-   button,
-   >div:has(> span) {
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-
-      font-size: 24px;
-
-      span {
-         font-size: 16px;
-      }
-   }
-
-   >div:has(> span) {
-      display: flex;
-
-      span {
-         opacity: 0.5;
-      }
-   }
-}
+// 		span {
+// 			opacity: 0.5;
+// 		}
+// 	}
+// }
 </style>
