@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Provider } from '@supabase/supabase-js'
+
 useHead({
 	title: 'Placar | Login',
 })
@@ -30,26 +32,32 @@ function goToPlacar() {
 
 	navigateTo('/id/' + routeId)
 }
+
+function signInWithOAuth(provider: Provider) {
+	client.auth.signInWithOAuth({ provider })
+}
 </script>
 
 <template>
-	<div id="Login" class="h-screen flex flex-col items-center justify-center">
-		<h2 class="text-lg font-medium opacity-75">Bem-vindo(a) ao</h2>
-		<h1 class="text-8xl font-bold mb-20">Placar</h1>
+	<div id="Login" class="h-screen flex flex-col items-center justify-center gap-32">
+		<div class="text-center">
+			<h2 class="text-lg font-medium opacity-75">Bem-vindo(a) ao</h2>
+			<h1 class="text-8xl font-bold">Placar</h1>
+		</div>
 
 		<div class="text-center w-full max-w-80">
-			<h3 class="text-base font-normal opacity-75 mb-6">Entre para criar um placar</h3>
+			<h3 class="text-base font-normal opacity-75 mb-8">Entre para criar um placar</h3>
 
 			<UButton
 				class="h-12"
-				color="black"
+				color="neutral"
 				label="Entrar com Discord"
 				icon="i-simple-icons-discord"
 				block
-				@click="() => client.auth.signInWithOAuth({ provider: 'discord' })"
+				@click="() => signInWithOAuth('discord')"
 			/>
 
-			<UDivider class="my-8 opacity-75" label="Ou" />
+			<USeparator class="my-12 opacity-75" label="Ou" />
 
 			<div class="relative flex items-center justify-center">
 				<input
@@ -62,7 +70,7 @@ function goToPlacar() {
 				/>
 				<button
 					@click="goToPlacar"
-					class="rounded text-3xl h-10 w-10 flex items-center justify-center absolute right-2 bg-white bg-opacity-5 hover:bg-opacity-10"
+					class="rounded text-3xl h-10 w-10 flex items-center justify-center absolute right-2 bg-white/5 hover:bg-white/10"
 				>
 					<UIcon name="i-iconamoon-arrow-right-2-light" />
 				</button>
@@ -70,5 +78,3 @@ function goToPlacar() {
 		</div>
 	</div>
 </template>
-
-<style lang="scss" scoped></style>

@@ -1,28 +1,36 @@
 <script setup lang="ts">
+import * as z from 'zod'
+import type { FormSubmitEvent } from '@nuxt/ui'
 import Services from '~/services'
+
+const toast = useToast()
 
 const model = defineModel<boolean>()
 
-const teamA = ref('')
-const teamB = ref('')
-const score = ref(1)
+const schema = z.object({
+	teamA: z.string().min(1, 'Nome do time A é obrigatório'),
+	teamB: z.string().min(1, 'Nome do time B é obrigatório'),
+	score: z.number().min(1, 'O valor da pontuação deve ser maior que 0'),
+})
+
+type Schema = z.output<typeof schema>
+
+const state = reactive<Partial<Schema>>({
+	teamA: '',
+	teamB: '',
+	score: 1,
+})
 
 const loading = ref(false)
 
-const isValidForm = computed(
-	() => teamA.value.trim() !== '' && teamB.value.trim() !== '' && score.value !== undefined && score.value > 0
-)
-
-async function handleCreate() {
-	if (!isValidForm.value) return
-
+async function onSubmit(event: FormSubmitEvent<Schema>) {
 	loading.value = true
 
 	Services.placar
 		.create({
-			score: score.value,
-			teamA: teamA.value,
-			teamB: teamB.value,
+			score: event.data.score,
+			teamA: event.data.teamA,
+			teamB: event.data.teamB,
 		})
 		.then(placarId => {
 			model.value = false
@@ -30,8 +38,12 @@ async function handleCreate() {
 			navigateTo(`/id/${placarId}`)
 		})
 		.catch(error => {
-			console.log('error')
-			console.log(error)
+			console.error(error)
+			toast.add({
+				color: 'error',
+				title: 'Erro ao criar placar',
+				description: error.message || 'Ocorreu um erro ao criar o placar. Tente novamente mais tarde.',
+			})
 		})
 		.finally(() => {
 			loading.value = false
@@ -39,57 +51,46 @@ async function handleCreate() {
 }
 
 function handleCancel() {
-	teamA.value = ''
-	teamB.value = ''
-	score.value = 1
+	state.teamA = ''
+	state.teamB = ''
+	state.score = 1
 
 	model.value = false
 }
 </script>
 
 <template>
-	<UModal v-model="model">
-		<UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
-			<template #header>
-				<h1 class="w-full text-center text-xl">Criando Placar</h1>
-			</template>
+	<UModal v-model:open="model" title="Criando placar">
+		<template #body>
+			<UForm :schema="schema" :state="state" @submit="onSubmit">
+				<div class="mb-6 grid grid-cols-1 md:grid-cols-[1fr_64px_1fr]">
+					<UFormField label="Primeiro time" name="teamA">
+						<UInput class="w-full" color="neutral" size="xl" placeholder="Time 1" v-model="state.teamA" :disabled="loading" />
+					</UFormField>
+					<div class="flex items-center justify-center pt-4 pb-2">vs</div>
+					<UFormField label="Segundo time" name="teamB">
+						<UInput class="w-full" color="neutral" size="xl" placeholder="Time 2" v-model="state.teamB" :disabled="loading" />
+					</UFormField>
+					<UFormField label="Valor da pontuação" name="score" class="mt-6">
+						<UInput color="neutral" size="xl" type="number" placeholder="1" v-model="state.score" :disabled="loading" />
+					</UFormField>
+				</div>
 
-			<div>
-				<UFormGroup label="Primeiro Time">
-					<UInput class="mb-8" color="gray" size="xl" placeholder="Time 1" v-model="teamA" :disabled="loading" />
-				</UFormGroup>
-				<UFormGroup label="Segundo Time">
-					<UInput class="mb-8" color="gray" size="xl" placeholder="Time 2" v-model="teamB" :disabled="loading" />
-				</UFormGroup>
-				<UFormGroup label="Valor da Pontuação">
-					<UInput class="mb-4" color="gray" size="xl" type="number" placeholder="1" v-model="score" :disabled="loading" />
-				</UFormGroup>
-			</div>
-
-			<template #footer>
-				<div class="flex flex-row justify-between items-center gap-8 px-8">
+				<div class="px-4 flex justify-between mt-8">
 					<UButton
-						class="flex-1 justify-center"
-						color="gray"
-						size="xl"
+						class="px-8"
+						color="neutral"
+						size="lg"
 						variant="ghost"
 						label="Cancelar"
+						type="button"
 						@click="handleCancel"
 						:disabled="loading"
 					/>
 
-					<UButton
-						class="flex-1 justify-center"
-						color="gray"
-						size="xl"
-						variant="ghost"
-						label="Criar"
-						@click="handleCreate"
-						:disabled="!isValidForm"
-						:loading="loading"
-					/>
+					<UButton class="px-8" color="neutral" size="lg" variant="solid" label="Salvar" type="submit" :loading="loading" />
 				</div>
-			</template>
-		</UCard>
+			</UForm>
+		</template>
 	</UModal>
 </template>

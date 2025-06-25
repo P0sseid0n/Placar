@@ -1,10 +1,10 @@
 <template>
-	<div class="bg-zinc-900">
+	<UApp>
 		<NuxtPage />
-	</div>
+	</UApp>
 </template>
 
-<style lang="scss">
+<style>
 :root {
 	--success-color: #3080e2;
 }
@@ -23,68 +23,69 @@
 ::-webkit-scrollbar-thumb {
 	background: rgba(245, 245, 250, 0.2);
 	border-radius: 40px;
-
-	&:hover {
-		background: rgba(245, 245, 250, 0.4);
-	}
 }
 
-// #App > div > header,
-// #App > div > div > header {
-// 	height: 128px;
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(245, 245, 250, 0.4);
+}
 
-// 	display: flex;
-// 	align-items: center;
-// 	justify-content: space-between;
-// 	padding: 0 3%;
+/* 
+#App > div > header,
+#App > div > div > header {
+	height: 128px;
 
-// 	h1 {
-// 		font-size: 40px;
-// 		font-weight: 700;
-// 	}
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 3%;
 
-// 	a,
-// 	button {
-// 		text-decoration: none;
-// 		color: white;
-// 		cursor: pointer;
+	h1 {
+		font-size: 40px;
+		font-weight: 700;
+	}
 
-// 		height: 40px;
-// 		padding: 0 32px;
-// 		display: inline-flex;
+	a,
+	button {
+		text-decoration: none;
+		color: white;
+		cursor: pointer;
 
-// 		border-radius: 8px;
-// 	}
+		height: 40px;
+		padding: 0 32px;
+		display: inline-flex;
 
-// 	> div {
-// 		flex: 1;
+		border-radius: 8px;
+	}
 
-// 		&:last-of-type {
-// 			text-align: right;
-// 			justify-content: flex-end;
-// 		}
-// 	}
+	> div {
+		flex: 1;
 
-// 	a,
-// 	button,
-// 	> div:has(> span) {
-// 		align-items: center;
-// 		justify-content: center;
-// 		gap: 8px;
+		&:last-of-type {
+			text-align: right;
+			justify-content: flex-end;
+		}
+	}
 
-// 		font-size: 24px;
+	a,
+	button,
+	> div:has(> span) {
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
 
-// 		span {
-// 			font-size: 16px;
-// 		}
-// 	}
+		font-size: 24px;
 
-// 	> div:has(> span) {
-// 		display: flex;
+		span {
+			font-size: 16px;
+		}
+	}
 
-// 		span {
-// 			opacity: 0.5;
-// 		}
-// 	}
-// }
+	> div:has(> span) {
+		display: flex;
+
+		span {
+			opacity: 0.5;
+		}
+	}
+} */
 </style>
