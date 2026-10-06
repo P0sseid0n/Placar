@@ -49,6 +49,39 @@
 	/* Sombras (só modal e toast) */
 	--shadow-modal: 0 32px 80px rgba(0, 0, 0, 0.6);
 	--shadow-toast: 0 16px 40px rgba(0, 0, 0, 0.55);
+
+	/* Animações */
+	--animate-score-pop: score-pop 0.35s ease-out; /* número que acabou de mudar */
+	--animate-skeleton: skeleton 1.4s ease-in-out infinite; /* carregando */
+
+	@keyframes score-pop {
+		0% {
+			transform: scale(1);
+		}
+		40% {
+			transform: scale(1.12);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+
+	@keyframes skeleton {
+		0%,
+		100% {
+			opacity: 0.5;
+		}
+		50% {
+			opacity: 1;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.animate-score-pop,
+	.animate-skeleton {
+		animation: none;
+	}
 }
 
 :root {
@@ -59,10 +92,4 @@
 @utility bg-dots {
 	background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 	background-size: 24px 24px;
-}
-
-@layer components {
-	.container-card {
-		@apply border-0 ring-1 ring-inset ring-gray-600/50 bg-zinc-800/10 hover:bg-zinc-800/25 hover:ring-gray-600/75;
-	}
 }

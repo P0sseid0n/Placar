@@ -6,6 +6,7 @@ const {
 	label = true,
 	textSize,
 	tag = 'span',
+	fluid = false,
 } = defineProps<{
 	/** Lado do quadrado, em px */
 	size?: number
@@ -15,25 +16,37 @@ const {
 	textSize?: number
 	/** Elemento raiz, ex.: 'h1' na tela de login */
 	tag?: string
+	/**
+	 * Medidas em `em`, acompanhando o font-size definido por classe no componente
+	 * (ex.: `text-[clamp(64px,10vw,112px)]` na tela de login). Ignora `size` e `textSize`.
+	 */
+	fluid?: boolean
 }>()
 
+// Em `fluid`, o quadrado tem 0.72em do texto, como no design da tela de login
+const unit = (px: number) => (fluid ? `${(px / 32) * 0.72}em` : `${(px / 32) * size}px`)
+
 const markStyle = computed(() => ({
-	width: `${size}px`,
-	height: `${size}px`,
-	borderRadius: `${size * 0.25}px`,
-	gap: `${size * 0.094}px`,
+	width: unit(32),
+	height: unit(32),
+	borderRadius: unit(8),
+	gap: unit(3),
 }))
 
 const barStyle = computed(() => ({
-	width: `${size * 0.125}px`,
-	height: `${size * 0.4375}px`,
-	borderRadius: `${size * 0.0625}px`,
+	width: unit(4),
+	height: unit(14),
+	borderRadius: unit(2),
 }))
 
-const rootStyle = computed(() => ({
-	gap: `${size * 0.3125}px`,
-	fontSize: `${textSize ?? Math.round(size * 0.6875)}px`,
-}))
+const rootStyle = computed(() =>
+	fluid
+		? { gap: '0.18em' }
+		: {
+				gap: unit(10),
+				fontSize: `${textSize ?? Math.round(size * 0.6875)}px`,
+			},
+)
 </script>
 
 <template>

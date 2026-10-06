@@ -10,14 +10,14 @@ const toast = useToast()
 const placarPublicId = String(route.params.id ?? '')
 
 const { data: placar, error } = await useAsyncData(`placar-${placarPublicId}`, async () => {
-	// IDs são gerados com 6 caracteres de 0-9 e a-z (services/placar.ts)
-	if (!/^[0-9a-z]{6}$/.test(placarPublicId)) {
-		throw createError({ statusCode: 400, statusMessage: 'ID inválido' })
+	if (!isValidPlacarId(placarPublicId)) {
+		throw createError({ statusCode: 400, message: 'ID inválido' })
 	}
 
 	const placarPayload = await Services.placar.getById(placarPublicId)
 	if (!placarPayload) {
-		throw createError({ statusCode: 404, statusMessage: 'Placar não encontrado' })
+		// O marcador diferencia "placar não existe" de "rota não existe" no error.vue
+		throw createError({ statusCode: 404, message: 'Placar não encontrado', data: { reason: PLACAR_NOT_FOUND } })
 	}
 	return placarPayload
 })
@@ -26,7 +26,8 @@ const { data: placar, error } = await useAsyncData(`placar-${placarPublicId}`, a
 if (error.value) {
 	throw createError({
 		statusCode: error.value.statusCode ?? 500,
-		statusMessage: error.value.statusMessage ?? 'Erro interno do servidor',
+		message: error.value.message,
+		data: error.value.data,
 		fatal: true,
 	})
 }

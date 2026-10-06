@@ -1,6 +1,7 @@
 -- Dados de teste do banco LOCAL (aplicados no `bun run db:reset`).
 -- Usuários com e-mail e senha, para testar sem configurar o Discord.
--- Senha dos dois usuários: teste-03944b853815
+-- vazio@placar.test não tem placares (estado vazio do painel).
+-- Senha dos três usuários: teste-03944b853815
 
 -- Usuários
 insert into auth.users (
@@ -18,13 +19,18 @@ values
 		'00000000-0000-0000-0000-000000000000', '22222222-2222-2222-2222-222222222222', 'authenticated', 'authenticated',
 		'outro@placar.test', crypt('teste-03944b853815', gen_salt('bf')), now(),
 		'{"provider":"email","providers":["email"]}', '{"full_name":"Outro Usuário"}', now(), now(), '', '', '', ''
+	),
+	(
+		'00000000-0000-0000-0000-000000000000', '33333333-3333-3333-3333-333333333333', 'authenticated', 'authenticated',
+		'vazio@placar.test', crypt('teste-03944b853815', gen_salt('bf')), now(),
+		'{"provider":"email","providers":["email"]}', '{"full_name":"Sem Placares"}', now(), now(), '', '', '', ''
 	)
 on conflict (id) do nothing;
 
 insert into auth.identities (id, user_id, provider_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
 select gen_random_uuid(), u.id, u.id::text, jsonb_build_object('sub', u.id::text, 'email', u.email), 'email', now(), now(), now()
 from auth.users u
-where u.id in ('11111111-1111-1111-1111-111111111111', '22222222-2222-2222-2222-222222222222')
+where u.id in ('11111111-1111-1111-1111-111111111111', '22222222-2222-2222-2222-222222222222', '33333333-3333-3333-3333-333333333333')
 	and not exists (select 1 from auth.identities i where i.user_id = u.id and i.provider = 'email');
 
 -- Placares
