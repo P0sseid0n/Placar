@@ -161,6 +161,10 @@ function handleUndo() {
 // Realtime: o placar muda em outro aparelho
 // ------------------------------------------------------------
 
+// Animação ao marcar ponto: dispara só quando chega uma jogada nova (INSERT em PlacarEvent),
+// tanto para o dono quanto para o visitante. Reiniciar e desfazer só atualizam o número.
+const { animations, play } = useScoreAnimation(looks)
+
 const { connected } = usePlacarRealtime(placar, {
 	onUpdate(row) {
 		if (!placar.value) return
@@ -171,6 +175,10 @@ const { connected } = usePlacarRealtime(placar, {
 		// O dono que apagou já foi para o painel; para quem está assistindo, o placar deixou de existir
 		if (isOwner.value) return
 		showError({ statusCode: 404, message: 'Placar não encontrado', data: { reason: PLACAR_NOT_FOUND } })
+	},
+	onEvent(event) {
+		if (event.team === 'a' || event.team === 'b') play(event.team, event.delta)
+		refreshEvents()
 	},
 })
 
@@ -337,6 +345,7 @@ function handleDeleted() {
 						:variant="isOwner ? 'owner' : 'viewer'"
 						:status="team.status"
 						:behind="summary.diff"
+						:animation="animations[team.team]"
 						@plus="handleUpdateScore(team.team, 'increment')"
 						@minus="handleUpdateScore(team.team, 'decrement')"
 					/>
@@ -387,7 +396,7 @@ function handleDeleted() {
 			</section>
 
 			<!-- Última jogada (visitante) -->
-			<p v-else-if="!telao && lastEvent" class="text-center text-[13px] text-fg-soft">
+			<p v-else-if="!telao && lastEvent" role="status" class="text-center text-[13px] text-fg-soft">
 				Última jogada:
 				<strong class="font-semibold text-white">{{ lastEvent.team }} {{ lastEvent.delta }}</strong>
 				· {{ lastEvent.when }}

@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import type { TeamAnimation } from '~/composables/useScoreAnimation'
 import type { TeamLook } from '~/utils/teamColors'
 
 // Painel de um time na página do placar. `owner` tem os botões de pontuar; `viewer` é só leitura.
-const { name, look, score, increment, scoreSize, variant, status } = defineProps<{
+const { name, look, score, increment, scoreSize, variant, status, animation } = defineProps<{
 	name: string
 	look: TeamLook
 	score: number
@@ -13,6 +14,8 @@ const { name, look, score, increment, scoreSize, variant, status } = defineProps
 	/** Situação do time: 'leader' (na frente), 'trailing' (atrás, com `behind` pontos) ou 'tie' */
 	status: 'leader' | 'trailing' | 'tie'
 	behind?: number
+	/** Jogada sendo animada (chega pelo realtime); `key` muda a cada jogada */
+	animation?: TeamAnimation | null
 }>()
 
 defineEmits<{ plus: []; minus: [] }>()
@@ -20,6 +23,13 @@ defineEmits<{ plus: []; minus: [] }>()
 const isOwner = computed(() => variant === 'owner')
 
 // Quem lidera ganha anel na cor do time a 60% (ver teamLook.lead)
+// Número e "+N"/"−N" um pouco maiores no visitante, como no design
+const floatClass = computed(() =>
+	isOwner.value
+		? 'top-[34%] right-[14%] text-[56px] [--float-distance:56px]'
+		: 'top-[40%] right-[12%] text-[64px] [--float-distance:64px]',
+)
+
 const panelStyle = computed(() => ({
 	boxShadow: `inset 0 0 0 1px ${status === 'leader' ? look.lead : 'var(--color-raised)'}`,
 }))
@@ -28,11 +38,30 @@ const panelStyle = computed(() => ({
 <template>
 	<section
 		:aria-label="name"
-		class="flex min-w-0 flex-[1_1_380px] flex-col overflow-hidden bg-surface transition-shadow duration-200"
+		class="relative flex min-w-0 flex-[1_1_380px] flex-col overflow-hidden bg-surface transition-shadow duration-300"
 		:class="isOwner ? 'rounded-panel' : 'rounded-screen'"
 		:style="panelStyle"
 	>
 		<div aria-hidden="true" :class="isOwner ? 'h-1.5' : 'h-2'" :style="{ background: look.stripe }" />
+
+		<!-- Animação ao marcar ponto: o painel pisca (só +N) e o "+N"/"−N" sobe e some -->
+		<div
+			v-if="animation?.flash"
+			:key="`flash-${animation.key}`"
+			aria-hidden="true"
+			class="pointer-events-none absolute inset-0 z-[1] animate-score-flash rounded-[inherit] opacity-0"
+			:style="{ background: animation.glow, boxShadow: `inset 0 0 0 2px ${animation.glowEdge}` }"
+		/>
+		<span
+			v-if="animation"
+			:key="`float-${animation.key}`"
+			aria-hidden="true"
+			class="pointer-events-none absolute z-[2] animate-score-float font-score leading-none font-bold opacity-0"
+			:class="floatClass"
+			:style="{ color: animation.textColor }"
+		>
+			{{ animation.text }}
+		</span>
 
 		<div
 			class="flex flex-1 flex-col"
@@ -54,10 +83,10 @@ const panelStyle = computed(() => ({
 					Na frente
 				</span>
 				<span
-					v-else-if="status === 'trailing' && !isOwner"
+					v-else-if="!isOwner"
 					class="inline-flex h-[26px] shrink-0 items-center rounded-full px-2.5 text-xs font-semibold text-fg-soft ring-1 ring-edge ring-inset"
 				>
-					{{ behind }} atrás
+					{{ status === 'tie' ? 'Empatado' : `${behind} atrás` }}
 				</span>
 			</div>
 
@@ -66,7 +95,13 @@ const panelStyle = computed(() => ({
 				class="flex flex-1 items-center justify-center font-score leading-[0.9] font-bold tracking-[-2px] text-white"
 				:class="scoreSizeClass(scoreSize, variant)"
 			>
-				{{ score }}
+				<span
+					:key="animation?.key ?? 0"
+					class="inline-block"
+					:class="animation && (animation.kind === 'up' ? 'animate-score-up' : 'animate-score-down')"
+				>
+					{{ score }}
+				</span>
 			</output>
 
 			<div v-if="isOwner" class="flex gap-2.5">

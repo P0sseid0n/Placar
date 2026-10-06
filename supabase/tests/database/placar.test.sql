@@ -4,7 +4,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(33);
+select plan(34);
 
 -- ------------------------------------------------------------
 -- Dados
@@ -34,6 +34,13 @@ select ok(
 		where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'Placar'
 	),
 	'Placar está na publicação do realtime'
+);
+select ok(
+	exists (
+		select 1 from pg_publication_tables
+		where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'PlacarEvent'
+	),
+	'PlacarEvent está na publicação do realtime (animação ao marcar ponto)'
 );
 
 -- ------------------------------------------------------------
