@@ -11,10 +11,10 @@ Nuxt.js - Vue.js - Pinia - Supabase - Scss
 ## Como rodar o projeto 🚀
 
 1. Clone o projeto
-2. Instale as dependências com `npm install` ou `yarn install`.
+2. Instale as dependências com `bun install`.
 3. Crie um projeto no [Supabase](https://supabase.io/).
 4. Crie um arquivo `.env` na raiz do projeto e adicione as variáveis de ambiente de acordo com o arquivo `.env.example`.
-5. Rode o projeto com `npm run dev` ou `yarn dev`.
+5. Rode o projeto com `bun run dev`.
 
 ## Contribuição 🤝
 

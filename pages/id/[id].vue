@@ -62,7 +62,7 @@ onUnmounted(() => {
 })
 
 const isCreator = computed(() => {
-	return user.value?.id === placar.value?.creator
+	return user.value?.sub === placar.value?.creator
 })
 
 function handleUpdateScore(team: 'a' | 'b', action: 'increment' | 'decrement') {

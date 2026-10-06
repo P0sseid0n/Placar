@@ -13,7 +13,7 @@ export default {
 		if (!user.value) throw new Error('Usuário não logado')
 
 		const { error } = await client.from('Placar').insert({
-			creator: user.value.id,
+			creator: user.value.sub,
 			public_id: id,
 			score_increment: payload.score,
 			team_a_name: payload.teamA,
