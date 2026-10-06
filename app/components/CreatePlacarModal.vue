@@ -183,6 +183,7 @@ const fields = [
 								v-model="state[field.color]"
 								:taken="state[field.other]"
 								:label="`Cor do ${field.legend.toLowerCase()}`"
+								:align="field.team === 'A' ? 'start' : 'end'"
 								:disabled="loading"
 							/>
 							<span :id="`time-${field.team}-erro`" class="min-h-5 text-[13px] leading-5 text-error">
