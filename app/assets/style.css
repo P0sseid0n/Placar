@@ -1,12 +1,64 @@
 @import 'tailwindcss' theme(static);
 @import '@nuxt/ui';
 
-@theme {
-	--font-sans: 'Open Sans', sans-serif;
+/*
+ * Tokens do redesign (docs/placar-design/HANDOFF.md, seção 1).
+ * Os nomes evitam colidir com os utilitários do Nuxt UI (default, elevated, accented, muted...).
+ * Erro (#ff6467) e sucesso (#05df72) vêm do próprio Nuxt UI: text-error, bg-success etc.
+ * `static`: as variáveis sempre vão para o CSS, mesmo sem classe que as use (ex.: cor do time via style).
+ * Raios e sombras novos também precisam estar em `ui.tv.twMergeConfig` (app/app.config.ts).
+ */
+@theme static {
+	/* Fontes */
+	--font-sans: 'Open Sans', system-ui, sans-serif;
+	--font-score: 'Barlow Condensed', 'Open Sans', sans-serif;
+	--font-score--font-feature-settings: 'tnum';
+	--font-id: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+	/* Neutros */
+	--color-canvas: #18181b; /* fundo de todas as telas */
+	--color-surface: #1d1d20; /* cards, painéis, modais, campos de busca */
+	--color-raised: #27272a; /* bordas, botão secundário, chips */
+	--color-edge: #3f3f46; /* anéis de campos e botões secundários, hover */
+	--color-faint: #52525c; /* "#" do ID, ":" entre placares */
+	--color-scrim: #09090b; /* overlay de modal (usar a 72%) */
+
+	/* Texto */
+	--color-fg: #e4e4e7; /* corpo */
+	--color-fg-strong: #d4d4d8; /* descrições de destaque */
+	--color-fg-soft: #9f9fa9; /* rótulos, apoio, time que está perdendo */
+	--color-fg-dim: #71717b; /* contadores, dicas */
+
+	/* Times (monograma: cor + alfa 24, ex.: bg-team-blue/14) */
+	--color-team-blue: #51a2ff;
+	--color-team-orange: #ff8904;
+	--color-team-green: #05df72;
+	--color-team-purple: #a684ff;
+	--color-team-pink: #fb64b6;
+	--color-team-yellow: #fdc700;
+
+	/* Raios */
+	--radius-chip: 6px; /* chip de ID */
+	--radius-btn: 8px; /* botões de cabeçalho, ícones */
+	--radius-field: 10px; /* botões grandes, campos */
+	--radius-card: 12px; /* cards, +1, resumo */
+	--radius-feature: 16px; /* destaque, histórico */
+	--radius-panel: 20px; /* painéis de time, modais */
+	--radius-screen: 24px; /* telão */
+
+	/* Sombras (só modal e toast) */
+	--shadow-modal: 0 32px 80px rgba(0, 0, 0, 0.6);
+	--shadow-toast: 0 16px 40px rgba(0, 0, 0, 0.55);
 }
 
 :root {
 	color-scheme: dark;
+}
+
+/* Fundo texturizado (login, erro, painel vazio) */
+@utility bg-dots {
+	background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+	background-size: 24px 24px;
 }
 
 @layer components {

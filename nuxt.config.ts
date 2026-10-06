@@ -5,8 +5,21 @@ export default defineNuxtConfig({
 	css: ['~/assets/style.css'],
 	app: {
 		head: {
-			htmlAttrs: { class: 'dark' },
+			htmlAttrs: { class: 'dark', lang: 'pt-BR' },
+			link: [
+				{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+				{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico', sizes: '32x32' },
+				{ rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+			],
+			meta: [{ name: 'theme-color', content: '#18181b' }],
 		},
+	},
+	fonts: {
+		// Open Sans para texto e Barlow Condensed para números (baixadas no build pelo @nuxt/fonts)
+		families: [
+			{ name: 'Open Sans', weights: [400, 500, 600, 700] },
+			{ name: 'Barlow Condensed', weights: [600, 700] },
+		],
 	},
 	ui: {
 		// Projeto usa somente o tema dark
