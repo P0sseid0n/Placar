@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import {
+	diffLines,
 	firstName,
+	formatDelta,
+	mergeRealtimePlacar,
+	scoreSizeClass,
 	isValidPlacarId,
 	relativeTime,
 	sanitizePlacarId,
@@ -115,5 +119,48 @@ describe('relativeTime', () => {
 
 	it('não mostra tempo negativo para datas no futuro', () => {
 		expect(relativeTime(new Date(now.getTime() + MIN), now)).toBe('agora')
+	})
+})
+
+describe('diffLines', () => {
+	it('mostra a diferença', () => {
+		expect(diffLines(12, 9)).toEqual(['Diferença', '3'])
+		expect(diffLines(2, 7)).toEqual(['Diferença', '5'])
+	})
+
+	it('mostra empate', () => {
+		expect(diffLines(4, 4)).toEqual(['Empate'])
+	})
+})
+
+describe('formatDelta', () => {
+	it('usa + para pontos somados e − (menos tipográfico) para pontos tirados', () => {
+		expect(formatDelta(3)).toBe('+3')
+		expect(formatDelta(-1)).toBe('−1')
+	})
+})
+
+describe('scoreSizeClass', () => {
+	it('usa os tamanhos do design para dono e visitante', () => {
+		expect(scoreSizeClass('P', 'owner')).toBe('text-[clamp(88px,10vw,150px)]')
+		expect(scoreSizeClass('M', 'viewer')).toBe('text-[clamp(120px,16vw,240px)]')
+	})
+
+	it('cai no Grande para valores desconhecidos', () => {
+		expect(scoreSizeClass(null, 'owner')).toBe('text-[clamp(130px,18vw,280px)]')
+		expect(scoreSizeClass('X', 'viewer')).toBe('text-[clamp(140px,21vw,320px)]')
+	})
+})
+
+describe('mergeRealtimePlacar', () => {
+	const current = { team_a_score: 7, team_b_score: 2, team_a_name: 'Casa' }
+	const incoming = { team_a_score: 6, team_b_score: 2, team_a_name: 'Casa FC' }
+
+	it('aplica o placar recebido quando não há cliques sendo salvos', () => {
+		expect(mergeRealtimePlacar(current, incoming, 0)).toEqual(incoming)
+	})
+
+	it('mantém as pontuações da tela enquanto há cliques sendo salvos, mas aceita o resto', () => {
+		expect(mergeRealtimePlacar(current, incoming, 2)).toEqual({ team_a_score: 7, team_b_score: 2, team_a_name: 'Casa FC' })
 	})
 })

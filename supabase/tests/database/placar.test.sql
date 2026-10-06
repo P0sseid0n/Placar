@@ -4,7 +4,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(28);
+select plan(29);
 
 -- ------------------------------------------------------------
 -- Dados
@@ -27,6 +27,14 @@ $$;
 create function pg_temp.logout() returns void language sql as $$
 	select set_config('role', 'anon', true), set_config('request.jwt.claims', '{"role":"anon"}', true);
 $$;
+
+select ok(
+	exists (
+		select 1 from pg_publication_tables
+		where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'Placar'
+	),
+	'Placar está na publicação do realtime'
+);
 
 -- ------------------------------------------------------------
 -- Colunas novas e travas

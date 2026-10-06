@@ -127,3 +127,52 @@ export function relativeTime(date: string | Date, now: Date = new Date()): strin
 	const years = Math.floor(days / 365)
 	return `há ${years} ${years === 1 ? 'ano' : 'anos'}`
 }
+
+/** Texto do centro do placar: ["Empate"] ou ["Diferença", "3"] */
+export function diffLines(a: number, b: number): string[] {
+	const diff = Math.abs(a - b)
+	return diff === 0 ? ['Empate'] : ['Diferença', String(diff)]
+}
+
+/** Variação de uma jogada: "+3" ou "−1" (sinal de menos tipográfico) */
+export function formatDelta(delta: number): string {
+	return `${delta > 0 ? '+' : '−'}${Math.abs(delta)}`
+}
+
+/**
+ * Tamanho dos números no placar, por P/M/G (valores do design).
+ * As classes ficam escritas por extenso para o Tailwind encontrá-las.
+ */
+const SCORE_SIZE_CLASSES: Record<'owner' | 'viewer', Record<ScoreSize, string>> = {
+	owner: {
+		P: 'text-[clamp(88px,10vw,150px)]',
+		M: 'text-[clamp(110px,14vw,210px)]',
+		G: 'text-[clamp(130px,18vw,280px)]',
+	},
+	viewer: {
+		P: 'text-[clamp(96px,11vw,170px)]',
+		M: 'text-[clamp(120px,16vw,240px)]',
+		G: 'text-[clamp(140px,21vw,320px)]',
+	},
+}
+
+export function scoreSizeClass(size: string | null | undefined, variant: 'owner' | 'viewer'): string {
+	const valid: ScoreSize = size === 'P' || size === 'M' ? size : 'G'
+	return SCORE_SIZE_CLASSES[variant][valid]
+}
+
+/**
+ * Junta o placar recebido pelo realtime com o que está na tela.
+ * Enquanto o dono tem cliques sendo salvos, as pontuações da tela (otimistas) são mantidas,
+ * para o número não "voltar"; o resto (nomes, incremento, tamanho, cores) vem do realtime.
+ */
+export function mergeRealtimePlacar<T extends Pick<PlacarRow, 'team_a_score' | 'team_b_score'>>(
+	current: T,
+	incoming: T,
+	pendingSaves: number,
+): T {
+	if (pendingSaves > 0) {
+		return { ...incoming, team_a_score: current.team_a_score, team_b_score: current.team_b_score }
+	}
+	return incoming
+}
