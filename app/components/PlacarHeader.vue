@@ -39,6 +39,7 @@ defineEmits<{
 						variant="subtle"
 						icon="i-lucide-share"
 						aria-label="Compartilhar"
+						aria-haspopup="dialog"
 						class="h-11 gap-2 rounded-btn bg-raised px-3.5 text-sm font-semibold text-fg ring-edge hover:bg-edge"
 						:ui="{ leadingIcon: 'size-[18px]' }"
 						@click="$emit('share')"

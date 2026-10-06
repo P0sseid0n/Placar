@@ -196,8 +196,8 @@ async function copy(text: string, title: string, description: string) {
 }
 
 const copyId = () => copy(placarPublicId, 'ID copiado!', 'Quem tiver o ID pode ver o placar.')
-const copyLink = () =>
-	copy(`${window.location.origin}/id/${placarPublicId}`, 'Link copiado!', 'Quem abrir o link acompanha ao vivo.')
+// "Compartilhar" (dono) abre o modal com QR code, ID e link
+const shareModal = ref(false)
 
 // ------------------------------------------------------------
 // Modo telão (visitante)
@@ -257,7 +257,7 @@ function handleDeleted() {
 			v-if="!telao"
 			:is-owner="isOwner"
 			:live="connected"
-			@share="copyLink"
+			@share="shareModal = true"
 			@settings="configModal = true"
 			@telao="enterTelao"
 		/>
@@ -402,6 +402,14 @@ function handleDeleted() {
 				· {{ lastEvent.when }}
 			</p>
 		</div>
+
+		<ShareModal
+			v-if="isOwner"
+			v-model="shareModal"
+			:public-id="placar.public_id"
+			:team-a="placar.team_a_name"
+			:team-b="placar.team_b_name"
+		/>
 
 		<ConfigPlacarModal
 			v-if="isOwner"

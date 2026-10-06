@@ -53,6 +53,7 @@
 	},
 	"dependencies": {
 		"nanoid": "^6.0.2",
-		"pinia": "^4.0.3"
+		"pinia": "^4.0.3",
+		"uqr": "^0.1.3"
 	}
 }

@@ -9,9 +9,9 @@ O Placar é um app para marcar e compartilhar, em tempo real, a pontuação de q
 - **Login com Discord** para criar e controlar seus placares, com um **perfil** que mostra seus números e permite sair ou excluir a conta.
 - **Painel** com resumo, o último placar em destaque, busca e ordenação.
 - **Placares personalizados**: nome de cada time, 16 cores (8 sólidas e 8 duplas, como uniformes listrados) e quanto vale cada ponto.
-- **Pontuação ao vivo**: quem está assistindo vê cada ponto na hora (Supabase Realtime).
+- **Pontuação ao vivo**: quem está assistindo vê cada ponto na hora, com animação (Supabase Realtime).
 - **Últimas jogadas** com **Desfazer**.
-- **Compartilhamento** por ID de 6 caracteres ou por link.
+- **Compartilhamento** por ID de 6 caracteres, link ou QR code (com download e tela cheia para TV).
 - **Modo telão** para exibir o placar numa TV ou projetor.
 - **Configurações** do placar: nomes, pontos por clique, tamanho dos números, reiniciar e apagar.
 - Funciona no celular a partir de 360px.
@@ -43,10 +43,10 @@ O Placar é um app para marcar e compartilhar, em tempo real, a pontuação de q
 - [x] Modal de usuário: ver o perfil e as preferências da conta
 - [x] Cor dupla para os times (duas cores por time, como uniformes listrados)
 - [x] Mais opções de cor para os times, como preto e vermelho
-- [ ] Animação ao marcar ponto: o número "pula" e a faixa da cor do time pisca por um instante, com som e vibração opcionais no celular
+- [x] Animação ao marcar ponto: o número "pula" e a faixa da cor do time pisca por um instante, com som e vibração opcionais no celular
 - [ ] Cronômetro: tempo de jogo com pausar e retomar, mostrado ao lado do placar e no modo telão
 - [ ] Modo celular de juiz: uma tela só com os botões +1 grandes, ocupando a tela inteira, para quem marca os pontos de pé na quadra
-- [ ] QR code no compartilhar: a pessoa aponta a câmera e abre o placar, sem digitar o ID
+- [x] QR code no compartilhar: a pessoa aponta a câmera e abre o placar, sem digitar o ID
 - [ ] Tela de fim de jogo: "Time Azul venceu 21 × 17", com as cores do vencedor, a duração da partida e um botão para compartilhar como imagem
 - [ ] Estatísticas no perfil: gráficos simples de vitórias e derrotas e dos times mais usados
 - [ ] Tema claro (os tokens de cor já estão organizados para isso)
