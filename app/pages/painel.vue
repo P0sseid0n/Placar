@@ -17,15 +17,6 @@ const loading = computed(() => status.value === 'pending' && !placares.value)
 const failed = computed(() => status.value === 'error')
 const list = computed(() => placares.value ?? [])
 
-const stats = computed(() => [
-	{ label: 'Placares criados', value: list.value.length },
-	{
-		label: 'Pontos marcados',
-		value: list.value.reduce((total, p) => total + (p.team_a_score ?? 0) + (p.team_b_score ?? 0), 0),
-	},
-	{ label: 'Empatados agora', value: list.value.filter(p => scoreSummary(p).tie).length },
-])
-
 // getAll já vem do mais recente para o mais antigo
 const latest = computed(() => list.value[0])
 
@@ -87,17 +78,6 @@ const filtered = computed(() => {
 			<PainelVazio v-else-if="!list.length" @create="createPlacarModal = true" />
 
 			<template v-else>
-				<section aria-label="Resumo" class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
-					<div
-						v-for="stat in stats"
-						:key="stat.label"
-						class="flex flex-col gap-1 rounded-card bg-surface p-5 ring-1 ring-raised ring-inset"
-					>
-						<span class="text-[13px] font-medium text-fg-soft">{{ stat.label }}</span>
-						<span class="font-score text-[44px] leading-none font-bold text-white">{{ stat.value }}</span>
-					</div>
-				</section>
-
 				<section v-if="latest" aria-labelledby="ultimo" class="flex flex-col gap-3.5">
 					<h2 id="ultimo" class="text-base font-semibold text-white">Continuar de onde parou</h2>
 					<PlacarDestaque :placar="latest" />
