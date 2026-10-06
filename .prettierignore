@@ -1,0 +1,12 @@
+# Gerados
+.nuxt
+.output
+coverage
+bun.lock
+app/types/database.types.ts
+
+# Documentos (relatório, handoff e telas de referência do design)
+docs
+
+# Supabase (SQL e config são formatados à mão)
+supabase

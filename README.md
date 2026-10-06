@@ -90,6 +90,13 @@ Os testes do app usam Vitest com o ambiente do Nuxt (`@nuxt/test-utils`):
 
 As regras do banco (travas, permissões e funções de pontuar, desfazer e reiniciar) são testadas com `bun run db:test`.
 
+## Lint e formatação 🧹
+
+- `bun run lint` / `bun run lint:fix`: ESLint com as regras do `@nuxt/eslint`
+- `bun run format` / `bun run format:check`: Prettier (tabs, aspas simples, sem ponto e vírgula), que também ordena as classes do Tailwind
+
+O `.editorconfig` deixa o editor com o mesmo estilo (tabs e UTF-8).
+
 ## Estrutura 📁
 
 ```

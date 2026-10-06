@@ -63,7 +63,7 @@ const filtered = computed(() => {
 <template>
 	<div class="min-h-screen bg-canvas text-fg">
 		<CreatePlacarModal v-model="createPlacarModal" />
-		<Header />
+		<PainelHeader />
 
 		<main class="mx-auto flex max-w-7xl flex-col gap-10 px-[clamp(16px,5vw,64px)] pt-10 pb-20">
 			<section class="flex flex-wrap items-end justify-between gap-5">
