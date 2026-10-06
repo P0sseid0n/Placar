@@ -156,3 +156,17 @@ export function mergeRealtimePlacar<T extends Pick<PlacarRow, 'team_a_score' | '
 	}
 	return incoming
 }
+
+/** Números da aba Perfil: total de placares, soma de todos os pontos e maior pontuação de um time */
+export function profileStats(placares: Pick<PlacarRow, 'team_a_score' | 'team_b_score'>[]) {
+	return {
+		total: placares.length,
+		points: placares.reduce((sum, p) => sum + (p.team_a_score ?? 0) + (p.team_b_score ?? 0), 0),
+		best: placares.reduce((max, p) => Math.max(max, p.team_a_score ?? 0, p.team_b_score ?? 0), 0),
+	}
+}
+
+/** "outubro de 2026" (mês por extenso e ano), para "Membro desde …" */
+export function monthYear(date: string | Date): string {
+	return new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' }).format(new Date(date))
+}

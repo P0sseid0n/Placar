@@ -4,6 +4,8 @@ import {
 	firstName,
 	formatDelta,
 	mergeRealtimePlacar,
+	monthYear,
+	profileStats,
 	scoreSizeClass,
 	isValidPlacarId,
 	relativeTime,
@@ -154,5 +156,26 @@ describe('mergeRealtimePlacar', () => {
 			team_b_score: 2,
 			team_a_name: 'Casa FC',
 		})
+	})
+})
+
+describe('profileStats', () => {
+	it('conta placares, soma os pontos e acha a maior pontuação', () => {
+		const placares = [
+			{ team_a_score: 12, team_b_score: 9 },
+			{ team_a_score: 45, team_b_score: 51 },
+			{ team_a_score: null, team_b_score: 3 },
+		]
+		expect(profileStats(placares)).toEqual({ total: 3, points: 120, best: 51 })
+	})
+
+	it('sem placares, tudo zero', () => {
+		expect(profileStats([])).toEqual({ total: 0, points: 0, best: 0 })
+	})
+})
+
+describe('monthYear', () => {
+	it('escreve o mês por extenso e o ano', () => {
+		expect(monthYear('2026-10-06T12:00:00Z')).toBe('outubro de 2026')
 	})
 })

@@ -5,10 +5,8 @@ const user = useSupabaseUser()
 const client = useSupabaseClient<Database>()
 
 const fullName = computed(() => (user.value?.user_metadata?.full_name as string | undefined) ?? '')
-const avatarUrl = computed(() => user.value?.user_metadata?.avatar_url as string | undefined)
-const avatarFailed = ref(false)
-const initial = computed(() => fullName.value.trim()[0]?.toUpperCase() ?? '?')
 
+const profileOpen = ref(false)
 const signingOut = ref(false)
 
 async function signOut() {
@@ -32,26 +30,16 @@ watchEffect(() => {
 			</NuxtLink>
 
 			<div class="flex items-center gap-2">
-				<div
-					class="flex h-11 items-center gap-2.5 rounded-full py-0 pr-1.5 pl-1.5 ring-1 ring-raised ring-inset sm:pr-3"
+				<button
+					type="button"
+					aria-label="Abrir perfil"
+					aria-haspopup="dialog"
+					class="flex h-11 cursor-pointer items-center gap-2.5 rounded-full py-0 pr-1.5 pl-1.5 ring-1 ring-raised transition-colors ring-inset hover:bg-raised sm:pr-3"
+					@click="profileOpen = true"
 				>
-					<img
-						v-if="avatarUrl && !avatarFailed"
-						:src="avatarUrl"
-						alt=""
-						class="size-8 rounded-full object-cover"
-						referrerpolicy="no-referrer"
-						@error="avatarFailed = true"
-					/>
-					<span
-						v-else
-						aria-hidden="true"
-						class="flex size-8 items-center justify-center rounded-full bg-edge text-sm font-bold text-white"
-					>
-						{{ initial }}
-					</span>
+					<UserAvatar :size="32" />
 					<span class="text-sm font-semibold text-white max-sm:sr-only">{{ fullName }}</span>
-				</div>
+				</button>
 
 				<UButton
 					color="neutral"
@@ -65,5 +53,7 @@ watchEffect(() => {
 				/>
 			</div>
 		</div>
+
+		<ProfileModal v-model="profileOpen" />
 	</header>
 </template>
