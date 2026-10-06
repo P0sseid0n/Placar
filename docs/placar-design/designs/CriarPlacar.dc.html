@@ -20,6 +20,8 @@ a{color:#e4e4e7}a:hover{color:#ffffff}
 .pl-in::placeholder{color:#71717b}
 .pl-in:focus{outline:none;box-shadow:inset 0 0 0 1px #9f9fa9 !important}
 .pl-sw:disabled{opacity:.25;cursor:not-allowed}
+.pl-sw:not(:disabled):hover{background:#27272a !important}
+.pl-pick:hover{box-shadow:inset 0 0 0 1px #71717b !important}
 :focus-visible{outline:2px solid #ffffff;outline-offset:2px}
 </style>
 </helmet>
@@ -49,8 +51,8 @@ a{color:#e4e4e7}a:hover{color:#ffffff}
 <div style="position: absolute; inset: 0; overflow-y: auto; background: rgba(9,9,11,0.72); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 24px 16px">
 <form role="dialog" aria-modal="true" aria-labelledby="modal-title" onSubmit="{{submit}}" style="width: 100%; max-width: 640px; box-sizing: border-box; margin: auto 0; overflow: hidden; border-radius: 20px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a, 0 32px 80px rgba(0,0,0,0.6); display: flex; flex-direction: column">
 <div aria-hidden="true" style="display: flex; height: 5px">
-<span style="flex: 1 1 0; background: {{ca}}"></span>
-<span style="flex: 1 1 0; background: {{cb}}"></span>
+<span style="flex: 1 1 0; background: {{stripeA}}"></span>
+<span style="flex: 1 1 0; background: {{stripeB}}"></span>
 </div>
 <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 24px 28px 0">
 <div style="display: flex; flex-direction: column; gap: 4px">
@@ -65,13 +67,13 @@ a{color:#e4e4e7}a:hover{color:#ffffff}
 <div style="padding: 24px 28px; display: flex; flex-direction: column; gap: 24px">
 <div aria-hidden="true" style="border-radius: 16px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a; padding: 16px 20px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px">
 <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
-<span style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 10px; background: {{tintA}}; color: {{ca}}; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{iniA}}</span>
+<span style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 10px; background: {{tintA}}; color: {{inkA}}; box-shadow: {{edgeA}}; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{iniA}}</span>
 <span style="font-size: 15px; font-weight: 600; color: {{nameFgA}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{nameA}}</span>
 </div>
 <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 44px; line-height: 1; font-weight: 700; color: #ffffff">0 <span style="color: #52525c">:</span> 0</span>
 <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; min-width: 0">
 <span style="font-size: 15px; font-weight: 600; color: {{nameFgB}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{nameB}}</span>
-<span style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 10px; background: {{tintB}}; color: {{cb}}; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{iniB}}</span>
+<span style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 10px; background: {{tintB}}; color: {{inkB}}; box-shadow: {{edgeB}}; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{iniB}}</span>
 </div>
 </div>
 
@@ -80,12 +82,34 @@ a{color:#e4e4e7}a:hover{color:#ffffff}
 <legend style="padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #ffffff">Primeiro time</legend>
 <label for="time-a" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Nome do primeiro time</label>
 <input id="time-a" class="pl-in" type="text" maxlength="24" placeholder="Time 1" value="{{a}}" onChange="{{onA}}" style="height: 48px; box-sizing: border-box; border: 0; border-radius: 10px; background: #18181b; box-shadow: {{ringA}}; color: #ffffff; font-family: inherit; font-size: 16px; padding: 0 14px"></input>
-<div role="group" aria-label="Cor do primeiro time" style="display: flex; flex-wrap: wrap; gap: 6px; padding-top: 4px">
-<sc-for list="{{swA}}" as="s" hint-placeholder-count="6">
-<button class="pl-sw" type="button" onClick="{{s.pick}}" disabled="{{s.taken}}" aria-pressed="{{s.pressed}}" aria-label="{{s.name}}" style="width: 44px; height: 44px; border: 0; padding: 0; border-radius: 10px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
-<span style="width: 26px; height: 26px; border-radius: 50%; background: {{s.hex}}; box-shadow: {{s.ring}}"></span>
+<div style="position: relative">
+<button class="pl-pick" type="button" onClick="{{toggleA}}" aria-expanded="{{openA}}" aria-haspopup="dialog" aria-label="Cor do primeiro time: {{lookA.name}}" style="width: 100%; height: 48px; box-sizing: border-box; padding: 0 12px; border: 0; border-radius: 10px; background: #18181b; box-shadow: inset 0 0 0 1px #3f3f46; color: #e4e4e7; font-family: inherit; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer">
+<span style="display: flex; align-items: center; gap: 10px; min-width: 0">
+<span aria-hidden="true" style="flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%; background: {{lookA.dot}}; box-shadow: {{lookA.swEdge}}"></span>
+<span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{lookA.name}}</span>
+</span>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9f9fa9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+</button>
+<sc-if value="{{showA}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-label="Cores do primeiro time" style="position: absolute; top: calc(100% + 8px); left: 0; z-index: 5; width: 384px; max-width: calc(100vw - 64px); box-sizing: border-box; padding: 14px; border-radius: 14px; background: #18181b; box-shadow: inset 0 0 0 1px #3f3f46, 0 24px 48px rgba(0,0,0,0.55); display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 600; color: #9f9fa9">Sólidas</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, 44px); gap: 0">
+<sc-for list="{{solidA}}" as="s" hint-placeholder-count="8">
+<button class="pl-sw" type="button" onClick="{{s.pick}}" disabled="{{s.taken}}" aria-pressed="{{s.pressed}}" aria-label="{{s.name}}" title="{{s.name}}" style="width: 44px; height: 44px; border: 0; padding: 0; border-radius: 10px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<span style="width: 26px; height: 26px; border-radius: 50%; background: {{s.dot}}; box-shadow: {{s.ring}}"></span>
 </button>
 </sc-for>
+</div>
+<span style="margin-top: 4px; font-size: 12px; font-weight: 600; color: #9f9fa9">Duplas</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, 44px); gap: 0">
+<sc-for list="{{dualA}}" as="s" hint-placeholder-count="8">
+<button class="pl-sw" type="button" onClick="{{s.pick}}" disabled="{{s.taken}}" aria-pressed="{{s.pressed}}" aria-label="{{s.name}}" title="{{s.name}}" style="width: 44px; height: 44px; border: 0; padding: 0; border-radius: 10px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<span style="width: 26px; height: 26px; border-radius: 50%; background: {{s.dot}}; box-shadow: {{s.ring}}"></span>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
 </div>
 <span style="min-height: 20px; font-size: 13px; line-height: 20px; color: #ff6467">{{errA}}</span>
 </fieldset>
@@ -93,12 +117,34 @@ a{color:#e4e4e7}a:hover{color:#ffffff}
 <legend style="padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #ffffff">Segundo time</legend>
 <label for="time-b" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Nome do segundo time</label>
 <input id="time-b" class="pl-in" type="text" maxlength="24" placeholder="Time 2" value="{{b}}" onChange="{{onB}}" style="height: 48px; box-sizing: border-box; border: 0; border-radius: 10px; background: #18181b; box-shadow: {{ringB}}; color: #ffffff; font-family: inherit; font-size: 16px; padding: 0 14px"></input>
-<div role="group" aria-label="Cor do segundo time" style="display: flex; flex-wrap: wrap; gap: 6px; padding-top: 4px">
-<sc-for list="{{swB}}" as="s" hint-placeholder-count="6">
-<button class="pl-sw" type="button" onClick="{{s.pick}}" disabled="{{s.taken}}" aria-pressed="{{s.pressed}}" aria-label="{{s.name}}" style="width: 44px; height: 44px; border: 0; padding: 0; border-radius: 10px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
-<span style="width: 26px; height: 26px; border-radius: 50%; background: {{s.hex}}; box-shadow: {{s.ring}}"></span>
+<div style="position: relative">
+<button class="pl-pick" type="button" onClick="{{toggleB}}" aria-expanded="{{openB}}" aria-haspopup="dialog" aria-label="Cor do segundo time: {{lookB.name}}" style="width: 100%; height: 48px; box-sizing: border-box; padding: 0 12px; border: 0; border-radius: 10px; background: #18181b; box-shadow: inset 0 0 0 1px #3f3f46; color: #e4e4e7; font-family: inherit; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer">
+<span style="display: flex; align-items: center; gap: 10px; min-width: 0">
+<span aria-hidden="true" style="flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%; background: {{lookB.dot}}; box-shadow: {{lookB.swEdge}}"></span>
+<span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{lookB.name}}</span>
+</span>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9f9fa9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+</button>
+<sc-if value="{{showB}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-label="Cores do segundo time" style="position: absolute; top: calc(100% + 8px); right: 0; z-index: 5; width: 384px; max-width: calc(100vw - 64px); box-sizing: border-box; padding: 14px; border-radius: 14px; background: #18181b; box-shadow: inset 0 0 0 1px #3f3f46, 0 24px 48px rgba(0,0,0,0.55); display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 600; color: #9f9fa9">Sólidas</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, 44px); gap: 0">
+<sc-for list="{{solidB}}" as="s" hint-placeholder-count="8">
+<button class="pl-sw" type="button" onClick="{{s.pick}}" disabled="{{s.taken}}" aria-pressed="{{s.pressed}}" aria-label="{{s.name}}" title="{{s.name}}" style="width: 44px; height: 44px; border: 0; padding: 0; border-radius: 10px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<span style="width: 26px; height: 26px; border-radius: 50%; background: {{s.dot}}; box-shadow: {{s.ring}}"></span>
 </button>
 </sc-for>
+</div>
+<span style="margin-top: 4px; font-size: 12px; font-weight: 600; color: #9f9fa9">Duplas</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, 44px); gap: 0">
+<sc-for list="{{dualB}}" as="s" hint-placeholder-count="8">
+<button class="pl-sw" type="button" onClick="{{s.pick}}" disabled="{{s.taken}}" aria-pressed="{{s.pressed}}" aria-label="{{s.name}}" title="{{s.name}}" style="width: 44px; height: 44px; border: 0; padding: 0; border-radius: 10px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<span style="width: 26px; height: 26px; border-radius: 50%; background: {{s.dot}}; box-shadow: {{s.ring}}"></span>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
 </div>
 <span style="min-height: 20px; font-size: 13px; line-height: 20px; color: #ff6467">{{errB}}</span>
 </fieldset>
@@ -140,21 +186,50 @@ a{color:#e4e4e7}a:hover{color:#ffffff}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
 class Component extends DCLogic {
-  constructor(props) { super(props); this.state = { a: '', b: '', ca: '#51a2ff', cb: '#ff8904', inc: 1, tried: false }; }
+  constructor(props) { super(props); this.state = { a: '', b: '', ca: 'azul', cb: 'laranja', open: null, inc: 1, tried: false }; }
   renderVals() {
     const s = this.state;
-    const colors = [
-      { name: 'Azul', hex: '#51a2ff' }, { name: 'Laranja', hex: '#ff8904' }, { name: 'Verde', hex: '#05df72' },
-      { name: 'Roxo', hex: '#a684ff' }, { name: 'Rosa', hex: '#fb64b6' }, { name: 'Amarelo', hex: '#fdc700' }
+    const PAL = [
+      { id: 'azul', name: 'Azul', c1: '#51a2ff' }, { id: 'laranja', name: 'Laranja', c1: '#ff8904' },
+      { id: 'verde', name: 'Verde', c1: '#05df72' }, { id: 'roxo', name: 'Roxo', c1: '#a684ff' },
+      { id: 'rosa', name: 'Rosa', c1: '#fb64b6' }, { id: 'amarelo', name: 'Amarelo', c1: '#fdc700' },
+      { id: 'vermelho', name: 'Vermelho', c1: '#fb2c36' }, { id: 'preto', name: 'Preto', c1: '#0a0a0a' },
+      { id: 'preto-branco', name: 'Preto e branco', c1: '#0a0a0a', c2: '#ffffff' },
+      { id: 'preto-vermelho', name: 'Preto e vermelho', c1: '#0a0a0a', c2: '#fb2c36' },
+      { id: 'amarelo-azul', name: 'Amarelo e azul', c1: '#fdc700', c2: '#155dfc' },
+      { id: 'verde-branco', name: 'Verde e branco', c1: '#00a63e', c2: '#ffffff' },
+      { id: 'azul-branco', name: 'Azul e branco', c1: '#155dfc', c2: '#ffffff' },
+      { id: 'vermelho-branco', name: 'Vermelho e branco', c1: '#e7000b', c2: '#ffffff' },
+      { id: 'verde-amarelo', name: 'Verde e amarelo', c1: '#00a63e', c2: '#fdc700' },
+      { id: 'preto-amarelo', name: 'Preto e amarelo', c1: '#0a0a0a', c2: '#fdc700' }
     ];
-    const sel = '0 0 0 3px #1d1d20, 0 0 0 5px #ffffff';
-    const sw = (mine, other, key) => colors.map((c) => ({
-      name: c.name, hex: c.hex,
-      pressed: mine === c.hex ? 'true' : 'false',
-      taken: other === c.hex,
-      ring: mine === c.hex ? sel : 'none',
-      pick: () => this.setState({ [key]: c.hex })
-    }));
+    const LOOK = (id) => {
+      const p = PAL.find((x) => x.id === id || x.name === id) || PAL[0];
+      const dark = p.c1 === '#0a0a0a';
+      return {
+        id: p.id, name: p.name, c1: p.c1, c2: p.c2 || null, dual: !!p.c2,
+        dot: p.c2 ? 'linear-gradient(135deg, ' + p.c1 + ' 50%, ' + p.c2 + ' 50%)' : p.c1,
+        stripe: p.c2 ? 'repeating-linear-gradient(135deg, ' + p.c1 + ' 0 10px, ' + p.c2 + ' 10px 20px)' : p.c1,
+        bar: p.c2 ? 'linear-gradient(180deg, ' + p.c1 + ' 50%, ' + p.c2 + ' 50%)' : p.c1,
+        tint: p.c2 ? p.c1 : (dark ? '#0a0a0a' : p.c1 + '24'),
+        ink: p.c2 ? p.c2 : (dark ? '#ffffff' : p.c1),
+        edge: dark ? 'inset 0 0 0 1px #52525c' : 'none',
+        swEdge: dark ? 'inset 0 0 0 1px #71717b' : 'none',
+        lead: dark ? (p.c2 ? p.c2 + '99' : '#71717b') : p.c1 + '99'
+      };
+    };
+    const sel = '0 0 0 3px #18181b, 0 0 0 5px #ffffff';
+    const list = (mine, other, key, duals) => PAL.filter((p) => !!p.c2 === duals).map((p) => {
+      const l = LOOK(p.id);
+      return {
+        name: p.name, dot: l.dot,
+        pressed: mine === p.id ? 'true' : 'false',
+        taken: other === p.id,
+        ring: mine === p.id ? (l.swEdge !== 'none' ? sel + ', ' + l.swEdge : sel) : l.swEdge,
+        pick: () => this.setState({ [key]: p.id, open: null })
+      };
+    });
+    const la = LOOK(s.ca), lb = LOOK(s.cb);
     const ini = (n, f) => (n.trim() || f).split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase();
     const ring = 'inset 0 0 0 1px #3f3f46';
     const bad = 'inset 0 0 0 1px #ff6467';
@@ -162,12 +237,19 @@ class Component extends DCLogic {
     const okB = s.b.trim().length > 0;
     const t = s.tried;
     return {
-      a: s.a, b: s.b, ca: s.ca, cb: s.cb, inc: s.inc,
-      tintA: s.ca + '24', tintB: s.cb + '24',
+      a: s.a, b: s.b, inc: s.inc,
+      lookA: la, lookB: lb,
+      stripeA: la.stripe, stripeB: lb.stripe,
+      tintA: la.tint, tintB: lb.tint, inkA: la.ink, inkB: lb.ink, edgeA: la.edge, edgeB: lb.edge,
+      showA: s.open === 'A', showB: s.open === 'B',
+      openA: s.open === 'A' ? 'true' : 'false', openB: s.open === 'B' ? 'true' : 'false',
+      toggleA: () => this.setState({ open: s.open === 'A' ? null : 'A' }),
+      toggleB: () => this.setState({ open: s.open === 'B' ? null : 'B' }),
+      solidA: list(s.ca, s.cb, 'ca', false), dualA: list(s.ca, s.cb, 'ca', true),
+      solidB: list(s.cb, s.ca, 'cb', false), dualB: list(s.cb, s.ca, 'cb', true),
       nameA: s.a.trim() || 'Time 1', nameB: s.b.trim() || 'Time 2',
       nameFgA: okA ? '#ffffff' : '#71717b', nameFgB: okB ? '#ffffff' : '#71717b',
       iniA: ini(s.a, 'T 1'), iniB: ini(s.b, 'T 2'),
-      swA: sw(s.ca, s.cb, 'ca'), swB: sw(s.cb, s.ca, 'cb'),
       ok: okA && okB, notOk: !(okA && okB),
       ringA: t && !okA ? bad : ring, ringB: t && !okB ? bad : ring,
       errA: t && !okA ? 'Nome do time A é obrigatório' : '',
@@ -177,7 +259,7 @@ class Component extends DCLogic {
       incUp: () => this.setState({ inc: s.inc + 1 }),
       onA: (e) => this.setState({ a: e.target.value }),
       onB: (e) => this.setState({ b: e.target.value }),
-      submit: (e) => { e.preventDefault(); this.setState({ tried: true }); }
+      submit: (e) => { e.preventDefault(); this.setState({ tried: true, open: null }); }
     };
   }
 }

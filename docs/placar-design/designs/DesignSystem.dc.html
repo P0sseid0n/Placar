@@ -52,16 +52,29 @@ a{color:#e4e4e7}a:hover{color:#ffffff}
 </div>
 <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 32px">
 <div style="display: flex; flex-direction: column; gap: 12px">
-<span style="font-size: 13px; font-weight: 600; color: #9f9fa9">Cores dos times · fundo do monograma a 14%</span>
-<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px">
-<sc-for list="{{teams}}" as="c" hint-placeholder-count="6">
+<span style="font-size: 13px; font-weight: 600; color: #9f9fa9">Cores dos times · fundo do monograma a 14% · Preto usa contorno #52525C e letra branca</span>
+<div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{teams}}" as="c" hint-placeholder-count="8">
 <div style="display: flex; flex-direction: column; gap: 8px">
-<div style="height: 72px; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 72px; border-radius: 12px; overflow: hidden; box-shadow: {{c.edge}}; display: flex; flex-direction: column">
 <span style="height: 50%; background: {{c.hex}}"></span>
-<span style="height: 50%; background: {{c.tint}}; color: {{c.hex}}; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center">TA</span>
+<span style="height: 50%; background: {{c.tint}}; color: {{c.ink}}; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center">TA</span>
 </div>
 <span style="font-size: 13px; font-weight: 600; color: #ffffff">{{c.name}}</span>
 <span style="font-size: 12px; color: #9f9fa9; font-family: ui-monospace, monospace">{{c.hex}}</span>
+</div>
+</sc-for>
+</div>
+<span style="margin-top: 8px; font-size: 13px; font-weight: 600; color: #9f9fa9">Cores duplas · listras a 135° na faixa, metade/metade na bolinha e na barra, monograma com fundo na 1ª cor e letra na 2ª</span>
+<div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{duals}}" as="c" hint-placeholder-count="8">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="height: 72px; border-radius: 12px; overflow: hidden; box-shadow: {{c.edge}}; display: flex; flex-direction: column">
+<span style="height: 50%; background: {{c.stripe}}"></span>
+<span style="height: 50%; background: {{c.tint}}; color: {{c.ink}}; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center">TA</span>
+</div>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #ffffff"><span aria-hidden="true" style="flex: 0 0 auto; width: 14px; height: 14px; border-radius: 50%; background: {{c.dot}}; box-shadow: {{c.swEdge}}"></span>{{c.name}}</span>
+<span style="font-size: 12px; color: #9f9fa9; font-family: ui-monospace, monospace">{{c.hexes}}</span>
 </div>
 </sc-for>
 </div>
@@ -289,9 +302,39 @@ Novo placar
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":3000}}'>
 class Component extends DCLogic {
   renderVals() {
+    const PAL = [
+      { id: 'azul', name: 'Azul', c1: '#51a2ff' }, { id: 'laranja', name: 'Laranja', c1: '#ff8904' },
+      { id: 'verde', name: 'Verde', c1: '#05df72' }, { id: 'roxo', name: 'Roxo', c1: '#a684ff' },
+      { id: 'rosa', name: 'Rosa', c1: '#fb64b6' }, { id: 'amarelo', name: 'Amarelo', c1: '#fdc700' },
+      { id: 'vermelho', name: 'Vermelho', c1: '#fb2c36' }, { id: 'preto', name: 'Preto', c1: '#0a0a0a' },
+      { id: 'preto-branco', name: 'Preto e branco', c1: '#0a0a0a', c2: '#ffffff' },
+      { id: 'preto-vermelho', name: 'Preto e vermelho', c1: '#0a0a0a', c2: '#fb2c36' },
+      { id: 'amarelo-azul', name: 'Amarelo e azul', c1: '#fdc700', c2: '#155dfc' },
+      { id: 'verde-branco', name: 'Verde e branco', c1: '#00a63e', c2: '#ffffff' },
+      { id: 'azul-branco', name: 'Azul e branco', c1: '#155dfc', c2: '#ffffff' },
+      { id: 'vermelho-branco', name: 'Vermelho e branco', c1: '#e7000b', c2: '#ffffff' },
+      { id: 'verde-amarelo', name: 'Verde e amarelo', c1: '#00a63e', c2: '#fdc700' },
+      { id: 'preto-amarelo', name: 'Preto e amarelo', c1: '#0a0a0a', c2: '#fdc700' }
+    ];
+    const LOOK = (id) => {
+      const p = PAL.find((x) => x.id === id || x.name === id) || PAL[0];
+      const dark = p.c1 === '#0a0a0a';
+      return {
+        id: p.id, name: p.name, c1: p.c1, c2: p.c2 || null, dual: !!p.c2,
+        dot: p.c2 ? 'linear-gradient(135deg, ' + p.c1 + ' 50%, ' + p.c2 + ' 50%)' : p.c1,
+        stripe: p.c2 ? 'repeating-linear-gradient(135deg, ' + p.c1 + ' 0 10px, ' + p.c2 + ' 10px 20px)' : p.c1,
+        bar: p.c2 ? 'linear-gradient(180deg, ' + p.c1 + ' 50%, ' + p.c2 + ' 50%)' : p.c1,
+        tint: p.c2 ? p.c1 : (dark ? '#0a0a0a' : p.c1 + '24'),
+        ink: p.c2 ? p.c2 : (dark ? '#ffffff' : p.c1),
+        edge: dark ? 'inset 0 0 0 1px #52525c' : 'none',
+        swEdge: dark ? 'inset 0 0 0 1px #71717b' : 'none',
+        lead: dark ? (p.c2 ? p.c2 + '99' : '#71717b') : p.c1 + '99'
+      };
+    };
     const teamHex = [
       ['Azul', '#51a2ff'], ['Laranja', '#ff8904'], ['Verde', '#05df72'],
-      ['Roxo', '#a684ff'], ['Rosa', '#fb64b6'], ['Amarelo', '#fdc700']
+      ['Roxo', '#a684ff'], ['Rosa', '#fb64b6'], ['Amarelo', '#fdc700'],
+      ['Vermelho', '#fb2c36'], ['Preto', '#0a0a0a']
     ];
     return {
       neutrals: [
@@ -306,9 +349,13 @@ class Component extends DCLogic {
         { name: 'Texto suave', role: 'Rótulos, apoio, quem perde', hex: '#9F9FA9', token: 'zinc-400' },
         { name: 'Texto apagado', role: 'Contadores, dicas', hex: '#71717B', token: 'zinc-500' }
       ],
+      duals: PAL.filter((p) => p.c2).map((p) => Object.assign({}, LOOK(p.id), { hexes: p.c1.toUpperCase() + ' / ' + p.c2.toUpperCase() })),
       teams: teamHex.map((t, i) => ({
-        name: t[0], hex: t[1], tint: t[1] + '24',
-        ring: i === 0 ? '0 0 0 3px #18181b, 0 0 0 5px #ffffff' : 'none',
+        name: t[0], hex: t[1],
+        tint: t[1] === '#0a0a0a' ? '#0a0a0a' : t[1] + '24',
+        ink: t[1] === '#0a0a0a' ? '#ffffff' : t[1],
+        edge: t[1] === '#0a0a0a' ? 'inset 0 0 0 1px #52525c' : 'none',
+        ring: i === 0 ? '0 0 0 3px #18181b, 0 0 0 5px #ffffff' : (t[1] === '#0a0a0a' ? 'inset 0 0 0 1px #71717b' : 'none'),
         op: i === 1 ? 0.25 : 1
       })),
       type: [

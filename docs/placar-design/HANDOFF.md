@@ -37,7 +37,18 @@ Este pacote traz o redesign de todas as telas do Placar e as instruções para i
 | Erro | `#ff6467` | apagar, validação |
 | Sucesso | `#05df72` | toast de sucesso, selo “Ao vivo” |
 
-Cores de time (novas): Azul `#51a2ff`, Laranja `#ff8904`, Verde `#05df72`, Roxo `#a684ff`, Rosa `#fb64b6`, Amarelo `#fdc700`. Fundo do monograma = cor + alfa `24` (≈14%).
+Cores de time — 16 opções, guardadas por **id** (paleta definida em código, ex.: `app/utils/teamColors.ts`):
+- Sólidas: `azul` #51a2ff, `laranja` #ff8904, `verde` #05df72, `roxo` #a684ff, `rosa` #fb64b6, `amarelo` #fdc700, `vermelho` #fb2c36, `preto` #0a0a0a.
+- Duplas (1ª / 2ª cor): `preto-branco` #0a0a0a/#ffffff, `preto-vermelho` #0a0a0a/#fb2c36, `amarelo-azul` #fdc700/#155dfc, `verde-branco` #00a63e/#ffffff, `azul-branco` #155dfc/#ffffff, `vermelho-branco` #e7000b/#ffffff, `verde-amarelo` #00a63e/#fdc700, `preto-amarelo` #0a0a0a/#fdc700.
+- Como cada cor aparece (implementar uma função `teamLook(id)` que devolve esses valores):
+  - bolinha/seletor e ponto do histórico: sólida = a cor; dupla = `linear-gradient(135deg, c1 50%, c2 50%)`.
+  - faixa no topo de painéis/cards/modais: sólida = a cor; dupla = listras `repeating-linear-gradient(135deg, c1 0 10px, c2 10px 20px)`.
+  - barra lateral de 4px nos cards: sólida = a cor; dupla = metade de cima c1, metade de baixo c2.
+  - monograma: sólida = fundo cor a 14% (`cor + 24`) e letra na cor; dupla = fundo c1 sólido e letra c2.
+  - anel do painel do time que lidera: c1 a 60% (`+99`).
+  - qualquer cor com c1 preto: anel `#52525c` no monograma e na barra, `#71717b` na bolinha; o anel do líder usa c2 a 60% (ou `#71717b` no preto sólido).
+- O vermelho de time (#fb2c36) é diferente do vermelho de erro (#ff6467).
+- No modal “Novo placar”, cada time tem um botão com a cor atual que abre um painel com “Sólidas” e “Duplas”; a cor já usada pelo outro time fica desativada.
 
 Sugestão: declarar em `app/assets/style.css` dentro de `@theme` (`--color-surface: #1d1d20;` etc.).
 
@@ -99,11 +110,16 @@ Logomarca: quadrado branco arredondado com duas barras verticais escuras (a segu
 - Rodapé “Cancelar” / “Salvar alterações”.
 
 ### Erro (`error.vue`)
-- Logomarca no topo, código em placas de dígito, título + texto por código (404/400/500), botões “Voltar para o início” e “Ir para o painel”. Corrigir “Error desconhecido” → “Erro desconhecido”.
+- Logomarca no topo, código em placas de dígito, título + texto por caso, botões “Voltar para o início” (sempre) e “Ir para o painel” (só se o usuário estiver logado). Corrigir “Error desconhecido” → “Erro desconhecido”.
+- Textos por caso:
+  - 404 de placar (lançado por `/id/[id]` com `statusMessage`): “Placar não encontrado” / “Esse placar não existe ou foi apagado. Confira o ID com quem compartilhou.”
+  - 404 de rota inexistente: “Página não encontrada” / “Esse endereço não existe. Confira o link ou volte para o início.”
+  - 400: “ID inválido” / “O ID do placar tem 6 caracteres, só letras minúsculas e números.”
+  - 500: “Erro interno do servidor” / “Algo deu errado do nosso lado. Tente de novo em alguns instantes.”
 - Fazer `[id].vue` lançar `createError` 404/400 em vez de ficar no spinner.
 
 ## 3. Dados e backend (nova migration)
-- `Placar`: adicionar `team_a_color text`, `team_b_color text` (default `#51a2ff` / `#ff8904`), `score_size text` default `'G'`; `CHECK` de pontuação ≥ 0.
+- `Placar`: adicionar `team_a_color text`, `team_b_color text` com o **id** da paleta (default `'azul'` / `'laranja'`; validar contra a lista de ids), `score_size text` default `'G'`; `CHECK` de pontuação ≥ 0.
 - Histórico (para “Últimas jogadas” e “Desfazer”): tabela `PlacarEvent` (`id`, `placar_id`, `team` 'a'|'b', `delta int`, `score_after int`, `created_at`), RLS: leitura pública, escrita só do criador. Desfazer = aplicar o inverso do último evento e apagá-lo.
 - Realtime: reativar o código comentado de `postgres_changes` em `[id].vue` e habilitar realtime no Supabase para `Placar` (e `PlacarEvent`).
 - Regerar `database.types.ts`.

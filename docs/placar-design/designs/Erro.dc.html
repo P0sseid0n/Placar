@@ -44,22 +44,25 @@ a{color:#e4e4e7}a:hover{color:#ffffff}
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="m11 18-6-6 6-6"></path></svg>
 Voltar para o início
 </a>
+<sc-if value="{{logado}}" hint-placeholder-val="{{ true }}">
 <a class="b-subtle" href="Painel.dc.html" style="height: 48px; box-sizing: border-box; padding: 0 20px; border-radius: 10px; background: #27272a; box-shadow: inset 0 0 0 1px #3f3f46; color: #ffffff; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center">Ir para o painel</a>
+</sc-if>
 </div>
 </main>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"codigo":{"editor":"enum","options":["404","400","500"],"default":"404"},"$preview":{"width":1440,"height":900}}'>
+<script type="text/x-dc" data-dc-script data-props='{"caso":{"editor":"enum","options":["404 · placar","404 · página","400 · ID inválido","500 · servidor"],"default":"404 · placar"},"logado":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":900}}'>
 class Component extends DCLogic {
   renderVals() {
-    const c = this.props.codigo ?? '404';
+    const caso = this.props.caso ?? '404 · placar';
     const msgs = {
-      '404': ['Placar não encontrado', 'Esse placar não existe ou foi apagado. Confira o ID com quem compartilhou.'],
-      '400': ['ID inválido', 'O ID do placar tem 6 caracteres, só letras minúsculas e números.'],
-      '500': ['Erro interno do servidor', 'Algo deu errado do nosso lado. Tente de novo em alguns instantes.']
+      '404 · placar': ['404', 'Placar não encontrado', 'Esse placar não existe ou foi apagado. Confira o ID com quem compartilhou.'],
+      '404 · página': ['404', 'Página não encontrada', 'Esse endereço não existe. Confira o link ou volte para o início.'],
+      '400 · ID inválido': ['400', 'ID inválido', 'O ID do placar tem 6 caracteres, só letras minúsculas e números.'],
+      '500 · servidor': ['500', 'Erro interno do servidor', 'Algo deu errado do nosso lado. Tente de novo em alguns instantes.']
     };
-    const m = msgs[c] || ['Erro desconhecido', 'Tente de novo em alguns instantes.'];
-    return { code: c, digits: c.split(''), title: m[0], text: m[1] };
+    const m = msgs[caso] || ['500', 'Erro desconhecido', 'Tente de novo em alguns instantes.'];
+    return { code: m[0], digits: m[0].split(''), title: m[1], text: m[2], logado: this.props.logado ?? true };
   }
 }
 </script>

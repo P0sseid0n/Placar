@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Placar · Perfil</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#18181b}
+a{color:#e4e4e7}a:hover{color:#ffffff}
+.b-solid:hover{background:#e4e4e7 !important}
+.b-subtle:hover{background:#3f3f46 !important}
+.b-subtle:disabled{opacity:.4;cursor:not-allowed}
+.b-ghost:hover{background:#27272a !important;color:#ffffff !important}
+.b-danger-ghost:hover{background:rgba(255,100,103,.12) !important}
+.b-danger:hover{background:#ff8183 !important}
+.pl-sw:disabled{opacity:.25;cursor:not-allowed}
+.pl-tab:hover{color:#ffffff !important}
+.pl-row:hover{background:#202024 !important;box-shadow:inset 0 0 0 1px #3f3f46 !important}
+.pl-scroll{scrollbar-width:thin;scrollbar-color:rgba(245,245,250,.2) transparent}
+.pl-scroll::-webkit-scrollbar{width:8px}
+.pl-scroll::-webkit-scrollbar-thumb{background:rgba(245,245,250,.2);border-radius:40px}
+:focus-visible{outline:2px solid #ffffff;outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; height: 100vh; min-height: 640px; background: #18181b; color: #e4e4e7; font-family: 'Open Sans', system-ui, sans-serif; overflow: hidden">
+
+<div aria-hidden="true">
+<div style="border-bottom: 1px solid #27272a">
+<div style="max-width: 1280px; height: 72px; box-sizing: border-box; margin: 0 auto; padding: 0 clamp(16px, 5vw, 64px); display: flex; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="width: 32px; height: 32px; border-radius: 8px; background: #ffffff"></span>
+<span style="font-size: 22px; font-weight: 700; color: #ffffff">Placar</span>
+</div>
+<span style="width: 120px; height: 44px; border-radius: 999px; box-shadow: inset 0 0 0 1px #71717b"></span>
+</div>
+</div>
+<div style="max-width: 1280px; box-sizing: border-box; margin: 0 auto; padding: 40px clamp(16px, 5vw, 64px); display: flex; flex-direction: column; gap: 40px">
+<div style="font-size: 40px; font-weight: 700; color: #ffffff">Olá, Matheus</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<div style="height: 96px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a"></div>
+<div style="height: 96px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a"></div>
+<div style="height: 96px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a"></div>
+</div>
+<div style="height: 180px; border-radius: 16px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a"></div>
+</div>
+</div>
+
+<div style="position: absolute; inset: 0; background: rgba(9,9,11,0.72); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 24px 16px; box-sizing: border-box">
+<div role="dialog" aria-modal="true" aria-labelledby="perfil-nome" style="width: 100%; max-width: 560px; max-height: 100%; box-sizing: border-box; overflow: hidden; border-radius: 20px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a, 0 32px 80px rgba(0,0,0,0.6); display: flex; flex-direction: column">
+
+<div style="flex: 0 0 auto">
+<div style="position: relative; height: 80px; background-color: #18181b; background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 16px 16px; border-bottom: 1px solid #27272a">
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; display: flex; height: 4px">
+<span style="flex: 1 1 0; background: {{ca}}"></span>
+<span style="flex: 1 1 0; background: {{cb}}"></span>
+</div>
+<a class="b-ghost" href="Painel.dc.html" aria-label="Fechar" style="position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 8px; color: #9f9fa9; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+</a>
+</div>
+<div style="position: relative; z-index: 1; padding: 0 28px; display: flex; align-items: flex-start; gap: 16px">
+<span aria-hidden="true" style="flex: 0 0 auto; margin-top: -38px; width: 76px; height: 76px; border-radius: 50%; background: #3f3f46; box-shadow: 0 0 0 5px #1d1d20; color: #ffffff; font-size: 30px; font-weight: 700; display: flex; align-items: center; justify-content: center">M</span>
+<div style="min-width: 0; padding-top: 10px; display: flex; flex-direction: column">
+<h2 id="perfil-nome" style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Matheus</h2>
+<span style="font-size: 13px; color: #9f9fa9; display: inline-flex; align-items: center; gap: 6px">
+<svg width="14" height="11" viewBox="0 0 24 18" aria-hidden="true" fill="currentColor"><path d="M20.3 1.5A19.6 19.6 0 0 0 15.4 0l-.6 1.3a18.2 18.2 0 0 0-5.6 0L8.6 0a19.6 19.6 0 0 0-4.9 1.5C.6 6.1-.3 10.6.1 15a19.8 19.8 0 0 0 6 3l1.3-2.1a12.8 12.8 0 0 1-2-1l.5-.4a14 14 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.7 19.7 0 0 0 6-3c.5-5.1-.8-9.6-3.6-13.5ZM8 12.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 7.5 8 7.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"></path></svg>
+Conectado com Discord
+</span>
+</div>
+</div>
+<div role="tablist" aria-label="Seções do perfil" style="margin-top: 18px; padding: 0 28px; display: flex; gap: 4px; border-bottom: 1px solid #27272a">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="2">
+<button class="pl-tab" type="button" role="tab" id="{{t.id}}" aria-selected="{{t.sel}}" aria-controls="{{t.panel}}" onClick="{{t.pick}}" style="position: relative; height: 48px; padding: 0 14px; border: 0; background: transparent; color: {{t.fg}}; font-family: inherit; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; cursor: pointer">
+{{t.label}}
+<span aria-hidden="true" style="position: absolute; left: 10px; right: 10px; bottom: -1px; height: 2px; border-radius: 2px; background: {{t.bar}}"></span>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div class="pl-scroll" style="flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain">
+<sc-if value="{{isPerfil}}" hint-placeholder-val="{{ true }}">
+<div role="tabpanel" id="painel-perfil" aria-labelledby="tab-perfil" style="padding: 24px 28px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+<div style="padding: 14px 16px; border-radius: 12px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a; display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'Barlow Condensed', sans-serif; font-size: 34px; line-height: 1; font-weight: 700; color: #ffffff">5</span>
+<span style="font-size: 12px; font-weight: 500; color: #9f9fa9">Placares</span>
+</div>
+<div style="padding: 14px 16px; border-radius: 12px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a; display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'Barlow Condensed', sans-serif; font-size: 34px; line-height: 1; font-weight: 700; color: #ffffff">134</span>
+<span style="font-size: 12px; font-weight: 500; color: #9f9fa9">Pontos marcados</span>
+</div>
+<div style="padding: 14px 16px; border-radius: 12px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a; display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'Barlow Condensed', sans-serif; font-size: 34px; line-height: 1; font-weight: 700; color: #ffffff">51</span>
+<span style="font-size: 12px; font-weight: 500; color: #9f9fa9">Maior pontuação</span>
+</div>
+</div>
+
+<p style="margin: 0; font-size: 13px; line-height: 20px; color: #71717b">Membro desde outubro de 2026. Nome e foto vêm da sua conta do Discord.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{isConfig}}" hint-placeholder-val="{{ false }}">
+<div role="tabpanel" id="painel-config" aria-labelledby="tab-config" style="padding: 24px 28px; display: flex; flex-direction: column; gap: 24px">
+
+<section aria-labelledby="conta" style="display: flex; flex-direction: column; gap: 12px">
+<h3 id="conta" style="margin: 0; font-size: 15px; font-weight: 600; color: #ffffff">Conta</h3>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<span style="font-size: 13px; color: #9f9fa9">Você pode entrar de novo a qualquer momento.</span>
+<a class="b-subtle" href="Main.dc.html" style="height: 44px; box-sizing: border-box; padding: 0 14px; border-radius: 10px; background: #27272a; box-shadow: inset 0 0 0 1px #3f3f46; color: #e4e4e7; font-size: 14px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>
+Sair da conta
+</a>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; border-radius: 12px; background: rgba(255,100,103,0.05); box-shadow: inset 0 0 0 1px rgba(255,100,103,0.3)">
+<div style="display: flex; flex-direction: column; gap: 2px; flex: 1 1 220px">
+<span style="font-size: 14px; font-weight: 600; color: #ff6467">Excluir conta</span>
+<span style="font-size: 13px; line-height: 19px; color: #9f9fa9">{{delText}}</span>
+</div>
+<sc-if value="{{delIdle}}" hint-placeholder-val="{{ true }}">
+<button class="b-danger-ghost" type="button" onClick="{{askDel}}" style="height: 44px; padding: 0 14px; border: 0; border-radius: 10px; background: transparent; box-shadow: inset 0 0 0 1px rgba(255,100,103,0.4); color: #ff6467; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">Excluir</button>
+</sc-if>
+<sc-if value="{{delAsk}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 6px">
+<button class="b-ghost" type="button" onClick="{{cancelDel}}" style="height: 44px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: #d4d4d8; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">Cancelar</button>
+<a class="b-danger" href="Main.dc.html" style="height: 44px; box-sizing: border-box; padding: 0 14px; border-radius: 10px; background: #ff6467; color: #18181b; font-size: 14px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center">Sim, excluir</a>
+</div>
+</sc-if>
+</div>
+</section>
+</div>
+</sc-if>
+</div>
+
+<div style="flex: 0 0 auto; display: flex; justify-content: flex-end; gap: 8px; padding: 14px 28px; background: #18181b; border-top: 1px solid #27272a">
+<a class="b-subtle" href="Painel.dc.html" style="height: 48px; box-sizing: border-box; padding: 0 20px; border-radius: 10px; background: #27272a; box-shadow: inset 0 0 0 1px #3f3f46; color: #ffffff; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center">Fechar</a>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;aba&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Perfil&quot;,&quot;Configurações&quot;],&quot;default&quot;:&quot;Perfil&quot;},&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { tab: null, ca: '#51a2ff', cb: '#ff8904', del: false }; }
+  renderVals() {
+    const s = this.state;
+    const tab = s.tab || (this.props.aba === 'Configurações' ? 'config' : 'perfil');
+    const mkTab = (id, label) => ({
+      id: 'tab-' + id, panel: id === 'perfil' ? 'painel-perfil' : 'painel-config', label: label,
+      sel: tab === id ? 'true' : 'false',
+      fg: tab === id ? '#ffffff' : '#9f9fa9',
+      bar: tab === id ? '#ffffff' : 'transparent',
+      pick: () => this.setState({ tab: id })
+    });
+    return {
+      tabs: [mkTab('perfil', 'Perfil'), mkTab('config', 'Configurações')],
+      isPerfil: tab === 'perfil', isConfig: tab === 'config',
+      ca: s.ca, cb: s.cb,
+      delIdle: !s.del, delAsk: s.del,
+      delText: s.del ? 'Tem certeza? Seus 5 placares serão apagados junto com a conta.' : 'Apaga sua conta e todos os seus placares. Não dá para desfazer.',
+      askDel: () => this.setState({ del: true }),
+      cancelDel: () => this.setState({ del: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

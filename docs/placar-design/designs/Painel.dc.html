@@ -40,10 +40,10 @@ a{color:#e4e4e7}a:hover{color:#ffffff}
 <span style="font-size: 22px; font-weight: 700; letter-spacing: -0.2px">Placar</span>
 </a>
 <div style="display: flex; align-items: center; gap: 8px">
-<div style="display: flex; align-items: center; gap: 10px; height: 44px; box-sizing: border-box; padding: 0 12px 0 6px; border-radius: 999px; box-shadow: inset 0 0 0 1px #27272a">
+<a class="b-ghost" href="Perfil.dc.html" aria-label="Abrir perfil" style="display: flex; align-items: center; gap: 10px; height: 44px; box-sizing: border-box; padding: 0 12px 0 6px; border-radius: 999px; box-shadow: inset 0 0 0 1px #27272a; text-decoration: none">
 <span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 50%; background: #3f3f46; color: #ffffff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">M</span>
 <span class="hide-sm" style="font-size: 14px; font-weight: 600; color: #ffffff">Matheus</span>
-</div>
+</a>
 <a class="b-ghost" href="Main.dc.html" aria-label="Sair" style="width: 44px; height: 44px; border-radius: 8px; color: #9f9fa9; display: flex; align-items: center; justify-content: center">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>
 </a>
@@ -83,13 +83,13 @@ Criar placar
 <h2 id="ultimo" style="margin: 0; font-size: 16px; font-weight: 600; color: #ffffff">Continuar de onde parou</h2>
 <a class="pl-feature" href="Placar.dc.html" style="position: relative; overflow: hidden; border-radius: 16px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; color: #ffffff; text-decoration: none; display: flex; flex-direction: column">
 <div aria-hidden="true" style="display: flex; height: 6px">
-<span style="flex: 1 1 0; background: {{f.colorA}}"></span>
-<span style="flex: 1 1 0; background: {{f.colorB}}"></span>
+<span style="flex: 1 1 0; background: {{f.stripeA}}"></span>
+<span style="flex: 1 1 0; background: {{f.stripeB}}"></span>
 </div>
 <div style="padding: clamp(20px, 3vw, 32px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px">
 <div style="flex: 1 1 520px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: clamp(12px, 3vw, 40px)">
 <div style="display: flex; align-items: center; gap: 14px; min-width: 0">
-<span aria-hidden="true" style="flex: 0 0 auto; width: 52px; height: 52px; border-radius: 12px; background: {{f.tintA}}; color: {{f.colorA}}; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{f.iniA}}</span>
+<span aria-hidden="true" style="flex: 0 0 auto; width: 52px; height: 52px; border-radius: 12px; background: {{f.tintA}}; color: {{f.inkA}}; box-shadow: {{f.edgeA}}; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{f.iniA}}</span>
 <div style="display: flex; flex-direction: column; min-width: 0">
 <span style="font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{f.a}}</span>
 <span style="font-size: 13px; color: #9f9fa9">{{f.tagA}}</span>
@@ -105,7 +105,7 @@ Criar placar
 <span style="font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{f.b}}</span>
 <span style="font-size: 13px; color: #9f9fa9">{{f.tagB}}</span>
 </div>
-<span aria-hidden="true" style="flex: 0 0 auto; width: 52px; height: 52px; border-radius: 12px; background: {{f.tintB}}; color: {{f.colorB}}; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{f.iniB}}</span>
+<span aria-hidden="true" style="flex: 0 0 auto; width: 52px; height: 52px; border-radius: 12px; background: {{f.tintB}}; color: {{f.inkB}}; box-shadow: {{f.edgeB}}; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{f.iniB}}</span>
 </div>
 </div>
 <div style="flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-end; gap: 10px">
@@ -147,12 +147,12 @@ Abrir placar
 </div>
 <div style="display: flex; flex-direction: column; gap: 10px">
 <div style="display: flex; align-items: center; gap: 12px">
-<span aria-hidden="true" style="flex: 0 0 auto; width: 4px; height: 28px; border-radius: 2px; background: {{p.colorA}}"></span>
+<span aria-hidden="true" style="flex: 0 0 auto; width: 4px; height: 28px; border-radius: 2px; background: {{p.barA}}; box-shadow: {{p.edgeA}}"></span>
 <span style="flex: 1 1 auto; min-width: 0; font-size: 15px; font-weight: 600; color: {{p.fgA}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{p.a}}</span>
 <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 32px; line-height: 1; font-weight: 700; color: {{p.fgA}}; font-variant-numeric: tabular-nums">{{p.sa}}</span>
 </div>
 <div style="display: flex; align-items: center; gap: 12px">
-<span aria-hidden="true" style="flex: 0 0 auto; width: 4px; height: 28px; border-radius: 2px; background: {{p.colorB}}"></span>
+<span aria-hidden="true" style="flex: 0 0 auto; width: 4px; height: 28px; border-radius: 2px; background: {{p.barB}}; box-shadow: {{p.edgeB}}"></span>
 <span style="flex: 1 1 auto; min-width: 0; font-size: 15px; font-weight: 600; color: {{p.fgB}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{p.b}}</span>
 <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 32px; line-height: 1; font-weight: 700; color: {{p.fgB}}; font-variant-numeric: tabular-nums">{{p.sb}}</span>
 </div>
@@ -186,13 +186,41 @@ Abrir placar
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { q: '' }; }
   renderVals() {
-    const C = { azul: '#51a2ff', laranja: '#ff8904', verde: '#05df72', roxo: '#a684ff', rosa: '#fb64b6', amarelo: '#fdc700' };
+    const PAL = [
+      { id: 'azul', name: 'Azul', c1: '#51a2ff' }, { id: 'laranja', name: 'Laranja', c1: '#ff8904' },
+      { id: 'verde', name: 'Verde', c1: '#05df72' }, { id: 'roxo', name: 'Roxo', c1: '#a684ff' },
+      { id: 'rosa', name: 'Rosa', c1: '#fb64b6' }, { id: 'amarelo', name: 'Amarelo', c1: '#fdc700' },
+      { id: 'vermelho', name: 'Vermelho', c1: '#fb2c36' }, { id: 'preto', name: 'Preto', c1: '#0a0a0a' },
+      { id: 'preto-branco', name: 'Preto e branco', c1: '#0a0a0a', c2: '#ffffff' },
+      { id: 'preto-vermelho', name: 'Preto e vermelho', c1: '#0a0a0a', c2: '#fb2c36' },
+      { id: 'amarelo-azul', name: 'Amarelo e azul', c1: '#fdc700', c2: '#155dfc' },
+      { id: 'verde-branco', name: 'Verde e branco', c1: '#00a63e', c2: '#ffffff' },
+      { id: 'azul-branco', name: 'Azul e branco', c1: '#155dfc', c2: '#ffffff' },
+      { id: 'vermelho-branco', name: 'Vermelho e branco', c1: '#e7000b', c2: '#ffffff' },
+      { id: 'verde-amarelo', name: 'Verde e amarelo', c1: '#00a63e', c2: '#fdc700' },
+      { id: 'preto-amarelo', name: 'Preto e amarelo', c1: '#0a0a0a', c2: '#fdc700' }
+    ];
+    const LOOK = (id) => {
+      const p = PAL.find((x) => x.id === id || x.name === id) || PAL[0];
+      const dark = p.c1 === '#0a0a0a';
+      return {
+        id: p.id, name: p.name, c1: p.c1, c2: p.c2 || null, dual: !!p.c2,
+        dot: p.c2 ? 'linear-gradient(135deg, ' + p.c1 + ' 50%, ' + p.c2 + ' 50%)' : p.c1,
+        stripe: p.c2 ? 'repeating-linear-gradient(135deg, ' + p.c1 + ' 0 10px, ' + p.c2 + ' 10px 20px)' : p.c1,
+        bar: p.c2 ? 'linear-gradient(180deg, ' + p.c1 + ' 50%, ' + p.c2 + ' 50%)' : p.c1,
+        tint: p.c2 ? p.c1 : (dark ? '#0a0a0a' : p.c1 + '24'),
+        ink: p.c2 ? p.c2 : (dark ? '#ffffff' : p.c1),
+        edge: dark ? 'inset 0 0 0 1px #52525c' : 'none',
+        swEdge: dark ? 'inset 0 0 0 1px #71717b' : 'none',
+        lead: dark ? (p.c2 ? p.c2 + '99' : '#71717b') : p.c1 + '99'
+      };
+    };
     const raw = [
-      { id: 'k3x9a2', a: 'Time Azul', sa: 12, ca: C.azul, b: 'Time Laranja', sb: 9, cb: C.laranja, when: 'há 2 min', inc: 1 },
-      { id: 'p7m2qd', a: 'Casa', sa: 3, ca: C.verde, b: 'Visitante', sb: 3, cb: C.roxo, when: 'há 3 h', inc: 1 },
-      { id: 'z0r8tw', a: 'Equipe A', sa: 45, ca: C.amarelo, b: 'Equipe B', sb: 51, cb: C.azul, when: 'ontem', inc: 3 },
-      { id: 'b5n1ke', a: 'Nós', sa: 2, ca: C.rosa, b: 'Eles', sb: 0, cb: C.verde, when: 'há 3 dias', inc: 1 },
-      { id: 'h2c6yv', a: 'Time 1', sa: 0, ca: C.roxo, b: 'Time 2', sb: 0, cb: C.laranja, when: 'há 1 semana', inc: 1 }
+      { id: 'k3x9a2', a: 'Time Azul', sa: 12, ca: 'azul', b: 'Time Laranja', sb: 9, cb: 'laranja', when: 'há 2 min', inc: 1 },
+      { id: 'p7m2qd', a: 'Casa', sa: 3, ca: 'preto-branco', b: 'Visitante', sb: 3, cb: 'amarelo-azul', when: 'há 3 h', inc: 1 },
+      { id: 'z0r8tw', a: 'Equipe A', sa: 45, ca: 'verde-amarelo', b: 'Equipe B', sb: 51, cb: 'preto-vermelho', when: 'ontem', inc: 3 },
+      { id: 'b5n1ke', a: 'Nós', sa: 2, ca: 'rosa', b: 'Eles', sb: 0, cb: 'verde', when: 'há 3 dias', inc: 1 },
+      { id: 'h2c6yv', a: 'Time 1', sa: 0, ca: 'roxo', b: 'Time 2', sb: 0, cb: 'vermelho', when: 'há 1 semana', inc: 1 }
     ];
     const ini = (s) => s.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
     const dim = '#9f9fa9';
@@ -202,7 +230,9 @@ class Component extends DCLogic {
       const leader = p.sa > p.sb ? p.a : p.b;
       return {
         id: p.id, a: p.a, b: p.b, sa: p.sa, sb: p.sb, when: p.when,
-        colorA: p.ca, colorB: p.cb, tintA: p.ca + '24', tintB: p.cb + '24',
+        stripeA: LOOK(p.ca).stripe, stripeB: LOOK(p.cb).stripe,
+        barA: LOOK(p.ca).bar, barB: LOOK(p.cb).bar, edgeA: LOOK(p.ca).edge, edgeB: LOOK(p.cb).edge,
+        tintA: LOOK(p.ca).tint, tintB: LOOK(p.cb).tint, inkA: LOOK(p.ca).ink, inkB: LOOK(p.cb).ink,
         iniA: ini(p.a), iniB: ini(p.b),
         fgA: tie || p.sa > p.sb ? '#ffffff' : dim,
         fgB: tie || p.sb > p.sa ? '#ffffff' : dim,

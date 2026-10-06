@@ -70,10 +70,10 @@ Ao vivo
 
 <main style="display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 20px">
 <section class="pl-panel" aria-label="Time Azul" style="flex: 1 1 380px; min-width: 0; overflow: hidden; border-radius: 20px; background: #1d1d20; box-shadow: {{ringA}}; display: flex; flex-direction: column">
-<div aria-hidden="true" style="height: 6px; background: {{corA}}"></div>
+<div aria-hidden="true" style="height: 6px; background: {{stripeA}}"></div>
 <div style="padding: clamp(20px, 3vw, 32px); display: flex; flex-direction: column; gap: 16px; flex: 1 1 auto">
 <div style="display: flex; align-items: center; gap: 14px; min-width: 0">
-<span aria-hidden="true" style="flex: 0 0 auto; width: 48px; height: 48px; border-radius: 12px; background: {{tintA}}; color: {{corA}}; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center">TA</span>
+<span aria-hidden="true" style="flex: 0 0 auto; width: 48px; height: 48px; border-radius: 12px; background: {{tintA}}; color: {{inkA}}; box-shadow: {{edgeA}}; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center">TA</span>
 <h2 style="margin: 0; flex: 1 1 auto; min-width: 0; font-size: clamp(20px, 2.2vw, 30px); line-height: 1.2; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Time Azul</h2>
 <sc-if value="{{leadA}}" hint-placeholder-val="{{ true }}">
 <span style="flex: 0 0 auto; height: 28px; box-sizing: border-box; padding: 0 10px; border-radius: 999px; background: #ffffff; color: #18181b; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">Na frente</span>
@@ -95,10 +95,10 @@ Ao vivo
 </div>
 
 <section class="pl-panel" aria-label="Time Laranja" style="flex: 1 1 380px; min-width: 0; overflow: hidden; border-radius: 20px; background: #1d1d20; box-shadow: {{ringB}}; display: flex; flex-direction: column">
-<div aria-hidden="true" style="height: 6px; background: {{corB}}"></div>
+<div aria-hidden="true" style="height: 6px; background: {{stripeB}}"></div>
 <div style="padding: clamp(20px, 3vw, 32px); display: flex; flex-direction: column; gap: 16px; flex: 1 1 auto">
 <div style="display: flex; align-items: center; gap: 14px; min-width: 0">
-<span aria-hidden="true" style="flex: 0 0 auto; width: 48px; height: 48px; border-radius: 12px; background: {{tintB}}; color: {{corB}}; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center">TL</span>
+<span aria-hidden="true" style="flex: 0 0 auto; width: 48px; height: 48px; border-radius: 12px; background: {{tintB}}; color: {{inkB}}; box-shadow: {{edgeB}}; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center">TL</span>
 <h2 style="margin: 0; flex: 1 1 auto; min-width: 0; font-size: clamp(20px, 2.2vw, 30px); line-height: 1.2; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Time Laranja</h2>
 <sc-if value="{{leadB}}" hint-placeholder-val="{{ false }}">
 <span style="flex: 0 0 auto; height: 28px; box-sizing: border-box; padding: 0 10px; border-radius: 999px; background: #ffffff; color: #18181b; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">Na frente</span>
@@ -126,7 +126,7 @@ Desfazer
 <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px">
 <sc-for list="{{log}}" as="e" hint-placeholder-count="3">
 <li style="height: 36px; box-sizing: border-box; padding: 0 12px 0 10px; border-radius: 8px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a; display: flex; align-items: center; gap: 8px; font-size: 13px; opacity: {{e.op}}">
-<span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: {{e.cor}}"></span>
+<span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: {{e.cor}}; box-shadow: {{e.corEdge}}"></span>
 <span style="font-weight: 600; color: #ffffff">{{e.time}}</span>
 <span style="font-weight: 700; color: {{e.deltaCor}}">{{e.delta}}</span>
 <span style="color: #9f9fa9">→ {{e.after}} · {{e.when}}</span>
@@ -150,7 +150,7 @@ Desfazer
 </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"tamanho":{"editor":"enum","options":["Pequeno","Médio","Grande"],"default":"Grande"},"incremento":{"editor":"int","min":1,"max":10,"default":1},"corA":{"editor":"color","default":"#51a2ff","options":["#51a2ff","#05df72","#a684ff","#fb64b6"]},"corB":{"editor":"color","default":"#ff8904","options":["#ff8904","#fdc700","#ff6467","#05df72"]},"$preview":{"width":1440,"height":900}}'>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tamanho&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Pequeno&quot;,&quot;Médio&quot;,&quot;Grande&quot;],&quot;default&quot;:&quot;Grande&quot;},&quot;incremento&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;min&quot;:1,&quot;max&quot;:10,&quot;default&quot;:1},&quot;corA&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Azul&quot;,&quot;Laranja&quot;,&quot;Verde&quot;,&quot;Roxo&quot;,&quot;Rosa&quot;,&quot;Amarelo&quot;,&quot;Vermelho&quot;,&quot;Preto&quot;,&quot;Preto e branco&quot;,&quot;Preto e vermelho&quot;,&quot;Amarelo e azul&quot;,&quot;Verde e branco&quot;,&quot;Azul e branco&quot;,&quot;Vermelho e branco&quot;,&quot;Verde e amarelo&quot;,&quot;Preto e amarelo&quot;],&quot;default&quot;:&quot;Preto&quot;},&quot;corB&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Azul&quot;,&quot;Laranja&quot;,&quot;Verde&quot;,&quot;Roxo&quot;,&quot;Rosa&quot;,&quot;Amarelo&quot;,&quot;Vermelho&quot;,&quot;Preto&quot;,&quot;Preto e branco&quot;,&quot;Preto e vermelho&quot;,&quot;Amarelo e azul&quot;,&quot;Verde e branco&quot;,&quot;Azul e branco&quot;,&quot;Vermelho e branco&quot;,&quot;Verde e amarelo&quot;,&quot;Preto e amarelo&quot;],&quot;default&quot;:&quot;Laranja&quot;},&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
 class Component extends DCLogic {
   constructor(props) {
     super(props);
@@ -181,18 +181,48 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state;
     const inc = this.props.incremento ?? 1;
-    const corA = this.props.corA ?? '#51a2ff';
-    const corB = this.props.corB ?? '#ff8904';
+    const PAL = [
+      { id: 'azul', name: 'Azul', c1: '#51a2ff' }, { id: 'laranja', name: 'Laranja', c1: '#ff8904' },
+      { id: 'verde', name: 'Verde', c1: '#05df72' }, { id: 'roxo', name: 'Roxo', c1: '#a684ff' },
+      { id: 'rosa', name: 'Rosa', c1: '#fb64b6' }, { id: 'amarelo', name: 'Amarelo', c1: '#fdc700' },
+      { id: 'vermelho', name: 'Vermelho', c1: '#fb2c36' }, { id: 'preto', name: 'Preto', c1: '#0a0a0a' },
+      { id: 'preto-branco', name: 'Preto e branco', c1: '#0a0a0a', c2: '#ffffff' },
+      { id: 'preto-vermelho', name: 'Preto e vermelho', c1: '#0a0a0a', c2: '#fb2c36' },
+      { id: 'amarelo-azul', name: 'Amarelo e azul', c1: '#fdc700', c2: '#155dfc' },
+      { id: 'verde-branco', name: 'Verde e branco', c1: '#00a63e', c2: '#ffffff' },
+      { id: 'azul-branco', name: 'Azul e branco', c1: '#155dfc', c2: '#ffffff' },
+      { id: 'vermelho-branco', name: 'Vermelho e branco', c1: '#e7000b', c2: '#ffffff' },
+      { id: 'verde-amarelo', name: 'Verde e amarelo', c1: '#00a63e', c2: '#fdc700' },
+      { id: 'preto-amarelo', name: 'Preto e amarelo', c1: '#0a0a0a', c2: '#fdc700' }
+    ];
+    const LOOK = (id) => {
+      const p = PAL.find((x) => x.id === id || x.name === id) || PAL[0];
+      const dark = p.c1 === '#0a0a0a';
+      return {
+        id: p.id, name: p.name, c1: p.c1, c2: p.c2 || null, dual: !!p.c2,
+        dot: p.c2 ? 'linear-gradient(135deg, ' + p.c1 + ' 50%, ' + p.c2 + ' 50%)' : p.c1,
+        stripe: p.c2 ? 'repeating-linear-gradient(135deg, ' + p.c1 + ' 0 10px, ' + p.c2 + ' 10px 20px)' : p.c1,
+        bar: p.c2 ? 'linear-gradient(180deg, ' + p.c1 + ' 50%, ' + p.c2 + ' 50%)' : p.c1,
+        tint: p.c2 ? p.c1 : (dark ? '#0a0a0a' : p.c1 + '24'),
+        ink: p.c2 ? p.c2 : (dark ? '#ffffff' : p.c1),
+        edge: dark ? 'inset 0 0 0 1px #52525c' : 'none',
+        swEdge: dark ? 'inset 0 0 0 1px #71717b' : 'none',
+        lead: dark ? (p.c2 ? p.c2 + '99' : '#71717b') : p.c1 + '99'
+      };
+    };
+    const la = LOOK(this.props.corA ?? 'Preto');
+    const lb = LOOK(this.props.corB ?? 'Laranja');
     const sizes = { 'Pequeno': 'clamp(88px, 10vw, 150px)', 'Médio': 'clamp(110px, 14vw, 210px)', 'Grande': 'clamp(130px, 18vw, 280px)' };
     const diff = Math.abs(s.a - s.b);
     const names = { A: 'Time Azul', B: 'Time Laranja' };
     return {
       a: s.a, b: s.b, inc: inc,
-      corA: corA, corB: corB, tintA: corA + '24', tintB: corB + '24',
+      stripeA: la.stripe, stripeB: lb.stripe,
+      tintA: la.tint, tintB: lb.tint, inkA: la.ink, inkB: lb.ink, edgeA: la.edge, edgeB: lb.edge,
       scoreSize: sizes[this.props.tamanho ?? 'Grande'] || sizes['Grande'],
       leadA: s.a > s.b, leadB: s.b > s.a,
-      ringA: s.a > s.b ? 'inset 0 0 0 1px ' + corA + '99' : 'inset 0 0 0 1px #27272a',
-      ringB: s.b > s.a ? 'inset 0 0 0 1px ' + corB + '99' : 'inset 0 0 0 1px #27272a',
+      ringA: s.a > s.b ? 'inset 0 0 0 1px ' + la.lead : 'inset 0 0 0 1px #27272a',
+      ringB: s.b > s.a ? 'inset 0 0 0 1px ' + lb.lead : 'inset 0 0 0 1px #27272a',
       diffText: diff === 0 ? 'Empate' : 'Diferença\n' + diff,
       noMinusA: s.a <= 0, noMinusB: s.b <= 0,
       plusA: () => this.score('A', inc),
@@ -200,7 +230,7 @@ class Component extends DCLogic {
       minusA: () => this.score('A', -inc),
       minusB: () => this.score('B', -inc),
       log: s.log.slice(0, 6).map((e, i) => ({
-        time: names[e.t], cor: e.t === 'A' ? corA : corB,
+        time: names[e.t], cor: e.t === 'A' ? la.dot : lb.dot, corEdge: e.t === 'A' ? la.swEdge : lb.swEdge,
         delta: (e.d > 0 ? '+' : '−') + Math.abs(e.d),
         deltaCor: e.d > 0 ? '#05df72' : '#ff6467',
         after: e.after, when: e.when, op: i === 0 ? 1 : 0.75
