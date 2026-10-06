@@ -29,6 +29,7 @@ Requer o [Docker](https://www.docker.com/) rodando. O Supabase roda localmente v
 - `bun run db:start` / `bun run db:stop`: sobe e para o Supabase local
 - `bun run db:status`: mostra URLs e chaves
 - `bun run db:reset`: recria o banco e reaplica as migrations
+- `bun run db:test`: roda os testes do banco (pgTAP, em `supabase/tests/`)
 - `bun run database`: regenera `app/types/database.types.ts` a partir do banco local
 - Studio: http://127.0.0.1:54323
 

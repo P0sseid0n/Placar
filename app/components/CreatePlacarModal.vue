@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import * as z from 'zod'
-import type { FormSubmitEvent } from '@nuxt/ui'
 import Services from '~/services'
 
 const toast = useToast()
@@ -8,89 +7,194 @@ const toast = useToast()
 const model = defineModel<boolean>()
 
 const schema = z.object({
-	teamA: z.string().min(1, 'Nome do time A é obrigatório'),
-	teamB: z.string().min(1, 'Nome do time B é obrigatório'),
+	teamA: z.string().trim().min(1, 'Nome do time A é obrigatório').max(TEAM_NAME_MAX_LENGTH),
+	teamB: z.string().trim().min(1, 'Nome do time B é obrigatório').max(TEAM_NAME_MAX_LENGTH),
 	score: z.number().min(1, 'O valor da pontuação deve ser maior que 0'),
 })
 
-type Schema = z.output<typeof schema>
-
-const state = reactive<Partial<Schema>>({
+const initialState = () => ({
 	teamA: '',
 	teamB: '',
+	colorA: DEFAULT_TEAM_COLORS.a,
+	colorB: DEFAULT_TEAM_COLORS.b,
 	score: 1,
 })
 
+const state = reactive(initialState())
+const tried = ref(false)
 const loading = ref(false)
 
-async function onSubmit(event: FormSubmitEvent<Schema>) {
+// Os erros aparecem depois da primeira tentativa e somem assim que o campo fica válido
+const errors = computed(() => {
+	if (!tried.value) return {}
+	const result = schema.safeParse(state)
+	if (result.success) return {}
+	return Object.fromEntries(result.error.issues.map(issue => [issue.path[0], issue.message])) as Partial<
+		Record<'teamA' | 'teamB' | 'score', string>
+	>
+})
+
+// Ao fechar (Cancelar, X ou Esc), o formulário volta ao início
+watch(model, open => {
+	if (!open) {
+		Object.assign(state, initialState())
+		tried.value = false
+	}
+})
+
+const preview = computed(() => ({
+	a: state.teamA.trim(),
+	b: state.teamB.trim(),
+}))
+
+async function onSubmit() {
+	tried.value = true
+	const result = schema.safeParse(state)
+	if (!result.success) return
+
 	loading.value = true
 
-	Services.placar
-		.create({
-			score: event.data.score,
-			teamA: event.data.teamA,
-			teamB: event.data.teamB,
+	try {
+		const placarId = await Services.placar.create({
+			score: result.data.score,
+			teamA: result.data.teamA,
+			teamB: result.data.teamB,
+			colorA: state.colorA,
+			colorB: state.colorB,
 		})
-		.then(placarId => {
-			model.value = false
-
-			navigateTo(`/id/${placarId}`)
+		model.value = false
+		await navigateTo(`/id/${placarId}`)
+	} catch (error) {
+		console.error(error)
+		toast.add({
+			color: 'error',
+			title: 'Erro ao criar placar',
+			description: (error as Error).message || 'Ocorreu um erro ao criar o placar. Tente novamente mais tarde.',
 		})
-		.catch(error => {
-			console.error(error)
-			toast.add({
-				color: 'error',
-				title: 'Erro ao criar placar',
-				description: error.message || 'Ocorreu um erro ao criar o placar. Tente novamente mais tarde.',
-			})
-		})
-		.finally(() => {
-			loading.value = false
-		})
+	} finally {
+		loading.value = false
+	}
 }
 
-function handleCancel() {
-	state.teamA = ''
-	state.teamB = ''
-	state.score = 1
-
-	model.value = false
-}
+const fields = [
+	{ team: 'A', legend: 'Primeiro time', label: 'Nome do primeiro time', placeholder: 'Time 1', name: 'teamA', color: 'colorA', other: 'colorB' },
+	{ team: 'B', legend: 'Segundo time', label: 'Nome do segundo time', placeholder: 'Time 2', name: 'teamB', color: 'colorB', other: 'colorA' },
+] as const
 </script>
 
 <template>
-	<UModal v-model:open="model" title="Criando placar">
-		<template #body>
-			<UForm :schema="schema" :state="state" @submit="onSubmit">
-				<div class="mb-6 grid grid-cols-1 md:grid-cols-[1fr_64px_1fr]">
-					<UFormField label="Primeiro time" name="teamA">
-						<UInput class="w-full" color="neutral" size="xl" placeholder="Time 1" v-model="state.teamA" :disabled="loading" />
-					</UFormField>
-					<div class="flex items-center justify-center pt-4 pb-2">vs</div>
-					<UFormField label="Segundo time" name="teamB">
-						<UInput class="w-full" color="neutral" size="xl" placeholder="Time 2" v-model="state.teamB" :disabled="loading" />
-					</UFormField>
-					<UFormField label="Valor da pontuação" name="score" class="mt-6">
-						<UInput color="neutral" size="xl" type="number" placeholder="1" v-model="state.score" :disabled="loading" />
-					</UFormField>
+	<UModal
+		v-model:open="model"
+		title="Novo placar"
+		description="Defina os times e quanto vale cada ponto."
+		:dismissible="!loading"
+		:ui="{ content: 'max-w-[640px] overflow-hidden' }"
+	>
+		<template #content="{ close }">
+			<form novalidate class="flex min-h-0 flex-1 flex-col" @submit.prevent="onSubmit">
+				<div aria-hidden="true" class="flex h-[5px] shrink-0">
+					<span class="flex-1 transition-colors" :style="{ background: state.colorA }" />
+					<span class="flex-1 transition-colors" :style="{ background: state.colorB }" />
 				</div>
 
-				<div class="px-4 flex justify-between mt-8">
+				<div class="flex shrink-0 items-start justify-between gap-4 px-7 pt-6 max-sm:px-5">
+					<div class="flex flex-col gap-1">
+						<h2 class="text-2xl font-bold text-white">Novo placar</h2>
+						<p class="text-[15px] text-fg-soft">Defina os times e quanto vale cada ponto.</p>
+					</div>
 					<UButton
-						class="px-8"
 						color="neutral"
-						size="lg"
+						variant="ghost"
+						icon="i-lucide-x"
+						aria-label="Fechar"
+						:disabled="loading"
+						class="size-10 shrink-0 justify-center rounded-btn text-fg-soft hover:bg-raised hover:text-white"
+						:ui="{ leadingIcon: 'size-5' }"
+						@click="close"
+					/>
+				</div>
+
+				<div class="flex min-h-0 flex-col overflow-y-auto gap-6 px-7 py-6 max-sm:px-5">
+					<!-- Prévia ao vivo -->
+					<div
+						aria-hidden="true"
+						class="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 rounded-feature bg-canvas px-5 py-4 ring-1 ring-inset ring-raised max-sm:gap-2 max-sm:px-3"
+					>
+						<div class="flex min-w-0 items-center gap-2.5">
+							<TeamMonogram :name="preview.a || 'T 1'" :color="state.colorA" :size="40" class="max-sm:hidden" />
+							<span class="truncate text-[15px] font-semibold" :class="preview.a ? 'text-white' : 'text-fg-dim'">
+								{{ preview.a || 'Time 1' }}
+							</span>
+						</div>
+						<span class="font-score text-[44px] leading-none font-bold text-white">0 <span class="text-faint">:</span> 0</span>
+						<div class="flex min-w-0 items-center justify-end gap-2.5">
+							<span class="truncate text-[15px] font-semibold" :class="preview.b ? 'text-white' : 'text-fg-dim'">
+								{{ preview.b || 'Time 2' }}
+							</span>
+							<TeamMonogram :name="preview.b || 'T 2'" :color="state.colorB" :size="40" class="max-sm:hidden" />
+						</div>
+					</div>
+
+					<!-- Times -->
+					<div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,240px),1fr))] gap-5">
+						<fieldset v-for="field in fields" :key="field.team" class="flex min-w-0 flex-col gap-2">
+							<legend class="mb-2 text-sm font-semibold text-white">{{ field.legend }}</legend>
+							<label :for="`time-${field.team}`" class="sr-only">{{ field.label }}</label>
+							<input
+								:id="`time-${field.team}`"
+								v-model="state[field.name]"
+								type="text"
+								:maxlength="TEAM_NAME_MAX_LENGTH"
+								:placeholder="field.placeholder"
+								:disabled="loading"
+								:aria-invalid="!!errors[field.name]"
+								:aria-describedby="`time-${field.team}-erro`"
+								class="h-12 rounded-field bg-canvas px-3.5 text-base text-white ring-1 ring-inset placeholder:text-fg-dim focus:outline-none disabled:opacity-60"
+								:class="errors[field.name] ? 'ring-error' : 'ring-edge focus:ring-fg-soft'"
+							/>
+							<TeamColorPicker
+								v-model="state[field.color]"
+								:taken="state[field.other]"
+								:label="`Cor do ${field.legend.toLowerCase()}`"
+								:disabled="loading"
+							/>
+							<span :id="`time-${field.team}-erro`" class="min-h-5 text-[13px] leading-5 text-error">
+								{{ errors[field.name] }}
+							</span>
+						</fieldset>
+					</div>
+
+					<!-- Valor da pontuação -->
+					<div class="flex flex-wrap items-center justify-between gap-4 border-t border-raised pt-5">
+						<div class="flex flex-col gap-0.5">
+							<span id="novo-inc-label" class="text-sm font-semibold text-white">Valor da pontuação</span>
+							<span class="text-[13px] text-fg-soft">Pontos somados a cada clique</span>
+						</div>
+						<ScoreStepper v-model="state.score" labelledby="novo-inc-label" :disabled="loading" />
+					</div>
+				</div>
+
+				<div class="flex shrink-0 justify-end gap-2 border-t border-raised bg-canvas px-7 py-4 max-sm:px-5">
+					<UButton
+						type="button"
+						color="neutral"
 						variant="ghost"
 						label="Cancelar"
-						type="button"
-						@click="handleCancel"
 						:disabled="loading"
+						class="h-12 rounded-field px-[18px] text-[15px] font-semibold text-fg-strong hover:bg-raised hover:text-white"
+						@click="close"
 					/>
-
-					<UButton class="px-8" color="neutral" size="lg" variant="solid" label="Salvar" type="submit" :loading="loading" />
+					<UButton
+						type="submit"
+						color="neutral"
+						variant="solid"
+						label="Criar placar"
+						trailing-icon="i-lucide-arrow-right"
+						:loading="loading"
+						class="h-12 gap-2 rounded-field px-5 text-[15px] font-semibold hover:bg-fg"
+					/>
 				</div>
-			</UForm>
+			</form>
 		</template>
 	</UModal>
 </template>

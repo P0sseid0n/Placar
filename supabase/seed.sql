@@ -34,9 +34,22 @@ where u.id in ('11111111-1111-1111-1111-111111111111', '22222222-2222-2222-2222-
 	and not exists (select 1 from auth.identities i where i.user_id = u.id and i.provider = 'email');
 
 -- Placares
-insert into public."Placar" (creator, public_id, score_increment, team_a_name, team_a_score, team_b_name, team_b_score, created_at)
+insert into public."Placar" (creator, public_id, score_increment, team_a_name, team_a_color, team_a_score, team_b_name, team_b_color, team_b_score, created_at)
 values
-	('11111111-1111-1111-1111-111111111111', 'teste1', 1, 'Time Azul', 12, 'Time Laranja', 9, now() - interval '5 minutes'),
-	('11111111-1111-1111-1111-111111111111', 'teste2', 3, 'Corinthians', 0, 'Palmeiras', 0, now() - interval '2 days'),
-	('22222222-2222-2222-2222-222222222222', 'outro1', 1, 'Time do outro', 4, 'Visitantes', 7, now() - interval '1 hour')
+	('11111111-1111-1111-1111-111111111111', 'teste1', 1, 'Time Azul', '#51a2ff', 12, 'Time Laranja', '#ff8904', 9, now() - interval '5 minutes'),
+	('11111111-1111-1111-1111-111111111111', 'teste2', 3, 'Corinthians', '#a684ff', 45, 'Palmeiras', '#05df72', 51, now() - interval '2 days'),
+	('22222222-2222-2222-2222-222222222222', 'outro1', 1, 'Time do outro', '#fb64b6', 4, 'Visitantes', '#fdc700', 7, now() - interval '1 hour')
 on conflict (public_id) do nothing;
+
+-- Últimas jogadas do teste1 (terminam no placar 12 x 9)
+insert into public."PlacarEvent" (placar_id, team, delta, score_after, created_at)
+select p.id, e.team, e.delta, e.score_after, now() - e.ago
+from public."Placar" p
+cross join (
+	values
+		('a', 1, 11, interval '3 minutes'),
+		('b', 1, 9, interval '2 minutes'),
+		('a', 1, 12, interval '1 minute')
+) as e (team, delta, score_after, ago)
+where p.public_id = 'teste1'
+	and not exists (select 1 from public."PlacarEvent" pe where pe.placar_id = p.id);

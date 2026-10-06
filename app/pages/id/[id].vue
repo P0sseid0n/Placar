@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Services from '~/services'
+import type { PlacarSettings } from '~/services/placar'
 import GearIcon from '@/components/icons/GearIcon.vue'
 import LoadingIcon from '@/components/icons/LoadingIcon.vue'
 
@@ -71,8 +72,8 @@ function setScores(scores: Partial<Pick<NonNullable<typeof placar.value>, 'team_
 	if (placar.value) placar.value = { ...placar.value, ...scores }
 }
 
-// Os cliques são salvos em fila: o serviço lê a pontuação atual antes de gravar,
-// então duas gravações ao mesmo tempo poderiam perder um ponto.
+// Os cliques são salvos em fila para chegarem ao banco na ordem em que foram dados
+// (a soma em si é atômica no banco, em placar_add_points).
 let saveQueue = Promise.resolve()
 let pendingSaves = 0
 
@@ -106,6 +107,18 @@ function handleUpdateScore(team: 'a' | 'b', action: 'increment' | 'decrement') {
 }
 
 const configModal = ref(false)
+
+function handleSaved(settings: PlacarSettings) {
+	if (!placar.value) return
+
+	placar.value = {
+		...placar.value,
+		team_a_name: settings.teamA,
+		team_b_name: settings.teamB,
+		score_increment: settings.score,
+		score_size: settings.scoreSize,
+	}
+}
 
 function handleReset() {
 	setScores({ team_a_score: 0, team_b_score: 0 })
@@ -225,7 +238,8 @@ function handleDeleted() {
 		<ConfigPlacarModal
 			v-if="isCreator"
 			v-model="configModal"
-			:placar-id="placar.public_id"
+			:placar="placar"
+			@saved="handleSaved"
 			@reset="handleReset"
 			@deleted="handleDeleted"
 		/>

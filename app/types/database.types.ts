@@ -25,16 +25,35 @@ export type Database = {
           Tables: {
             "Placar": {
                   Row: {
-                    "created_at": string,"creator": string,"id": number,"public_id": string,"score_increment": number,"team_a_name": string,"team_a_score": number | null,"team_b_name": string,"team_b_score": number | null
+                    "created_at": string,"creator": string,"id": number,"public_id": string,"score_increment": number,"score_size": string,"team_a_color": string,"team_a_name": string,"team_a_score": number | null,"team_b_color": string,"team_b_name": string,"team_b_score": number | null
                   }
                   Insert: {
-                    "created_at"?: string,"creator": string,"id"?: number,"public_id": string,"score_increment"?: number,"team_a_name"?: string,"team_a_score"?: number | null,"team_b_name"?: string,"team_b_score"?: number | null
+                    "created_at"?: string,"creator": string,"id"?: number,"public_id": string,"score_increment"?: number,"score_size"?: string,"team_a_color"?: string,"team_a_name"?: string,"team_a_score"?: number | null,"team_b_color"?: string,"team_b_name"?: string,"team_b_score"?: number | null
                   }
                   Update: {
-                    "created_at"?: string,"creator"?: string,"id"?: number,"public_id"?: string,"score_increment"?: number,"team_a_name"?: string,"team_a_score"?: number | null,"team_b_name"?: string,"team_b_score"?: number | null
+                    "created_at"?: string,"creator"?: string,"id"?: number,"public_id"?: string,"score_increment"?: number,"score_size"?: string,"team_a_color"?: string,"team_a_name"?: string,"team_a_score"?: number | null,"team_b_color"?: string,"team_b_name"?: string,"team_b_score"?: number | null
                   }
                   Relationships: [
                     
+                  ]
+                },"PlacarEvent": {
+                  Row: {
+                    "created_at": string,"delta": number,"id": number,"placar_id": number,"score_after": number,"team": string
+                  }
+                  Insert: {
+                    "created_at"?: string,"delta": number,"id"?: number,"placar_id": number,"score_after": number,"team": string
+                  }
+                  Update: {
+                    "created_at"?: string,"delta"?: number,"id"?: number,"placar_id"?: number,"score_after"?: number,"team"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "PlacarEvent_placar_id_fkey"
+      columns: ["placar_id"]
+isOneToOne: false
+      referencedRelation: "Placar"
+      referencedColumns: ["id"]
+    }
                   ]
                 }
           }
@@ -42,7 +61,17 @@ export type Database = {
             [_ in never]: never
           }
           Functions: {
-            [_ in never]: never
+            "placar_add_points":
+{ Args: { "p_direction": string,"p_public_id": string,"p_team": string }; Returns: number
+                           },
+"placar_reset":
+{ Args: { "p_public_id": string }; Returns: undefined
+                           },
+"placar_undo_last":
+{ Args: { "p_public_id": string }; Returns: {
+              "score": number,"team": string
+            }[]
+                           }
           }
           Enums: {
             [_ in never]: never

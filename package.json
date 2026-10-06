@@ -13,6 +13,7 @@
 		"db:stop": "supabase stop",
 		"db:reset": "supabase db reset",
 		"db:status": "supabase status",
+		"db:test": "supabase test db",
 		"test": "vitest",
 		"test:run": "vitest run",
 		"test:coverage": "vitest run --coverage",

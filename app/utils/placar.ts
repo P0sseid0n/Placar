@@ -21,13 +21,35 @@ export function isValidPlacarId(id: string): boolean {
 	return /^[0-9a-z]{6}$/.test(id)
 }
 
-/** Cores padrão do handoff, usadas enquanto o placar não tem cor própria */
+/** Cores que o usuário pode escolher para cada time (mesmos valores dos tokens team-* em style.css) */
+export const TEAM_COLORS = [
+	{ name: 'Azul', hex: '#51a2ff' },
+	{ name: 'Laranja', hex: '#ff8904' },
+	{ name: 'Verde', hex: '#05df72' },
+	{ name: 'Roxo', hex: '#a684ff' },
+	{ name: 'Rosa', hex: '#fb64b6' },
+	{ name: 'Amarelo', hex: '#fdc700' },
+] as const
+
+/** Cores padrão de um placar novo (também são o default das colunas no banco) */
 export const DEFAULT_TEAM_COLORS: Record<Team, string> = {
 	a: '#51a2ff',
 	b: '#ff8904',
 }
 
-/** Cor do time; as colunas team_a_color / team_b_color chegam na migration da etapa 4 */
+/** Tamanho dos números no placar, escolhido nas configurações */
+export type ScoreSize = 'P' | 'M' | 'G'
+
+export const SCORE_SIZES: { value: ScoreSize; label: string }[] = [
+	{ value: 'P', label: 'Pequeno' },
+	{ value: 'M', label: 'Médio' },
+	{ value: 'G', label: 'Grande' },
+]
+
+/** Nome do time: 1 a 24 caracteres (mesma regra do banco) */
+export const TEAM_NAME_MAX_LENGTH = 24
+
+/** Cor do time, com o padrão azul/laranja se o placar não tiver uma */
 export function teamColor(placar: object, team: Team): string {
 	const color = (placar as Partial<Record<`team_${Team}_color`, string | null>>)[`team_${team}_color`]
 	return color || DEFAULT_TEAM_COLORS[team]
