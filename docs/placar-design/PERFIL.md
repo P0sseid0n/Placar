@@ -19,8 +19,8 @@ Modal de até 560px de largura, raio 20, fundo `#1d1d20`, anel `#27272a`, overla
 - Abas “Perfil” e “Configurações” (`role="tablist"`, `role="tab"`, `aria-selected`), 48px de altura, ativa em branco com sublinhado de 2px; inativa em `#9f9fa9`.
 
 **Aba Perfil**
-- Três blocos lado a lado: Placares (total do usuário), Pontos marcados (soma das pontuações dos placares do usuário), Maior pontuação (maior valor entre os dois times de todos os placares). Números em Barlow Condensed 34px/700.
-- Linha de apoio: “Membro desde {mês} de {ano}. Nome e foto vêm da sua conta do Discord.” (data = `created_at` do usuário no Supabase Auth).
+- O usuário é organizador (cria placares, não joga), então nada de estatísticas de pontos. Três blocos lado a lado: “Placares criados” (número em Barlow Condensed 34px), “Último placar criado” (tempo relativo, ex.: “há 2 min”) e “Organizador desde” (mês/ano abreviado do `created_at` do usuário, ex.: “out. 2026”).
+- Linha de apoio: “Nome e foto vêm da sua conta do Discord.”
 
 **Aba Configurações**
 - Seção “Conta”:
@@ -32,7 +32,7 @@ Modal de até 560px de largura, raio 20, fundo `#1d1d20`, anel `#27272a`, overla
 
 ## Backend
 - Exclusão de conta precisa rodar no servidor (a chave de service role não pode ir para o navegador): criar uma rota `server/api/account.delete.ts` ou uma Edge Function do Supabase que valida o usuário da sessão e chama `auth.admin.deleteUser(id)`. Os placares já são apagados em cascata (`creator` referencia `auth.users` com `on delete cascade`); confirmar isso na migration.
-- Os números da aba Perfil podem vir da mesma consulta do painel (placares filtrados por `creator`).
+- Os dados da aba Perfil vêm da mesma consulta do painel (placares filtrados por `creator`: contagem e o `created_at` mais recente).
 
 ## Aceite
 - Abre pelo chip do cabeçalho; fecha pelo X, pelo “Fechar”, pelo Esc e clicando fora.

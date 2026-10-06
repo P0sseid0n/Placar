@@ -79,12 +79,12 @@ Logomarca: quadrado branco arredondado com duas barras verticais escuras (a segu
 ### Painel (`painel.vue`)
 - Cabeçalho de 72px: logomarca à esquerda; à direita chip com avatar do Discord (`user_metadata.avatar_url`, fallback inicial) + nome, e botão-ícone “Sair”.
 - “Seu painel” / “Olá, {primeiro nome}” + botão “Criar placar”.
-- Resumo: placares criados, pontos marcados (soma), empatados agora.
 - “Continuar de onde parou”: placar mais recente em destaque.
 - “Todos os placares”: busca por time ou ID (filtro no cliente), ordenação (mais recentes / mais antigos / mais pontos), grade de cards + card tracejado “Novo placar”.
 - Card (`PlacarItem.vue`): chip `#public_id`, tempo relativo de `created_at`, duas linhas time (barra de cor + nome + número), quem perde em `#9f9fa9`, rodapé com “{líder} por {n}” ou “Empate”.
 - **Corrigir:** filtrar por `creator = user.id`; linkar por `public_id` (hoje usa o id numérico).
-- Estados (`PainelVazio.dc.html`): vazio com 3 passos, carregando com skeleton, erro com “Tentar novamente” (usar o `status`/`error` do `useAsyncData`).
+- Sem bloco de resumo/estatísticas: o organizador cria placares, não joga. Depois da saudação vem direto “Continuar de onde parou”.
+- Estados (`PainelVazio.dc.html`): vazio com 3 passos, carregando com skeleton (destaque + cards), erro com “Tentar novamente” (usar o `status`/`error` do `useAsyncData`).
 
 ### Novo placar (`CreatePlacarModal.vue`)
 - Título “Novo placar”, prévia `0 : 0` ao vivo, nome + seletor de cor por time (cor do outro time desativada), stepper de pontuação (mín. 1), botões “Cancelar” e “Criar placar”.
@@ -132,3 +132,13 @@ Logomarca: quadrado branco arredondado com duas barras verticais escuras (a segu
 5. Placar dono/visitante, realtime, modo telão.
 
 Cada etapa deve funcionar em celular (≥ 360px) e manter `aria-label` nos botões só com ícone.
+
+
+## 5. Animação ao marcar ponto (dono e visitante)
+Referência: `designs/Placar.dc.html` e `designs/PlacarVisitante.dc.html` (blocos `@keyframes pl-*`).
+- **+N:** o número dá um “pulo” (scale 1 → 1.16 → 0.97 → 1, ~420ms); o painel do time pisca com fundo na cor do time a ~18% e contorno de 2px na cor (time preto: branco), ~700ms; um “+N” verde (#05df72) em Barlow Condensed sobe ~56px e some (~900ms).
+- **−N:** o número afunda (translateY 10px, scale .94 → volta, ~380ms) e um “−N” vermelho (#ff6467) sobe e some; sem piscar o painel.
+- O visitante recebe a mesma animação quando a mudança chega pelo realtime (só pontos positivos piscam).
+- Reiniciar a animação a cada ponto: trocar a `key` do elemento ou alternar duas classes equivalentes.
+- Respeitar `prefers-reduced-motion: reduce` (sem animação).
+- Implementar como um componente/composable reutilizável (ex.: `useScoreAnimation`) para dono e visitante.

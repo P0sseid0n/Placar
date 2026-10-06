@@ -16,6 +16,17 @@ a{color:#e4e4e7}a:hover{color:#ffffff}
 .b-solid:hover{background:#e4e4e7 !important}
 .b-subtle:hover{background:#3f3f46 !important}
 .b-ghost:hover{background:#27272a !important;color:#ffffff !important}
+@keyframes pl-up0{0%{transform:scale(1)}30%{transform:scale(1.16)}60%{transform:scale(.97)}100%{transform:scale(1)}}
+@keyframes pl-up1{0%{transform:scale(1)}30%{transform:scale(1.16)}60%{transform:scale(.97)}100%{transform:scale(1)}}
+@keyframes pl-flash0{0%{opacity:0}15%{opacity:1}100%{opacity:0}}
+@keyframes pl-flash1{0%{opacity:0}15%{opacity:1}100%{opacity:0}}
+@keyframes pl-float0{0%{opacity:0;transform:translateY(12px)}20%{opacity:1}100%{opacity:0;transform:translateY(-64px)}}
+@keyframes pl-float1{0%{opacity:0;transform:translateY(12px)}20%{opacity:1}100%{opacity:0;transform:translateY(-64px)}}
+.pl-up0{animation:pl-up0 .42s cubic-bezier(.2,.8,.2,1)}.pl-up1{animation:pl-up1 .42s cubic-bezier(.2,.8,.2,1)}
+.pl-flash0{animation:pl-flash0 .7s ease-out}.pl-flash1{animation:pl-flash1 .7s ease-out}
+.pl-float0{animation:pl-float0 .9s ease-out forwards}.pl-float1{animation:pl-float1 .9s ease-out forwards}
+.pl-panel{transition:box-shadow .3s ease}
+@media (prefers-reduced-motion: reduce){.pl-anim{animation:none !important}}
 :focus-visible{outline:2px solid #ffffff;outline-offset:2px}
 @media (max-width:720px){.hide-sm{display:none !important}}
 </style>
@@ -71,38 +82,46 @@ Ao vivo
 </sc-if>
 
 <main style="flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 20px">
-<section aria-label="Time Azul" style="flex: 1 1 380px; min-width: 0; overflow: hidden; border-radius: 24px; background: #1d1d20; box-shadow: inset 0 0 0 1px #51a2ff99; display: flex; flex-direction: column">
+<section class="pl-panel" aria-label="Time Azul" style="position: relative; flex: 1 1 380px; min-width: 0; overflow: hidden; border-radius: 24px; background: #1d1d20; box-shadow: {{ringA}}; display: flex; flex-direction: column">
 <div aria-hidden="true" style="height: 8px; background: #51a2ff"></div>
+<div aria-hidden="true" class="pl-anim {{flashA}}" style="position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; border-radius: 24px; background: #51a2ff2e; box-shadow: inset 0 0 0 2px #51a2ff"></div>
+<sc-if value="{{floatOnA}}" hint-placeholder-val="{{ false }}">
+<span aria-hidden="true" class="pl-anim {{floatA}}" style="position: absolute; z-index: 2; top: 40%; right: 12%; opacity: 0; pointer-events: none; font-family: 'Barlow Condensed', sans-serif; font-size: 64px; line-height: 1; font-weight: 700; color: #05df72">+1</span>
+</sc-if>
 <div style="padding: clamp(20px, 3vw, 36px); display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1 1 auto">
 <div style="display: flex; align-items: center; justify-content: center; gap: 12px; max-width: 100%">
 <span aria-hidden="true" style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 12px; background: #51a2ff24; color: #51a2ff; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center">TA</span>
 <h2 style="margin: 0; min-width: 0; font-size: clamp(20px, 2.4vw, 34px); font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Time Azul</h2>
 </div>
-<span style="height: 26px; box-sizing: border-box; padding: 0 10px; border-radius: 999px; background: #ffffff; color: #18181b; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">Na frente</span>
-<span style="flex: 1 1 auto; display: flex; align-items: center; font-family: 'Barlow Condensed', sans-serif; font-size: {{scoreSize}}; line-height: 0.9; font-weight: 700; color: #ffffff; font-variant-numeric: tabular-nums; letter-spacing: -2px">12</span>
+<span style="height: 26px; box-sizing: border-box; padding: 0 10px; border-radius: 999px; background: {{badgeBgA}}; box-shadow: {{badgeRingA}}; color: {{badgeFgA}}; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">{{tagA}}</span>
+<span style="flex: 1 1 auto; display: flex; align-items: center; font-family: 'Barlow Condensed', sans-serif; font-size: {{scoreSize}}; line-height: 0.9; font-weight: 700; color: #ffffff; font-variant-numeric: tabular-nums; letter-spacing: -2px"><span class="pl-anim {{popA}}" style="display: inline-block">{{a}}</span></span>
 </div>
 </section>
 
 <div aria-hidden="true" style="flex: 0 0 auto; align-self: center; display: flex; flex-direction: column; align-items: center; gap: 10px">
 <span style="width: 56px; height: 56px; border-radius: 50%; box-shadow: inset 0 0 0 1px #3f3f46; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: #9f9fa9; display: flex; align-items: center; justify-content: center">VS</span>
-<span style="font-size: 12px; font-weight: 600; color: #71717b; text-align: center">Diferença<br>3</span>
+<span style="font-size: 12px; font-weight: 600; color: #71717b; text-align: center; white-space: pre-line">{{diffText}}</span>
 </div>
 
-<section aria-label="Time Laranja" style="flex: 1 1 380px; min-width: 0; overflow: hidden; border-radius: 24px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; display: flex; flex-direction: column">
+<section class="pl-panel" aria-label="Time Laranja" style="position: relative; flex: 1 1 380px; min-width: 0; overflow: hidden; border-radius: 24px; background: #1d1d20; box-shadow: {{ringB}}; display: flex; flex-direction: column">
 <div aria-hidden="true" style="height: 8px; background: #ff8904"></div>
+<div aria-hidden="true" class="pl-anim {{flashB}}" style="position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; border-radius: 24px; background: #ff89042e; box-shadow: inset 0 0 0 2px #ff8904"></div>
+<sc-if value="{{floatOnB}}" hint-placeholder-val="{{ false }}">
+<span aria-hidden="true" class="pl-anim {{floatB}}" style="position: absolute; z-index: 2; top: 40%; right: 12%; opacity: 0; pointer-events: none; font-family: 'Barlow Condensed', sans-serif; font-size: 64px; line-height: 1; font-weight: 700; color: #05df72">+1</span>
+</sc-if>
 <div style="padding: clamp(20px, 3vw, 36px); display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1 1 auto">
 <div style="display: flex; align-items: center; justify-content: center; gap: 12px; max-width: 100%">
 <span aria-hidden="true" style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 12px; background: #ff890424; color: #ff8904; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center">TL</span>
 <h2 style="margin: 0; min-width: 0; font-size: clamp(20px, 2.4vw, 34px); font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Time Laranja</h2>
 </div>
-<span style="height: 26px; box-sizing: border-box; padding: 0 10px; border-radius: 999px; box-shadow: inset 0 0 0 1px #3f3f46; color: #9f9fa9; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center">3 atrás</span>
-<span style="flex: 1 1 auto; display: flex; align-items: center; font-family: 'Barlow Condensed', sans-serif; font-size: {{scoreSize}}; line-height: 0.9; font-weight: 700; color: #ffffff; font-variant-numeric: tabular-nums; letter-spacing: -2px">9</span>
+<span style="height: 26px; box-sizing: border-box; padding: 0 10px; border-radius: 999px; background: {{badgeBgB}}; box-shadow: {{badgeRingB}}; color: {{badgeFgB}}; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">{{tagB}}</span>
+<span style="flex: 1 1 auto; display: flex; align-items: center; font-family: 'Barlow Condensed', sans-serif; font-size: {{scoreSize}}; line-height: 0.9; font-weight: 700; color: #ffffff; font-variant-numeric: tabular-nums; letter-spacing: -2px"><span class="pl-anim {{popB}}" style="display: inline-block">{{b}}</span></span>
 </div>
 </section>
 </main>
 
 <sc-if value="{{normal}}" hint-placeholder-val="{{ true }}">
-<p style="margin: 0; text-align: center; font-size: 13px; color: #9f9fa9">Última jogada: <strong style="color: #ffffff; font-weight: 600">Time Azul +1</strong> · há 1 min</p>
+<p role="status" style="margin: 0; text-align: center; font-size: 13px; color: #9f9fa9">Última jogada: <strong style="color: #ffffff; font-weight: 600">{{lastTeam}} +1</strong> · {{lastWhen}}</p>
 </sc-if>
 </div>
 
@@ -114,20 +133,52 @@ Ao vivo
 </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"tamanho":{"editor":"enum","options":["Pequeno","Médio","Grande"],"default":"Grande"},"$preview":{"width":1440,"height":900}}'>
+<script type="text/x-dc" data-dc-script data-props='{"tamanho":{"editor":"enum","options":["Pequeno","Médio","Grande"],"default":"Grande"},"simularAoVivo":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":900}}'>
 class Component extends DCLogic {
-  constructor(props) { super(props); this.state = { telao: false, toast: false }; }
-  componentWillUnmount() { clearTimeout(this.t); }
+  constructor(props) {
+    super(props);
+    this.state = { telao: false, toast: false, a: 12, b: 9, n: 0, last: 'A', lastWhen: 'há 1 min' };
+  }
+  componentDidMount() {
+    this.iv = setInterval(() => {
+      if (this.props.simularAoVivo === false) return;
+      const s = this.state;
+      if (s.a + s.b >= 45) { this.setState({ a: 12, b: 9, n: 0, last: 'A', lastWhen: 'há 1 min' }); return; }
+      const t = Math.random() < 0.5 ? 'A' : 'B';
+      this.setState(t === 'A' ? { a: s.a + 1, n: s.n + 1, last: 'A', lastWhen: 'agora' } : { b: s.b + 1, n: s.n + 1, last: 'B', lastWhen: 'agora' });
+    }, 2800);
+  }
+  componentWillUnmount() { clearTimeout(this.t); clearInterval(this.iv); }
   renderVals() {
     const sizes = { 'Pequeno': 'clamp(96px, 11vw, 170px)', 'Médio': 'clamp(120px, 16vw, 240px)', 'Grande': 'clamp(140px, 21vw, 320px)' };
-    const tel = this.state.telao;
+    const s = this.state;
+    const tel = s.telao;
+    const k = s.n % 2;
+    const animA = s.n > 0 && s.last === 'A';
+    const animB = s.n > 0 && s.last === 'B';
+    const diff = Math.abs(s.a - s.b);
+    const tag = (mine, other) => mine === other ? 'Empatado' : (mine > other ? 'Na frente' : (other - mine) + ' atrás');
+    const lead = (mine, other) => mine > other;
     return {
+      a: s.a, b: s.b,
+      popA: animA ? 'pl-up' + k : '', popB: animB ? 'pl-up' + k : '',
+      flashA: animA ? 'pl-flash' + k : '', flashB: animB ? 'pl-flash' + k : '',
+      floatA: animA ? 'pl-float' + k : '', floatB: animB ? 'pl-float' + k : '',
+      floatOnA: animA, floatOnB: animB,
+      ringA: lead(s.a, s.b) ? 'inset 0 0 0 1px #51a2ff99' : 'inset 0 0 0 1px #27272a',
+      ringB: lead(s.b, s.a) ? 'inset 0 0 0 1px #ff890499' : 'inset 0 0 0 1px #27272a',
+      tagA: tag(s.a, s.b), tagB: tag(s.b, s.a),
+      badgeBgA: lead(s.a, s.b) ? '#ffffff' : 'transparent', badgeFgA: lead(s.a, s.b) ? '#18181b' : '#9f9fa9', badgeRingA: lead(s.a, s.b) ? 'none' : 'inset 0 0 0 1px #3f3f46',
+      badgeBgB: lead(s.b, s.a) ? '#ffffff' : 'transparent', badgeFgB: lead(s.b, s.a) ? '#18181b' : '#9f9fa9', badgeRingB: lead(s.b, s.a) ? 'none' : 'inset 0 0 0 1px #3f3f46',
+      diffText: diff === 0 ? 'Empate' : 'Diferença\n' + diff,
+      lastTeam: s.last === 'A' ? 'Time Azul' : 'Time Laranja',
+      lastWhen: s.lastWhen,
       telao: tel,
       normal: !tel,
       pad: tel ? '24px clamp(16px, 3vw, 40px)' : '28px clamp(16px, 4vw, 48px) 40px',
       scoreSize: sizes[this.props.tamanho ?? 'Grande'] || sizes['Grande'],
       toggle: () => this.setState({ telao: !tel }),
-      toast: this.state.toast,
+      toast: s.toast,
       copyId: () => {
         clearTimeout(this.t);
         this.setState({ toast: true });

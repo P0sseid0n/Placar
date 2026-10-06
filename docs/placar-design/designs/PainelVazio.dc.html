@@ -91,14 +91,6 @@ Criar primeiro placar
 
 <sc-if value="{{carregando}}" hint-placeholder-val="{{ false }}">
 <div aria-busy="true" aria-label="Carregando placares" style="display: flex; flex-direction: column; gap: 40px">
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px">
-<sc-for list="{{three}}" as="x" hint-placeholder-count="3">
-<div class="pl-skel" style="height: 96px; box-sizing: border-box; padding: 20px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; display: flex; flex-direction: column; gap: 12px">
-<span style="width: 110px; height: 12px; border-radius: 4px; background: #27272a"></span>
-<span style="width: 56px; height: 32px; border-radius: 6px; background: #27272a"></span>
-</div>
-</sc-for>
-</div>
 <div class="pl-skel" style="height: 168px; border-radius: 16px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a"></div>
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 16px">
 <sc-for list="{{four}}" as="x" hint-placeholder-count="4">
@@ -128,7 +120,7 @@ Tentar novamente
 </main>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"estado":{"editor":"enum","options":["vazio","carregando","erro"],"default":"vazio"},"$preview":{"width":1440,"height":900}}'>
+<script type="text/x-dc" data-dc-script data-props="{&quot;estado&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;vazio&quot;,&quot;carregando&quot;,&quot;erro&quot;],&quot;default&quot;:&quot;erro&quot;},&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
 class Component extends DCLogic {
   renderVals() {
     const e = this.props.estado ?? 'vazio';
