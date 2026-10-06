@@ -59,6 +59,39 @@ async function signOut() {
 	await navigateTo('/')
 }
 
+// Excluir conta: o primeiro clique pede confirmação no próprio bloco
+const toast = useToast()
+const deleteStep = ref<'idle' | 'confirm' | 'deleting'>('idle')
+
+const deleteText = computed(() => {
+	if (deleteStep.value === 'idle') return 'Apaga sua conta e todos os seus placares. Não dá para desfazer.'
+	const n = stats.value.total
+	return `Tem certeza? ${n === 1 ? 'Seu placar será apagado' : `Seus ${n} placares serão apagados`} junto com a conta.`
+})
+
+async function deleteAccount() {
+	deleteStep.value = 'deleting'
+	try {
+		await Services.account.deleteAccount()
+	} catch (error) {
+		console.error(error)
+		deleteStep.value = 'confirm'
+		toast.add({ color: 'error', title: 'Não foi possível excluir a conta', description: 'Tente novamente.' })
+		return
+	}
+
+	// A conta já não existe no servidor; só limpa a sessão deste navegador
+	await client.auth.signOut({ scope: 'local' }).catch(() => {})
+	model.value = false
+	toast.add({ color: 'success', title: 'Conta excluída' })
+	await navigateTo('/')
+}
+
+// Ao fechar o modal ou trocar de aba, a confirmação volta ao início
+watch([model, tab], () => {
+	if (deleteStep.value !== 'deleting') deleteStep.value = 'idle'
+})
+
 const statItems = computed(() => [
 	{ label: 'Placares', value: stats.value.total },
 	{ label: 'Pontos marcados', value: stats.value.points },
@@ -183,6 +216,45 @@ const statItems = computed(() => [
 									:loading="signingOut"
 									class="h-11 gap-2 rounded-field bg-raised px-3.5 text-sm font-semibold text-fg ring-edge hover:bg-edge"
 									@click="signOut"
+								/>
+							</div>
+
+							<div
+								class="flex flex-wrap items-center justify-between gap-3 rounded-card bg-error/5 p-4 ring-1 ring-error/30 ring-inset"
+							>
+								<div class="flex flex-[1_1_220px] flex-col gap-0.5">
+									<span class="text-sm font-semibold text-error">Excluir conta</span>
+									<span role="status" class="text-[13px] leading-[19px] text-fg-soft">{{
+										deleteText
+									}}</span>
+								</div>
+
+								<div v-if="deleteStep !== 'idle'" class="flex items-center gap-1.5">
+									<UButton
+										color="neutral"
+										variant="ghost"
+										label="Cancelar"
+										:disabled="deleteStep === 'deleting'"
+										class="h-11 rounded-field px-3 text-sm font-semibold text-fg-strong hover:bg-raised hover:text-white"
+										@click="deleteStep = 'idle'"
+									/>
+									<UButton
+										color="error"
+										variant="solid"
+										label="Sim, excluir"
+										:loading="deleteStep === 'deleting'"
+										class="h-11 rounded-field bg-error px-3.5 text-sm font-bold text-canvas hover:bg-[#ff8183]"
+										@click="deleteAccount"
+									/>
+								</div>
+								<UButton
+									v-else
+									color="error"
+									variant="ghost"
+									icon="i-lucide-trash-2"
+									label="Excluir"
+									class="h-11 gap-2 rounded-field px-3.5 text-sm font-semibold text-error ring-1 ring-error/40 ring-inset hover:bg-error/12"
+									@click="deleteStep = 'confirm'"
 								/>
 							</div>
 						</section>

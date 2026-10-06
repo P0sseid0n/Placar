@@ -6,9 +6,9 @@ O Placar é um app para marcar e compartilhar, em tempo real, a pontuação de q
 
 ## Funcionalidades ✨
 
-- **Login com Discord** para criar e controlar seus placares.
+- **Login com Discord** para criar e controlar seus placares, com um **perfil** que mostra seus números e permite sair ou excluir a conta.
 - **Painel** com resumo, o último placar em destaque, busca e ordenação.
-- **Placares personalizados**: nome e cor de cada time e quanto vale cada ponto.
+- **Placares personalizados**: nome de cada time, 16 cores (8 sólidas e 8 duplas, como uniformes listrados) e quanto vale cada ponto.
 - **Pontuação ao vivo**: quem está assistindo vê cada ponto na hora (Supabase Realtime).
 - **Últimas jogadas** com **Desfazer**.
 - **Compartilhamento** por ID de 6 caracteres ou por link.
@@ -40,9 +40,9 @@ O Placar é um app para marcar e compartilhar, em tempo real, a pontuação de q
 
 ## Roadmap 🗺️
 
-- [ ] Modal de usuário: ver o perfil e as preferências da conta
-- [ ] Cor dupla para os times (duas cores por time, como uniformes listrados)
-- [ ] Mais opções de cor para os times, como preto e vermelho
+- [x] Modal de usuário: ver o perfil e as preferências da conta
+- [x] Cor dupla para os times (duas cores por time, como uniformes listrados)
+- [x] Mais opções de cor para os times, como preto e vermelho
 - [ ] Animação ao marcar ponto: o número "pula" e a faixa da cor do time pisca por um instante, com som e vibração opcionais no celular
 - [ ] Cronômetro: tempo de jogo com pausar e retomar, mostrado ao lado do placar e no modo telão
 - [ ] Modo celular de juiz: uma tela só com os botões +1 grandes, ocupando a tela inteira, para quem marca os pontos de pé na quadra
@@ -60,7 +60,9 @@ Requer o [Docker](https://www.docker.com/) rodando. O Supabase roda localmente v
 1. Clone o projeto.
 2. Instale as dependências com `bun install`.
 3. Suba o Supabase local com `bun run db:start`. As migrations em `supabase/migrations` criam as tabelas, as políticas de acesso e as funções do banco, e o `supabase/seed.sql` cria dados de exemplo.
-4. Crie o `.env` a partir do `.env.example` e preencha `SUPABASE_KEY` com a `PUBLISHABLE_KEY` mostrada pelo `bun run db:status`.
+4. Crie o `.env` a partir do `.env.example` e preencha, com os valores mostrados pelo `bun run db:status`:
+    - `SUPABASE_KEY` com a `PUBLISHABLE_KEY`;
+    - `NUXT_SUPABASE_SECRET_KEY` com a `SECRET_KEY` (usada só no servidor, para excluir conta). Em produção, defina essa variável no ambiente do deploy, nunca no código.
 5. Rode o projeto com `bun run dev` e abra http://localhost:3000.
 
 ### Login com Discord

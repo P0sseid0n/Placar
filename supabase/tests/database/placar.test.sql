@@ -4,7 +4,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(31);
+select plan(33);
 
 -- ------------------------------------------------------------
 -- Dados
@@ -184,6 +184,27 @@ select is(
 select throws_ok(
 	$$ select public.placar_add_points('tst001', 'a', 'increment') $$,
 	'42501', null, 'visitante não pode chamar as funções'
+);
+
+-- ------------------------------------------------------------
+-- Excluir conta: placares e jogadas do usuário vão junto (cascata)
+-- ------------------------------------------------------------
+
+select pg_temp.logout();
+set local role postgres;
+
+delete from auth.users where id = 'aaaaaaaa-0000-0000-0000-000000000001';
+
+select is(
+	(select count(*)::int from public."Placar" where public_id = 'tst001'),
+	0,
+	'excluir o usuário apaga os placares dele'
+);
+select is(
+	(select count(*)::int from public."PlacarEvent" e
+		where not exists (select 1 from public."Placar" p where p.id = e.placar_id)),
+	0,
+	'e as jogadas desses placares'
 );
 
 select * from finish();
