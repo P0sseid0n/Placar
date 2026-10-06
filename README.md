@@ -108,7 +108,7 @@ docs/             relatório do projeto, handoff do redesign e prints
 
 ## Contribuição 🤝
 
-Toda contribuição é bem-vinda, desde melhorias de design a novas funcionalidades. Sinta-se à vontade para abrir uma issue ou um pull request.
+Toda contribuição é bem-vinda, desde melhorias de design a novas funcionalidades. Sinta-se à vontade para abrir uma issue ou um pull request. Veja o [guia de contribuição](./CONTRIBUTING.md) para preparar o ambiente e conhecer as convenções do projeto.
 
 ## Licença 📝
 
