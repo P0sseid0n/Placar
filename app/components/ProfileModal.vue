@@ -34,7 +34,7 @@ const placares = computed(() => cachedPlacares.value ?? fetchedPlacares.value ??
 const stats = computed(() => profileStats(placares.value))
 
 // A data de criação da conta não vem no token da sessão; busca o usuário completo
-const memberSince = ref('')
+const organizerSinceText = ref('')
 
 watch(model, async open => {
 	if (!open) return
@@ -43,9 +43,9 @@ watch(model, async open => {
 	if (!cachedPlacares.value && !fetchedPlacares.value) {
 		fetchedPlacares.value = await Services.placar.getAll().catch(() => null)
 	}
-	if (!memberSince.value) {
+	if (!organizerSinceText.value) {
 		const { data } = await client.auth.getUser()
-		if (data.user?.created_at) memberSince.value = monthYear(data.user.created_at)
+		if (data.user?.created_at) organizerSinceText.value = organizerSince(data.user.created_at)
 	}
 })
 
@@ -92,10 +92,15 @@ watch([model, tab], () => {
 	if (deleteStep.value !== 'deleting') deleteStep.value = 'idle'
 })
 
-const statItems = computed(() => [
-	{ label: 'Placares', value: stats.value.total },
-	{ label: 'Pontos marcados', value: stats.value.points },
-	{ label: 'Maior pontuação', value: stats.value.best },
+// O usuário é organizador (cria placares, não joga): nada de estatísticas de pontos
+const infoItems = computed(() => [
+	{ label: 'Placares criados', value: String(stats.value.total), number: true },
+	{
+		label: 'Último placar criado',
+		value: stats.value.lastCreatedAt ? relativeTime(stats.value.lastCreatedAt) : '—',
+		number: false,
+	},
+	{ label: 'Organizador desde', value: organizerSinceText.value || '—', number: false },
 ])
 </script>
 
@@ -179,20 +184,24 @@ const statItems = computed(() => [
 					>
 						<div class="grid grid-cols-3 gap-2.5">
 							<div
-								v-for="stat in statItems"
-								:key="stat.label"
-								class="flex flex-col gap-0.5 rounded-card bg-canvas px-4 py-3.5 ring-1 ring-raised ring-inset"
+								v-for="item in infoItems"
+								:key="item.label"
+								class="flex min-w-0 flex-col gap-0.5 rounded-card bg-canvas px-4 py-3.5 ring-1 ring-raised ring-inset"
 							>
-								<span class="font-score text-[34px] leading-none font-bold text-white">{{
-									stat.value
-								}}</span>
-								<span class="text-xs font-medium text-fg-soft">{{ stat.label }}</span>
+								<span
+									class="font-bold text-white"
+									:class="
+										item.number
+											? 'font-score text-[34px] leading-none'
+											: 'truncate text-[17px] leading-[34px]'
+									"
+								>
+									{{ item.value }}
+								</span>
+								<span class="text-xs font-medium text-fg-soft">{{ item.label }}</span>
 							</div>
 						</div>
-						<p class="text-[13px] leading-5 text-fg-dim">
-							<template v-if="memberSince">Membro desde {{ memberSince }}. </template>Nome e foto vêm da
-							sua conta do Discord.
-						</p>
+						<p class="text-[13px] leading-5 text-fg-dim">Nome e foto vêm da sua conta do Discord.</p>
 					</div>
 
 					<div

@@ -4,7 +4,7 @@ import {
 	firstName,
 	formatDelta,
 	mergeRealtimePlacar,
-	monthYear,
+	organizerSince,
 	profileStats,
 	scoreSizeClass,
 	isValidPlacarId,
@@ -160,22 +160,23 @@ describe('mergeRealtimePlacar', () => {
 })
 
 describe('profileStats', () => {
-	it('conta placares, soma os pontos e acha a maior pontuação', () => {
+	it('conta os placares e acha o criado mais recentemente', () => {
 		const placares = [
-			{ team_a_score: 12, team_b_score: 9 },
-			{ team_a_score: 45, team_b_score: 51 },
-			{ team_a_score: null, team_b_score: 3 },
+			{ created_at: '2026-10-01T10:00:00Z' },
+			{ created_at: '2026-10-06T09:30:00Z' },
+			{ created_at: '2026-09-20T18:00:00Z' },
 		]
-		expect(profileStats(placares)).toEqual({ total: 3, points: 120, best: 51 })
+		expect(profileStats(placares)).toEqual({ total: 3, lastCreatedAt: '2026-10-06T09:30:00Z' })
 	})
 
-	it('sem placares, tudo zero', () => {
-		expect(profileStats([])).toEqual({ total: 0, points: 0, best: 0 })
+	it('sem placares, total zero e sem data', () => {
+		expect(profileStats([])).toEqual({ total: 0, lastCreatedAt: null })
 	})
 })
 
-describe('monthYear', () => {
-	it('escreve o mês por extenso e o ano', () => {
-		expect(monthYear('2026-10-06T12:00:00Z')).toBe('outubro de 2026')
+describe('organizerSince', () => {
+	it('escreve o mês abreviado e o ano', () => {
+		expect(organizerSince('2026-10-06T12:00:00Z')).toBe('out. 2026')
+		expect(organizerSince('2025-05-15T12:00:00Z')).toBe('mai. 2025')
 	})
 })
