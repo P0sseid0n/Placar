@@ -4,7 +4,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(29);
+select plan(31);
 
 -- ------------------------------------------------------------
 -- Dados
@@ -42,7 +42,7 @@ select ok(
 
 select results_eq(
 	$$ select team_a_color, team_b_color, score_size from public."Placar" where public_id = 'tst001' $$,
-	$$ values ('#51a2ff', '#ff8904', 'G') $$,
+	$$ values ('azul', 'laranja', 'G') $$,
 	'cores e tamanho têm os padrões do handoff'
 );
 
@@ -55,8 +55,16 @@ select throws_ok(
 	'23514', null, 'incremento é no mínimo 1'
 );
 select throws_ok(
-	$$ update public."Placar" set team_a_color = 'azul' where public_id = 'tst001' $$,
-	'23514', null, 'cor precisa ser #rrggbb'
+	$$ update public."Placar" set team_a_color = '#51a2ff' where public_id = 'tst001' $$,
+	'23514', null, 'cor precisa ser um id da paleta (não hex)'
+);
+select lives_ok(
+	$$ update public."Placar" set team_a_color = 'preto-branco', team_b_color = 'verde-amarelo' where public_id = 'tst001' $$,
+	'aceita cores duplas da paleta'
+);
+select throws_ok(
+	$$ update public."Placar" set team_b_color = team_a_color where public_id = 'tst001' $$,
+	'23514', null, 'os dois times não podem ter a mesma cor'
 );
 select throws_ok(
 	$$ update public."Placar" set score_size = 'X' where public_id = 'tst001' $$,

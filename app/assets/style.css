@@ -29,13 +29,7 @@
 	--color-fg-soft: #9f9fa9; /* rótulos, apoio, time que está perdendo */
 	--color-fg-dim: #71717b; /* contadores, dicas */
 
-	/* Times (monograma: cor + alfa 24, ex.: bg-team-blue/14) */
-	--color-team-blue: #51a2ff;
-	--color-team-orange: #ff8904;
-	--color-team-green: #05df72;
-	--color-team-purple: #a684ff;
-	--color-team-pink: #fb64b6;
-	--color-team-yellow: #fdc700;
+	/* Cores dos times: ficam em app/utils/teamColors.ts (16 opções, guardadas por id no banco) */
 
 	/* Raios */
 	--radius-chip: 6px; /* chip de ID */

@@ -59,7 +59,7 @@ beforeEach(() => {
 	mockUser.mockReturnValue({ value: { sub: 'user123' } })
 })
 
-const newPlacar = { score: 2, teamA: ' Time A ', teamB: 'Time B', colorA: '#05df72', colorB: '#a684ff' }
+const newPlacar = { score: 2, teamA: ' Time A ', teamB: 'Time B', colorA: 'verde', colorB: 'preto-branco' }
 
 describe('placar.create', () => {
 	it('falha sem usuário logado', async () => {
@@ -83,10 +83,10 @@ describe('placar.create', () => {
 						public_id: 'abc123',
 						score_increment: 2,
 						team_a_name: 'Time A',
-						team_a_color: '#05df72',
+						team_a_color: 'verde',
 						team_a_score: 0,
 						team_b_name: 'Time B',
-						team_b_color: '#a684ff',
+						team_b_color: 'preto-branco',
 						team_b_score: 0,
 					},
 				],

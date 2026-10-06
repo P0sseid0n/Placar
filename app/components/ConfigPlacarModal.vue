@@ -57,8 +57,8 @@ const errors = computed(() => {
 	>
 })
 
-const colorA = computed(() => teamColor(placar, 'a'))
-const colorB = computed(() => teamColor(placar, 'b'))
+const lookA = computed(() => teamLookFor(placar, 'a'))
+const lookB = computed(() => teamLookFor(placar, 'b'))
 
 const sizePreview: Record<ScoreSize, string> = { P: 'text-[22px]', M: 'text-[30px]', G: 'text-[40px]' }
 
@@ -125,8 +125,8 @@ const teams = [
 		<template #content="{ close }">
 			<form novalidate class="flex min-h-0 flex-1 flex-col" @submit.prevent="save">
 				<div aria-hidden="true" class="flex h-[5px] shrink-0">
-					<span class="flex-1" :style="{ background: colorA }" />
-					<span class="flex-1" :style="{ background: colorB }" />
+					<span class="flex-1" :style="{ background: lookA.stripe }" />
+					<span class="flex-1" :style="{ background: lookB.stripe }" />
 				</div>
 
 				<div
@@ -159,7 +159,7 @@ const teams = [
 							<div class="flex items-center gap-2.5">
 								<TeamMonogram
 									:name="draft[team.field] || (team.key === 'A' ? 'T 1' : 'T 2')"
-									:color="team.key === 'A' ? colorA : colorB"
+									:look="team.key === 'A' ? lookA : lookB"
 									:size="44"
 								/>
 								<label :for="`cfg-${team.key}`" class="sr-only">{{ team.label }}</label>

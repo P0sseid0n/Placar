@@ -36,9 +36,9 @@ where u.id in ('11111111-1111-1111-1111-111111111111', '22222222-2222-2222-2222-
 -- Placares
 insert into public."Placar" (creator, public_id, score_increment, team_a_name, team_a_color, team_a_score, team_b_name, team_b_color, team_b_score, created_at)
 values
-	('11111111-1111-1111-1111-111111111111', 'teste1', 1, 'Time Azul', '#51a2ff', 12, 'Time Laranja', '#ff8904', 9, now() - interval '5 minutes'),
-	('11111111-1111-1111-1111-111111111111', 'teste2', 3, 'Corinthians', '#a684ff', 45, 'Palmeiras', '#05df72', 51, now() - interval '2 days'),
-	('22222222-2222-2222-2222-222222222222', 'outro1', 1, 'Time do outro', '#fb64b6', 4, 'Visitantes', '#fdc700', 7, now() - interval '1 hour')
+	('11111111-1111-1111-1111-111111111111', 'teste1', 1, 'Time Azul', 'azul', 12, 'Time Laranja', 'laranja', 9, now() - interval '5 minutes'),
+	('11111111-1111-1111-1111-111111111111', 'teste2', 3, 'Corinthians', 'preto-branco', 45, 'Palmeiras', 'verde-branco', 51, now() - interval '2 days'),
+	('22222222-2222-2222-2222-222222222222', 'outro1', 1, 'Time do outro', 'preto', 4, 'Visitantes', 'amarelo-azul', 7, now() - interval '1 hour')
 on conflict (public_id) do nothing;
 
 -- Últimas jogadas do teste1 (terminam no placar 12 x 9)

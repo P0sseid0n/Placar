@@ -13,7 +13,7 @@ const rows = computed(() =>
 		team,
 		name: team === 'a' ? placar.team_a_name : placar.team_b_name,
 		score: summary.value[team],
-		color: teamColor(placar, team),
+		look: teamLookFor(placar, team),
 		losing: summary.value.leader !== null && summary.value.leader !== team,
 	})),
 )
@@ -38,7 +38,11 @@ const ariaLabel = computed(
 
 		<div class="flex flex-col gap-2.5">
 			<div v-for="row in rows" :key="row.team" class="flex items-center gap-3">
-				<span aria-hidden="true" class="h-7 w-1 shrink-0 rounded-[2px]" :style="{ background: row.color }" />
+				<span
+					aria-hidden="true"
+					class="h-7 w-1 shrink-0 rounded-[2px]"
+					:style="{ background: row.look.bar, boxShadow: row.look.edge }"
+				/>
 				<span
 					class="min-w-0 flex-1 truncate text-[15px] font-semibold"
 					:class="row.losing ? 'text-fg-soft' : 'text-white'"

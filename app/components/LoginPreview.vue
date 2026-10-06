@@ -27,8 +27,8 @@ onMounted(() => {
 
 onUnmounted(() => clearInterval(timer))
 
-const colorA = DEFAULT_TEAM_COLORS.a
-const colorB = DEFAULT_TEAM_COLORS.b
+const lookA = teamLook(DEFAULT_TEAM_COLOR_IDS.a)
+const lookB = teamLook(DEFAULT_TEAM_COLOR_IDS.b)
 </script>
 
 <template>
@@ -37,8 +37,8 @@ const colorB = DEFAULT_TEAM_COLORS.b
 		class="overflow-hidden rounded-panel bg-surface shadow-[inset_0_0_0_1px_var(--color-raised),0_24px_60px_rgba(0,0,0,0.35)]"
 	>
 		<div class="flex h-[5px]">
-			<span class="flex-1" :style="{ background: colorA }" />
-			<span class="flex-1" :style="{ background: colorB }" />
+			<span class="flex-1" :style="{ background: lookA.stripe }" />
+			<span class="flex-1" :style="{ background: lookB.stripe }" />
 		</div>
 		<div class="flex flex-col gap-3.5 px-6 py-5">
 			<div class="flex items-center justify-between">
@@ -47,7 +47,7 @@ const colorB = DEFAULT_TEAM_COLORS.b
 			</div>
 			<div class="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4">
 				<div class="flex min-w-0 items-center gap-2.5">
-					<TeamMonogram name="Time Azul" :color="colorA" :size="38" />
+					<TeamMonogram name="Time Azul" :look="lookA" :size="38" />
 					<span class="truncate text-[15px] font-semibold text-white">Time Azul</span>
 				</div>
 				<div class="flex items-center gap-3.5 font-score text-[64px] leading-none font-bold">
@@ -75,7 +75,7 @@ const colorB = DEFAULT_TEAM_COLORS.b
 				</div>
 				<div class="flex min-w-0 items-center justify-end gap-2.5">
 					<span class="truncate text-[15px] font-semibold text-white">Time Laranja</span>
-					<TeamMonogram name="Time Laranja" :color="colorB" :size="38" />
+					<TeamMonogram name="Time Laranja" :look="lookB" :size="38" />
 				</div>
 			</div>
 		</div>

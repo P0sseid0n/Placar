@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import type { TeamLook } from '~/utils/teamColors'
+
 // Painel de um time na página do placar. `owner` tem os botões de pontuar; `viewer` é só leitura.
-const { name, color, score, increment, scoreSize, variant, status } = defineProps<{
+const { name, look, score, increment, scoreSize, variant, status } = defineProps<{
 	name: string
-	color: string
+	look: TeamLook
 	score: number
 	increment: number
 	/** P, M ou G */
@@ -17,9 +19,9 @@ defineEmits<{ plus: []; minus: [] }>()
 
 const isOwner = computed(() => variant === 'owner')
 
-// Quem lidera ganha anel na cor do time a 60% (alfa 99 em hex)
+// Quem lidera ganha anel na cor do time a 60% (ver teamLook.lead)
 const panelStyle = computed(() => ({
-	boxShadow: `inset 0 0 0 1px ${status === 'leader' ? `${color}99` : 'var(--color-raised)'}`,
+	boxShadow: `inset 0 0 0 1px ${status === 'leader' ? look.lead : 'var(--color-raised)'}`,
 }))
 </script>
 
@@ -30,14 +32,14 @@ const panelStyle = computed(() => ({
 		:class="isOwner ? 'rounded-panel' : 'rounded-screen'"
 		:style="panelStyle"
 	>
-		<div aria-hidden="true" :class="isOwner ? 'h-1.5' : 'h-2'" :style="{ background: color }" />
+		<div aria-hidden="true" :class="isOwner ? 'h-1.5' : 'h-2'" :style="{ background: look.stripe }" />
 
 		<div
 			class="flex flex-1 flex-col"
 			:class="isOwner ? 'gap-4 p-[clamp(20px,3vw,32px)]' : 'items-center gap-3 p-[clamp(20px,3vw,36px)]'"
 		>
 			<div class="flex min-w-0 items-center" :class="isOwner ? 'gap-3.5' : 'max-w-full justify-center gap-3'">
-				<TeamMonogram :name="name" :color="color" :size="isOwner ? 48 : 44" />
+				<TeamMonogram :name="name" :look="look" :size="isOwner ? 48 : 44" />
 				<h2
 					class="min-w-0 truncate leading-tight font-bold text-white"
 					:class="isOwner ? 'flex-1 text-[clamp(20px,2.2vw,30px)]' : 'text-[clamp(20px,2.4vw,34px)]'"

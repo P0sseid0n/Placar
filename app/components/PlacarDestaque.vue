@@ -7,8 +7,8 @@ const { placar } = defineProps<{
 }>()
 
 const summary = computed(() => scoreSummary(placar))
-const colorA = computed(() => teamColor(placar, 'a'))
-const colorB = computed(() => teamColor(placar, 'b'))
+const lookA = computed(() => teamLookFor(placar, 'a'))
+const lookB = computed(() => teamLookFor(placar, 'b'))
 
 const scoreClass = (team: 'a' | 'b') =>
 	summary.value.leader !== null && summary.value.leader !== team ? 'text-fg-soft' : 'text-white'
@@ -21,8 +21,8 @@ const scoreClass = (team: 'a' | 'b') =>
 		class="group relative flex flex-col overflow-hidden rounded-feature bg-surface text-white ring-1 ring-raised ring-inset"
 	>
 		<div aria-hidden="true" class="flex h-1.5">
-			<span class="flex-1" :style="{ background: colorA }" />
-			<span class="flex-1" :style="{ background: colorB }" />
+			<span class="flex-1" :style="{ background: lookA.stripe }" />
+			<span class="flex-1" :style="{ background: lookB.stripe }" />
 		</div>
 
 		<div class="flex flex-wrap items-center justify-between gap-6 p-[clamp(20px,3vw,32px)]">
@@ -30,7 +30,7 @@ const scoreClass = (team: 'a' | 'b') =>
 				class="grid flex-[1_1_520px] grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-[clamp(12px,3vw,40px)]"
 			>
 				<div class="flex min-w-0 items-center gap-3.5">
-					<TeamMonogram :name="placar.team_a_name" :color="colorA" class="max-sm:hidden" />
+					<TeamMonogram :name="placar.team_a_name" :look="lookA" class="max-sm:hidden" />
 					<div class="flex min-w-0 flex-col">
 						<span class="text-base font-semibold max-sm:line-clamp-2 max-sm:break-words sm:truncate">{{
 							placar.team_a_name
@@ -52,7 +52,7 @@ const scoreClass = (team: 'a' | 'b') =>
 						}}</span>
 						<span class="text-[13px] text-fg-soft">{{ summary.tag.b }}</span>
 					</div>
-					<TeamMonogram :name="placar.team_b_name" :color="colorB" class="max-sm:hidden" />
+					<TeamMonogram :name="placar.team_b_name" :look="lookB" class="max-sm:hidden" />
 				</div>
 			</div>
 

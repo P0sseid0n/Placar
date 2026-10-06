@@ -42,13 +42,13 @@ const isOwner = computed(() => !!user.value && user.value.sub === placar.value?.
 // ------------------------------------------------------------
 
 const summary = computed(() => scoreSummary(placar.value!))
-const colors = computed(() => ({ a: teamColor(placar.value!, 'a'), b: teamColor(placar.value!, 'b') }))
+const looks = computed(() => ({ a: teamLookFor(placar.value!, 'a'), b: teamLookFor(placar.value!, 'b') }))
 
 const teams = computed(() =>
 	(['a', 'b'] as const).map(team => ({
 		team,
 		name: team === 'a' ? placar.value!.team_a_name : placar.value!.team_b_name,
-		color: colors.value[team],
+		look: looks.value[team],
 		score: summary.value[team],
 		status: (summary.value.tie ? 'tie' : summary.value.leader === team ? 'leader' : 'trailing') as
 			'leader' | 'trailing' | 'tie',
@@ -81,7 +81,7 @@ const eventChips = computed(() =>
 	events.value.map((event, index) => ({
 		id: event.id,
 		team: event.team === 'a' ? placar.value!.team_a_name : placar.value!.team_b_name,
-		color: colors.value[event.team === 'a' ? 'a' : 'b'],
+		look: looks.value[event.team === 'a' ? 'a' : 'b'],
 		delta: formatDelta(event.delta),
 		positive: event.delta > 0,
 		after: event.score_after,
@@ -330,7 +330,7 @@ function handleDeleted() {
 
 					<TeamPanel
 						:name="team.name"
-						:color="team.color"
+						:look="team.look"
 						:score="team.score"
 						:increment="placar.score_increment"
 						:score-size="placar.score_size"
@@ -371,7 +371,11 @@ function handleDeleted() {
 						class="flex h-9 items-center gap-2 rounded-btn bg-canvas pr-3 pl-2.5 text-[13px] ring-1 ring-raised ring-inset"
 						:class="event.faded && 'opacity-75'"
 					>
-						<span aria-hidden="true" class="size-2 rounded-full" :style="{ background: event.color }" />
+						<span
+							aria-hidden="true"
+							class="size-2.5 rounded-full"
+							:style="{ background: event.look.dot, boxShadow: event.look.swEdge }"
+						/>
 						<span class="font-semibold text-white">{{ event.team }}</span>
 						<span class="font-bold" :class="event.positive ? 'text-success' : 'text-error'">{{
 							event.delta

@@ -9,7 +9,6 @@ import {
 	relativeTime,
 	sanitizePlacarId,
 	scoreSummary,
-	teamColor,
 	teamInitials,
 } from './placar'
 
@@ -34,17 +33,6 @@ describe('isValidPlacarId', () => {
 
 	it.each(['k3x9a', 'k3x9a22', 'K3X9A2', 'k3x9a!', ''])('recusa "%s"', id => {
 		expect(isValidPlacarId(id)).toBe(false)
-	})
-})
-
-describe('teamColor', () => {
-	it('usa a cor do placar quando existe', () => {
-		expect(teamColor({ team_a_color: '#05df72' }, 'a')).toBe('#05df72')
-	})
-
-	it('usa azul e laranja como padrão', () => {
-		expect(teamColor({}, 'a')).toBe('#51a2ff')
-		expect(teamColor({ team_b_color: null }, 'b')).toBe('#ff8904')
 	})
 })
 

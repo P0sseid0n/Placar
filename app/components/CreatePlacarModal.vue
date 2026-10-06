@@ -15,8 +15,8 @@ const schema = z.object({
 const initialState = () => ({
 	teamA: '',
 	teamB: '',
-	colorA: DEFAULT_TEAM_COLORS.a,
-	colorB: DEFAULT_TEAM_COLORS.b,
+	colorA: DEFAULT_TEAM_COLOR_IDS.a as string,
+	colorB: DEFAULT_TEAM_COLOR_IDS.b as string,
 	score: 1,
 })
 
@@ -41,6 +41,9 @@ watch(model, open => {
 		tried.value = false
 	}
 })
+
+const lookA = computed(() => teamLook(state.colorA))
+const lookB = computed(() => teamLook(state.colorB))
 
 const preview = computed(() => ({
 	a: state.teamA.trim(),
@@ -109,8 +112,8 @@ const fields = [
 		<template #content="{ close }">
 			<form novalidate class="flex min-h-0 flex-1 flex-col" @submit.prevent="onSubmit">
 				<div aria-hidden="true" class="flex h-[5px] shrink-0">
-					<span class="flex-1 transition-colors" :style="{ background: state.colorA }" />
-					<span class="flex-1 transition-colors" :style="{ background: state.colorB }" />
+					<span class="flex-1 transition-colors" :style="{ background: lookA.stripe }" />
+					<span class="flex-1 transition-colors" :style="{ background: lookB.stripe }" />
 				</div>
 
 				<div class="flex shrink-0 items-start justify-between gap-4 px-7 pt-6 max-sm:px-5">
@@ -137,12 +140,7 @@ const fields = [
 						class="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 rounded-feature bg-canvas px-5 py-4 ring-1 ring-raised ring-inset max-sm:gap-2 max-sm:px-3"
 					>
 						<div class="flex min-w-0 items-center gap-2.5">
-							<TeamMonogram
-								:name="preview.a || 'T 1'"
-								:color="state.colorA"
-								:size="40"
-								class="max-sm:hidden"
-							/>
+							<TeamMonogram :name="preview.a || 'T 1'" :look="lookA" :size="40" class="max-sm:hidden" />
 							<span
 								class="truncate text-[15px] font-semibold"
 								:class="preview.a ? 'text-white' : 'text-fg-dim'"
@@ -160,12 +158,7 @@ const fields = [
 							>
 								{{ preview.b || 'Time 2' }}
 							</span>
-							<TeamMonogram
-								:name="preview.b || 'T 2'"
-								:color="state.colorB"
-								:size="40"
-								class="max-sm:hidden"
-							/>
+							<TeamMonogram :name="preview.b || 'T 2'" :look="lookB" :size="40" class="max-sm:hidden" />
 						</div>
 					</div>
 
