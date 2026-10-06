@@ -1,6 +1,8 @@
 import { customAlphabet } from 'nanoid'
 import type { Database } from '~/types/database.types'
 
+type PlacarRow = Database['public']['Tables']['Placar']['Row']
+
 export default {
 	async create(payload: { score: number; teamA: string; teamB: string }): Promise<string> {
 		const alphabet = '0123456789abcdefghijklmnopqrstuvwxyz'
@@ -29,16 +31,25 @@ export default {
 		return id
 	},
 
-	async getAll(): Promise<Database['public']['Tables']['Placar']['Row'][]> {
+	/** Placares do usuário logado, do mais recente para o mais antigo */
+	async getAll(): Promise<PlacarRow[]> {
+		const user = useSupabaseUser()
 		const client = useSupabaseClient<Database>()
-		const placares = await client.from('Placar').select('*')
+
+		if (!user.value) return []
+
+		const placares = await client
+			.from('Placar')
+			.select('*')
+			.eq('creator', user.value.sub)
+			.order('created_at', { ascending: false })
 
 		if (placares.error) throw placares.error
 
 		return placares.data
 	},
 
-	async getById(id: string): Promise<Database['public']['Tables']['Placar']['Row'] | null> {
+	async getById(id: string): Promise<PlacarRow | null> {
 		const client = useSupabaseClient<Database>()
 		const placar = await client.from('Placar').select('*').eq('public_id', id).single()
 
@@ -51,8 +62,13 @@ export default {
 		return placar.data
 	},
 
-	async updateTeamScore(id: string, team: 'a' | 'b', type: 'increment' | 'decrement'): Promise<boolean> {
+	/**
+	 * Soma ou subtrai `score_increment` da pontuação do time, sem deixar ficar abaixo de 0.
+	 * Retorna a pontuação salva no banco, ou `null` se não foi possível salvar.
+	 */
+	async updateTeamScore(id: string, team: 'a' | 'b', type: 'increment' | 'decrement'): Promise<number | null> {
 		const client = useSupabaseClient<Database>()
+		const column = `team_${team}_score` as const
 
 		const { data, error: fetchError } = await client
 			.from('Placar')
@@ -62,41 +78,52 @@ export default {
 
 		if (fetchError) {
 			console.error('Fetch error:', fetchError)
-			return false
+			return null
 		}
 
-		const teamScore = data[`team_${team}_score`] ?? 0
+		const teamScore = data[column] ?? 0
+		const newScore = Math.max(0, teamScore + (type === 'increment' ? data.score_increment : -data.score_increment))
 
-		const newScore = teamScore + (type === 'increment' ? data.score_increment : -data.score_increment)
+		if (newScore === teamScore) return teamScore
 
-		await client
+		// O select depois do update devolve a linha salva; sem permissão (RLS) não volta nenhuma linha
+		const { data: saved, error: updateError } = await client
 			.from('Placar')
-			.update({
-				[`team_${team}_score`]: newScore,
-			})
+			.update({ [column]: newScore })
 			.eq('public_id', id)
+			.select(column)
+			.single()
 
-		return true
+		if (updateError) {
+			console.error('Update error:', updateError)
+			return null
+		}
+
+		return saved[column] ?? 0
 	},
 
-	async resetScore(id: string): Promise<boolean> {
+	async resetScore(id: string): Promise<void> {
 		const client = useSupabaseClient<Database>()
 
-		await client
+		const { data, error } = await client
 			.from('Placar')
 			.update({
 				team_a_score: 0,
 				team_b_score: 0,
 			})
 			.eq('public_id', id)
+			.select('id')
 
-		return true
+		if (error) throw error
+		if (!data.length) throw new Error('Placar não encontrado')
 	},
 
-	async deletePlacar(id: string): Promise<boolean> {
+	async deletePlacar(id: string): Promise<void> {
 		const client = useSupabaseClient<Database>()
-		await client.from('Placar').delete().eq('public_id', id)
 
-		return true
+		const { data, error } = await client.from('Placar').delete().eq('public_id', id).select('id')
+
+		if (error) throw error
+		if (!data.length) throw new Error('Placar não encontrado')
 	},
 }

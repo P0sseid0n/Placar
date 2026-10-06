@@ -27,7 +27,6 @@ watchEffect(() => {
 function goToPlacar() {
 	const routeId = id.value.slice(1).trim().toLowerCase()
 
-	console.log('Login -> goToPlacar -> routeId', routeId, routeId.length)
 	if (routeId.length < 6) return
 
 	navigateTo('/id/' + routeId)
@@ -60,7 +59,9 @@ function signInWithOAuth(provider: Provider) {
 			<USeparator class="my-12 opacity-75" label="Ou" />
 
 			<div class="relative flex items-center justify-center">
+				<label for="placar-id" class="sr-only">ID do placar</label>
 				<input
+					id="placar-id"
 					class="container-card outline-none w-full text-center text-base h-12 rounded px-2 py-4"
 					type="text"
 					placeholder="Digite o ID do Placar"
@@ -69,6 +70,8 @@ function signInWithOAuth(provider: Provider) {
 					@keypress.enter="goToPlacar"
 				/>
 				<button
+					type="button"
+					aria-label="Abrir placar"
 					@click="goToPlacar"
 					class="rounded text-3xl h-10 w-10 flex items-center justify-center absolute right-2 bg-white/5 hover:bg-white/10"
 				>

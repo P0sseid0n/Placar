@@ -8,7 +8,7 @@ const { placar } = defineProps<{
 
 <template>
 	<NuxtLink
-		:to="`/id/${placar.id}`"
+		:to="`/id/${placar.public_id}`"
 		class="group container-card h-36 w-64 relative cursor-pointer rounded-lg no-underline text-white flex flex-col items-center justify-center gap-3"
 	>
 		<div
@@ -16,7 +16,7 @@ const { placar } = defineProps<{
 		>
 			<UIcon name="i-iconamoon-arrow-right-2-light" />
 		</div>
-		<h3 class="w-full text-xl text-center font-normal"><span class="opacity-50">#</span>{{ placar.id }}</h3>
+		<h3 class="w-full text-xl text-center font-normal"><span class="opacity-50">#</span>{{ placar.public_id }}</h3>
 		<div class="card-content w-full flex items-center justify-between">
 			<div class="flex flex-col items-center content-center flex-1">
 				<h4 class="text-xs font-bold">{{ placar.team_a_name }}</h4>

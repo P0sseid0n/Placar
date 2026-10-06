@@ -1,220 +1,241 @@
-import { describe, it, expect, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { mockNuxtImport } from '@nuxt/test-utils/runtime'
+import placarService from './placar'
 
-describe('Placar Service - Cobertura 100%', () => {
-  it('deve testar todas as linhas do service placar', async () => {
-    // ============ MOCKS ============
-    const mockUser = vi.fn()
-    const mockClient = vi.fn()
+const { mockUser, mockClient } = vi.hoisted(() => ({
+	mockUser: vi.fn(),
+	mockClient: vi.fn(),
+}))
 
-    // Mock do nanoid
-    vi.doMock('nanoid', () => ({
-      customAlphabet: () => () => 'abc123'
-    }))
+// Os composables do Supabase são auto-imports do Nuxt: trocar via globalThis não funciona
+mockNuxtImport('useSupabaseUser', () => mockUser)
+mockNuxtImport('useSupabaseClient', () => mockClient)
 
-    // Substituir as funções globalmente antes de importar
-    const originalUseSupabaseUser = (globalThis as any).useSupabaseUser
-    const originalUseSupabaseClient = (globalThis as any).useSupabaseClient
-    
-    ;(globalThis as any).useSupabaseUser = mockUser
-    ;(globalThis as any).useSupabaseClient = mockClient
+vi.mock('nanoid', () => ({
+	customAlphabet: () => () => 'abc123',
+}))
 
-    try {
-      const { default: placarService } = await import('./placar')
+/**
+ * Query builder falso do supabase-js: todos os métodos encadeiam e o `await`
+ * resolve com `result`. `calls` guarda os métodos chamados, na ordem.
+ */
+function query(result: { data?: unknown; error?: unknown }) {
+	const calls: [string, unknown[]][] = []
+	const builder: any = new Proxy(
+		{},
+		{
+			get(_, prop) {
+				if (prop === 'then') {
+					return (resolve: (value: unknown) => void) => resolve({ data: null, error: null, ...result })
+				}
+				return (...args: unknown[]) => {
+					calls.push([String(prop), args])
+					return builder
+				}
+			},
+		},
+	)
+	return { builder, calls }
+}
 
-      // ============ TESTE 1: CREATE - Erro usuário não logado ============
-      mockUser.mockReturnValue({ value: null })
-      
-      let errorThrown = false
-      try {
-        await placarService.create({ score: 1, teamA: 'A', teamB: 'B' })
-      } catch (error: any) {
-        expect(error.message).toBe('Usuário não logado')
-        errorThrown = true
-      }
-      expect(errorThrown).toBe(true)
+/** Faz cada `client.from()` devolver a próxima query da lista */
+function useQueries(...queries: ReturnType<typeof query>[]) {
+	const from = vi.fn()
+	for (const q of queries) from.mockReturnValueOnce(q.builder)
+	mockClient.mockReturnValue({ from })
+	return from
+}
 
-      // ============ TESTE 2: CREATE - Sucesso ============
-      mockUser.mockReturnValue({ value: { sub: 'user123' } })
-      const mockInsert = vi.fn().mockResolvedValue({ error: null })
-      const mockFrom = vi.fn().mockReturnValue({ insert: mockInsert })
-      mockClient.mockReturnValue({ from: mockFrom })
+beforeEach(() => {
+	vi.clearAllMocks()
+	mockUser.mockReturnValue({ value: { sub: 'user123' } })
+})
 
-      const result = await placarService.create({ score: 2, teamA: 'Time A', teamB: 'Time B' })
-      expect(result).toBe('abc123')
+describe('placar.create', () => {
+	it('falha sem usuário logado', async () => {
+		mockUser.mockReturnValue({ value: null })
+		useQueries()
 
-      // ============ TESTE 3: CREATE - Erro no banco ============
-      const dbError = new Error('DB Error')
-      const mockInsertError = vi.fn().mockResolvedValue({ error: dbError })
-      const mockFromError = vi.fn().mockReturnValue({ insert: mockInsertError })
-      mockClient.mockReturnValue({ from: mockFromError })
+		await expect(placarService.create({ score: 1, teamA: 'A', teamB: 'B' })).rejects.toThrow('Usuário não logado')
+	})
 
-      let dbErrorThrown = false
-      try {
-        await placarService.create({ score: 1, teamA: 'A', teamB: 'B' })
-      } catch (error) {
-        expect(error).toBe(dbError)
-        dbErrorThrown = true
-      }
-      expect(dbErrorThrown).toBe(true)
+	it('cria o placar em nome do usuário e retorna o ID público', async () => {
+		const insert = query({ error: null })
+		useQueries(insert)
 
-      // ============ TESTE 4: GETALL - Sucesso ============
-      const mockData = [{ id: 1, public_id: 'test' }]
-      const mockSelect = vi.fn().mockResolvedValue({ data: mockData, error: null })
-      const mockFromGetAll = vi.fn().mockReturnValue({ select: mockSelect })
-      mockClient.mockReturnValue({ from: mockFromGetAll })
+		await expect(placarService.create({ score: 2, teamA: 'Time A', teamB: 'Time B' })).resolves.toBe('abc123')
+		expect(insert.calls).toEqual([
+			[
+				'insert',
+				[
+					{
+						creator: 'user123',
+						public_id: 'abc123',
+						score_increment: 2,
+						team_a_name: 'Time A',
+						team_a_score: 0,
+						team_b_name: 'Time B',
+						team_b_score: 0,
+					},
+				],
+			],
+		])
+	})
 
-      const allData = await placarService.getAll()
-      expect(allData).toEqual(mockData)
+	it('repassa o erro do banco', async () => {
+		const dbError = new Error('DB Error')
+		useQueries(query({ error: dbError }))
 
-      // ============ TESTE 5: GETALL - Erro ============
-      const getAllError = new Error('GetAll Error')
-      const mockSelectError = vi.fn().mockResolvedValue({ data: null, error: getAllError })
-      const mockFromGetAllError = vi.fn().mockReturnValue({ select: mockSelectError })
-      mockClient.mockReturnValue({ from: mockFromGetAllError })
+		await expect(placarService.create({ score: 1, teamA: 'A', teamB: 'B' })).rejects.toBe(dbError)
+	})
+})
 
-      let getAllErrorThrown = false
-      try {
-        await placarService.getAll()
-      } catch (error) {
-        expect(error).toBe(getAllError)
-        getAllErrorThrown = true
-      }
-      expect(getAllErrorThrown).toBe(true)
+describe('placar.getAll', () => {
+	it('busca só os placares do usuário, do mais recente para o mais antigo', async () => {
+		const rows = [{ id: 1, public_id: 'test' }]
+		const select = query({ data: rows })
+		useQueries(select)
 
-      // ============ TESTE 6: GETBYID - Sucesso ============
-      const mockPlacarData = { id: 1, public_id: 'abc123' }
-      const mockSingle = vi.fn().mockResolvedValue({ data: mockPlacarData, error: null })
-      const mockEq = vi.fn().mockReturnValue({ single: mockSingle })
-      const mockSelectById = vi.fn().mockReturnValue({ eq: mockEq })
-      const mockFromGetById = vi.fn().mockReturnValue({ select: mockSelectById })
-      mockClient.mockReturnValue({ from: mockFromGetById })
+		await expect(placarService.getAll()).resolves.toEqual(rows)
+		expect(select.calls).toEqual([
+			['select', ['*']],
+			['eq', ['creator', 'user123']],
+			['order', ['created_at', { ascending: false }]],
+		])
+	})
 
-      const foundData = await placarService.getById('abc123')
-      expect(foundData).toEqual(mockPlacarData)
+	it('retorna lista vazia sem usuário logado', async () => {
+		mockUser.mockReturnValue({ value: null })
+		const from = useQueries()
 
-      // ============ TESTE 7: GETBYID - Não encontrado (PGRST116) ============
-      const mockSingleNotFound = vi.fn().mockResolvedValue({ data: null, error: { code: 'PGRST116' } })
-      const mockEqNotFound = vi.fn().mockReturnValue({ single: mockSingleNotFound })
-      const mockSelectNotFound = vi.fn().mockReturnValue({ eq: mockEqNotFound })
-      const mockFromNotFound = vi.fn().mockReturnValue({ select: mockSelectNotFound })
-      mockClient.mockReturnValue({ from: mockFromNotFound })
+		await expect(placarService.getAll()).resolves.toEqual([])
+		expect(from).not.toHaveBeenCalled()
+	})
 
-      const notFoundData = await placarService.getById('notfound')
-      expect(notFoundData).toBeNull()
+	it('repassa o erro do banco', async () => {
+		const getAllError = new Error('GetAll Error')
+		useQueries(query({ error: getAllError }))
 
-      // ============ TESTE 8: GETBYID - Outro erro ============
-      const otherError = { code: 'OTHER', message: 'Other error' }
-      const mockSingleOtherError = vi.fn().mockResolvedValue({ data: null, error: otherError })
-      const mockEqOtherError = vi.fn().mockReturnValue({ single: mockSingleOtherError })
-      const mockSelectOtherError = vi.fn().mockReturnValue({ eq: mockEqOtherError })
-      const mockFromOtherError = vi.fn().mockReturnValue({ select: mockSelectOtherError })
-      mockClient.mockReturnValue({ from: mockFromOtherError })
+		await expect(placarService.getAll()).rejects.toBe(getAllError)
+	})
+})
 
-      let otherErrorThrown = false
-      try {
-        await placarService.getById('error')
-      } catch (error) {
-        expect(error).toBe(otherError)
-        otherErrorThrown = true
-      }
-      expect(otherErrorThrown).toBe(true)
+describe('placar.getById', () => {
+	it('busca pelo ID público', async () => {
+		const row = { id: 1, public_id: 'abc123' }
+		const select = query({ data: row })
+		useQueries(select)
 
-      // ============ TESTE 9: UPDATETEAMSCORE - Sucesso incremento ============
-      const mockScoreData = { team_a_score: 5, team_b_score: 3, score_increment: 2 }
-      const mockSingleUpdate = vi.fn().mockResolvedValue({ data: mockScoreData, error: null })
-      const mockEqUpdate = vi.fn().mockReturnValue({ single: mockSingleUpdate })
-      const mockSelectUpdate = vi.fn().mockReturnValue({ eq: mockEqUpdate })
-      
-      const mockUpdateEq = vi.fn().mockResolvedValue({ error: null })
-      const mockUpdate = vi.fn().mockReturnValue({ eq: mockUpdateEq })
-      
-      const mockFromUpdate = vi.fn()
-        .mockReturnValueOnce({ select: mockSelectUpdate })
-        .mockReturnValueOnce({ update: mockUpdate })
-      
-      mockClient.mockReturnValue({ from: mockFromUpdate })
+		await expect(placarService.getById('abc123')).resolves.toEqual(row)
+		expect(select.calls).toContainEqual(['eq', ['public_id', 'abc123']])
+	})
 
-      const updateResult = await placarService.updateTeamScore('abc123', 'a', 'increment')
-      expect(updateResult).toBe(true)
+	it('retorna null quando não encontra (PGRST116)', async () => {
+		useQueries(query({ error: { code: 'PGRST116' } }))
 
-      // ============ TESTE 10: UPDATETEAMSCORE - Decremento ============
-      vi.clearAllMocks()
-      const mockScoreDataDec = { team_a_score: 5, team_b_score: 4, score_increment: 1 }
-      const mockSingleDec = vi.fn().mockResolvedValue({ data: mockScoreDataDec, error: null })
-      const mockEqDec = vi.fn().mockReturnValue({ single: mockSingleDec })
-      const mockSelectDec = vi.fn().mockReturnValue({ eq: mockEqDec })
-      
-      const mockUpdateEqDec = vi.fn().mockResolvedValue({ error: null })
-      const mockUpdateDec = vi.fn().mockReturnValue({ eq: mockUpdateEqDec })
-      
-      const mockFromDec = vi.fn()
-        .mockReturnValueOnce({ select: mockSelectDec })
-        .mockReturnValueOnce({ update: mockUpdateDec })
-      
-      mockClient.mockReturnValue({ from: mockFromDec })
+		await expect(placarService.getById('naoexi')).resolves.toBeNull()
+	})
 
-      const decResult = await placarService.updateTeamScore('abc123', 'b', 'decrement')
-      expect(decResult).toBe(true)
+	it('repassa outros erros', async () => {
+		const otherError = { code: 'OTHER', message: 'Other error' }
+		useQueries(query({ error: otherError }))
 
-      // ============ TESTE 11: UPDATETEAMSCORE - Erro fetch ============
-      vi.clearAllMocks()
-      const fetchError = new Error('Fetch error')
-      const mockSingleFetchError = vi.fn().mockResolvedValue({ data: null, error: fetchError })
-      const mockEqFetchError = vi.fn().mockReturnValue({ single: mockSingleFetchError })
-      const mockSelectFetchError = vi.fn().mockReturnValue({ eq: mockEqFetchError })
-      const mockFromFetchError = vi.fn().mockReturnValue({ select: mockSelectFetchError })
-      
-      mockClient.mockReturnValue({ from: mockFromFetchError })
+		await expect(placarService.getById('abc123')).rejects.toBe(otherError)
+	})
+})
 
-      const errorResult = await placarService.updateTeamScore('abc123', 'a', 'increment')
-      expect(errorResult).toBe(false)
+describe('placar.updateTeamScore', () => {
+	const current = { team_a_score: 5, team_b_score: 3, score_increment: 2 }
 
-      // ============ TESTE 12: UPDATETEAMSCORE - Valores nulos ============
-      vi.clearAllMocks()
-      const mockNullData = { team_a_score: null, team_b_score: null, score_increment: 1 }
-      const mockSingleNull = vi.fn().mockResolvedValue({ data: mockNullData, error: null })
-      const mockEqNull = vi.fn().mockReturnValue({ single: mockSingleNull })
-      const mockSelectNull = vi.fn().mockReturnValue({ eq: mockEqNull })
-      
-      const mockUpdateEqNull = vi.fn().mockResolvedValue({ error: null })
-      const mockUpdateNull = vi.fn().mockReturnValue({ eq: mockUpdateEqNull })
-      
-      const mockFromNull = vi.fn()
-        .mockReturnValueOnce({ select: mockSelectNull })
-        .mockReturnValueOnce({ update: mockUpdateNull })
-      
-      mockClient.mockReturnValue({ from: mockFromNull })
+	it('soma o incremento e retorna a pontuação salva', async () => {
+		const update = query({ data: { team_a_score: 7 } })
+		useQueries(query({ data: current }), update)
 
-      const nullResult = await placarService.updateTeamScore('abc123', 'a', 'increment')
-      expect(nullResult).toBe(true)
+		await expect(placarService.updateTeamScore('abc123', 'a', 'increment')).resolves.toBe(7)
+		expect(update.calls[0]).toEqual(['update', [{ team_a_score: 7 }]])
+	})
 
-      // ============ TESTE 13: RESETSCORE ============
-      vi.clearAllMocks()
-      const mockResetEq = vi.fn().mockResolvedValue({ error: null })
-      const mockResetUpdate = vi.fn().mockReturnValue({ eq: mockResetEq })
-      const mockFromReset = vi.fn().mockReturnValue({ update: mockResetUpdate })
-      mockClient.mockReturnValue({ from: mockFromReset })
+	it('subtrai o incremento', async () => {
+		const update = query({ data: { team_b_score: 1 } })
+		useQueries(query({ data: current }), update)
 
-      const resetResult = await placarService.resetScore('abc123')
-      expect(resetResult).toBe(true)
+		await expect(placarService.updateTeamScore('abc123', 'b', 'decrement')).resolves.toBe(1)
+		expect(update.calls[0]).toEqual(['update', [{ team_b_score: 1 }]])
+	})
 
-      // ============ TESTE 14: DELETEPLACAR ============
-      vi.clearAllMocks()
-      const mockDeleteEq = vi.fn().mockResolvedValue({ error: null })
-      const mockDelete = vi.fn().mockReturnValue({ eq: mockDeleteEq })
-      const mockFromDelete = vi.fn().mockReturnValue({ delete: mockDelete })
-      mockClient.mockReturnValue({ from: mockFromDelete })
+	it('não deixa a pontuação ficar negativa', async () => {
+		const update = query({ data: { team_b_score: 0 } })
+		useQueries(query({ data: { team_a_score: 0, team_b_score: 1, score_increment: 3 } }), update)
 
-      const deleteResult = await placarService.deletePlacar('abc123')
-      expect(deleteResult).toBe(true)
+		await expect(placarService.updateTeamScore('abc123', 'b', 'decrement')).resolves.toBe(0)
+		expect(update.calls[0]).toEqual(['update', [{ team_b_score: 0 }]])
+	})
 
-      console.log('✅ Todas as 103 linhas do service foram testadas!')
-      console.log('🎯 100% de cobertura alcançada!')
+	it('não grava nada quando o time já está em 0 e o clique é para tirar', async () => {
+		const from = useQueries(query({ data: { team_a_score: 0, team_b_score: 0, score_increment: 1 } }))
 
-    } finally {
-      // Restaurar funções originais
-      ;(globalThis as any).useSupabaseUser = originalUseSupabaseUser
-      ;(globalThis as any).useSupabaseClient = originalUseSupabaseClient
-    }
-  })
+		await expect(placarService.updateTeamScore('abc123', 'a', 'decrement')).resolves.toBe(0)
+		expect(from).toHaveBeenCalledTimes(1)
+	})
+
+	it('trata pontuação nula como 0', async () => {
+		const update = query({ data: { team_a_score: 1 } })
+		useQueries(query({ data: { team_a_score: null, team_b_score: null, score_increment: 1 } }), update)
+
+		await expect(placarService.updateTeamScore('abc123', 'a', 'increment')).resolves.toBe(1)
+	})
+
+	it('retorna null se não conseguir ler o placar', async () => {
+		useQueries(query({ error: new Error('Fetch error') }))
+
+		await expect(placarService.updateTeamScore('abc123', 'a', 'increment')).resolves.toBeNull()
+	})
+
+	it('retorna null se não conseguir gravar (ex.: sem permissão)', async () => {
+		useQueries(query({ data: current }), query({ error: { code: 'PGRST116' } }))
+
+		await expect(placarService.updateTeamScore('abc123', 'a', 'increment')).resolves.toBeNull()
+	})
+})
+
+describe('placar.resetScore', () => {
+	it('zera os dois times', async () => {
+		const update = query({ data: [{ id: 1 }] })
+		useQueries(update)
+
+		await expect(placarService.resetScore('abc123')).resolves.toBeUndefined()
+		expect(update.calls[0]).toEqual(['update', [{ team_a_score: 0, team_b_score: 0 }]])
+	})
+
+	it('falha se nenhuma linha foi alterada (placar inexistente ou sem permissão)', async () => {
+		useQueries(query({ data: [] }))
+
+		await expect(placarService.resetScore('abc123')).rejects.toThrow('Placar não encontrado')
+	})
+
+	it('repassa o erro do banco', async () => {
+		const dbError = new Error('DB Error')
+		useQueries(query({ error: dbError }))
+
+		await expect(placarService.resetScore('abc123')).rejects.toBe(dbError)
+	})
+})
+
+describe('placar.deletePlacar', () => {
+	it('apaga pelo ID público', async () => {
+		const del = query({ data: [{ id: 1 }] })
+		useQueries(del)
+
+		await expect(placarService.deletePlacar('abc123')).resolves.toBeUndefined()
+		expect(del.calls.slice(0, 2)).toEqual([
+			['delete', []],
+			['eq', ['public_id', 'abc123']],
+		])
+	})
+
+	it('falha se nenhuma linha foi apagada (placar inexistente ou sem permissão)', async () => {
+		useQueries(query({ data: [] }))
+
+		await expect(placarService.deletePlacar('abc123')).rejects.toThrow('Placar não encontrado')
+	})
 })

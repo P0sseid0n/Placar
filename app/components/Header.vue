@@ -16,9 +16,9 @@ watchEffect(() => {
 </script>
 
 <template>
-	<header class="w-full h-32 border-b border-zinc-800">
-		<div class="container h-full flex flex-row items-center px-[10%] mx-auto">
-			<div class="w-1/4">
+	<header class="w-full h-20 sm:h-32 border-b border-zinc-800">
+		<div class="container h-full flex flex-row items-center gap-2 px-4 sm:px-[10%] mx-auto">
+			<div class="shrink-0 sm:w-1/4">
 				<UButton
 					icon="i-mingcute-align-arrow-left-line"
 					color="neutral"
@@ -30,11 +30,11 @@ watchEffect(() => {
 				/>
 			</div>
 
-			<h1 class="flex-1 text-5xl font-bold text-center">Placar</h1>
+			<h1 class="flex-1 text-2xl sm:text-5xl font-bold text-center">Placar</h1>
 
-			<div class="w-1/4 flex flex-row items-center justify-end gap-1">
+			<div class="shrink-0 sm:w-1/4 min-w-0 flex flex-row items-center justify-end gap-1">
 				<UIcon name="i-material-symbols-person" class="text-2xl" />
-				<span class="text-md font-semibold"> {{ user?.user_metadata.full_name }} </span>
+				<span class="hidden sm:inline truncate font-semibold"> {{ user?.user_metadata.full_name }} </span>
 			</div>
 		</div>
 	</header>
