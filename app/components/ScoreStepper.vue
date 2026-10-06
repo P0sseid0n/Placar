@@ -17,7 +17,7 @@ const {
 
 const sizes = {
 	lg: { button: 'size-11', icon: 'size-5', value: 'w-16 text-[32px]' },
-	md: { button: 'size-10', icon: 'size-[18px]', value: 'w-14 text-[28px]' },
+	md: { button: 'size-10', icon: 'size-4.5', value: 'w-14 text-[28px]' },
 }
 </script>
 

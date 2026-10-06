@@ -47,7 +47,7 @@ useHead({ title: () => `Placar | ${content.value.title}` })
 
 <template>
 	<div class="flex min-h-screen flex-col bg-canvas bg-dots text-fg">
-		<header class="flex h-[72px] items-center px-[clamp(16px,5vw,64px)]">
+		<header class="flex h-18 items-center px-[clamp(16px,5vw,64px)]">
 			<NuxtLink to="/" class="rounded-btn" aria-label="Placar, ir para o início">
 				<AppLogo />
 			</NuxtLink>
@@ -67,7 +67,7 @@ useHead({ title: () => `Placar | ${content.value.title}` })
 			</div>
 
 			<h1 class="text-[clamp(24px,3vw,32px)] leading-tight font-bold text-white">{{ content.title }}</h1>
-			<p class="max-w-[420px] text-base text-fg-soft">{{ content.text }}</p>
+			<p class="max-w-105 text-base text-fg-soft">{{ content.text }}</p>
 
 			<div class="mt-5 flex flex-wrap justify-center gap-2.5">
 				<UButton

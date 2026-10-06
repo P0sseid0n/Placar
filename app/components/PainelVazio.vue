@@ -15,7 +15,7 @@ const steps = [
 	>
 		<div
 			aria-hidden="true"
-			class="flex items-center gap-5 rounded-feature bg-surface px-[22px] py-[18px] shadow-[inset_0_0_0_1px_var(--color-raised),0_20px_50px_rgba(0,0,0,0.35)]"
+			class="flex items-center gap-5 rounded-feature bg-surface px-5.5 py-4.5 shadow-[inset_0_0_0_1px_var(--color-raised),0_20px_50px_rgba(0,0,0,0.35)]"
 		>
 			<span
 				class="flex size-11 items-center justify-center rounded-card border border-dashed border-faint text-lg font-bold text-fg-dim"
@@ -30,7 +30,7 @@ const steps = [
 
 		<div class="flex flex-col items-center gap-2">
 			<h2 id="vazio-titulo" class="text-2xl font-bold text-white">Nenhum placar criado ainda</h2>
-			<p class="max-w-[420px] text-base text-fg-soft">
+			<p class="max-w-105 text-base text-fg-soft">
 				Crie seu primeiro placar e compartilhe o ID com quem vai acompanhar o jogo.
 			</p>
 		</div>
@@ -40,11 +40,11 @@ const steps = [
 			variant="solid"
 			icon="i-lucide-plus"
 			label="Criar primeiro placar"
-			class="h-[52px] gap-2 rounded-field px-[22px] text-base font-semibold hover:bg-fg"
+			class="h-13 gap-2 rounded-field px-5.5 text-base font-semibold hover:bg-fg"
 			@click="$emit('create')"
 		/>
 
-		<ol class="mt-2 grid w-full max-w-[760px] grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 text-left">
+		<ol class="mt-2 grid w-full max-w-190 grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 text-left">
 			<li
 				v-for="(step, index) in steps"
 				:key="step.title"

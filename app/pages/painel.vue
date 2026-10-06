@@ -94,7 +94,7 @@ const filtered = computed(() => {
 							<div
 								class="flex h-11 flex-[1_1_220px] items-center gap-2 rounded-btn bg-surface px-3 text-fg-soft ring-1 ring-raised ring-inset focus-within:ring-fg-dim"
 							>
-								<UIcon name="i-lucide-search" class="size-[18px] shrink-0" aria-hidden="true" />
+								<UIcon name="i-lucide-search" class="size-4.5 shrink-0" aria-hidden="true" />
 								<input
 									id="busca"
 									v-model="search"
@@ -131,7 +131,7 @@ const filtered = computed(() => {
 									aria-hidden="true"
 									class="flex size-11 items-center justify-center rounded-full ring-1 ring-edge ring-inset"
 								>
-									<UIcon name="i-lucide-plus" class="size-[22px]" />
+									<UIcon name="i-lucide-plus" class="size-5.5" />
 								</span>
 								<span class="text-sm font-semibold">Novo placar</span>
 							</button>

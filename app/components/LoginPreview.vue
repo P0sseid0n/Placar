@@ -36,7 +36,7 @@ const lookB = teamLook(DEFAULT_TEAM_COLOR_IDS.b)
 		aria-hidden="true"
 		class="overflow-hidden rounded-panel bg-surface shadow-[inset_0_0_0_1px_var(--color-raised),0_24px_60px_rgba(0,0,0,0.35)]"
 	>
-		<div class="flex h-[5px]">
+		<div class="flex h-1.25">
 			<span class="flex-1" :style="{ background: lookA.stripe }" />
 			<span class="flex-1" :style="{ background: lookB.stripe }" />
 		</div>

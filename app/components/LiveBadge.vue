@@ -6,7 +6,7 @@ const { size = 'md' } = defineProps<{ size?: 'sm' | 'md' }>()
 <template>
 	<span
 		class="inline-flex items-center rounded-full bg-success/8 font-semibold text-success ring-1 ring-success/25 ring-inset"
-		:class="size === 'sm' ? 'h-[26px] gap-1.5 px-2.5 text-xs' : 'h-8 gap-2 px-3 text-[13px]'"
+		:class="size === 'sm' ? 'h-6.5 gap-1.5 px-2.5 text-xs' : 'h-8 gap-2 px-3 text-[13px]'"
 	>
 		<span
 			class="rounded-full bg-success"

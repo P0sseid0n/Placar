@@ -6,9 +6,9 @@
 			<div
 				v-for="n in 4"
 				:key="n"
-				class="flex h-49 animate-skeleton flex-col gap-[18px] rounded-card bg-surface px-5 py-[18px] ring-1 ring-raised ring-inset"
+				class="flex h-49 animate-skeleton flex-col gap-4.5 rounded-card bg-surface px-5 py-4.5 ring-1 ring-raised ring-inset"
 			>
-				<span class="h-[22px] w-[72px] rounded-chip bg-raised" />
+				<span class="h-5.5 w-18 rounded-chip bg-raised" />
 				<span class="h-7 rounded-chip bg-raised" />
 				<span class="h-7 rounded-chip bg-raised" />
 			</div>

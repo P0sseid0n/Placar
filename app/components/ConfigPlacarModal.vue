@@ -124,13 +124,13 @@ const teams = [
 	>
 		<template #content="{ close }">
 			<form novalidate class="flex min-h-0 flex-1 flex-col" @submit.prevent="save">
-				<div aria-hidden="true" class="flex h-[5px] shrink-0">
+				<div aria-hidden="true" class="flex h-1.25 shrink-0">
 					<span class="flex-1" :style="{ background: lookA.stripe }" />
 					<span class="flex-1" :style="{ background: lookB.stripe }" />
 				</div>
 
 				<div
-					class="flex shrink-0 items-start justify-between gap-4 border-b border-raised px-7 pt-[22px] pb-[18px] max-sm:px-5"
+					class="flex shrink-0 items-start justify-between gap-4 border-b border-raised px-7 pt-5.5 pb-4.5 max-sm:px-5"
 				>
 					<div class="flex min-w-0 flex-col gap-1">
 						<h2 class="text-2xl font-bold text-white">Configurações</h2>
@@ -151,7 +151,7 @@ const teams = [
 					/>
 				</div>
 
-				<div class="flex min-h-0 flex-col gap-[26px] overflow-y-auto px-7 py-6 max-sm:px-5">
+				<div class="flex min-h-0 flex-col gap-6.5 overflow-y-auto px-7 py-6 max-sm:px-5">
 					<!-- Times -->
 					<fieldset class="flex flex-col gap-2.5">
 						<legend class="mb-2.5 text-sm font-semibold text-white">Times</legend>
@@ -178,7 +178,7 @@ const teams = [
 							<span
 								v-if="errors[team.field]"
 								:id="`cfg-${team.key}-erro`"
-								class="pl-[54px] text-[13px] leading-5 text-error"
+								class="pl-13.5 text-[13px] leading-5 text-error"
 							>
 								{{ errors[team.field] }}
 							</span>
@@ -210,7 +210,7 @@ const teams = [
 								role="radio"
 								:aria-checked="draft.scoreSize === size.value"
 								:disabled="busy"
-								class="flex h-[76px] cursor-pointer flex-col items-center justify-center gap-1.5 rounded-btn transition-colors"
+								class="flex h-19 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-btn transition-colors"
 								:class="
 									draft.scoreSize === size.value
 										? 'bg-white text-canvas'
@@ -229,7 +229,7 @@ const teams = [
 						</div>
 					</fieldset>
 
-					<div class="flex flex-col gap-3 border-t border-raised pt-[22px]">
+					<div class="flex flex-col gap-3 border-t border-raised pt-5.5">
 						<!-- Reiniciar -->
 						<div class="flex flex-wrap items-center justify-between gap-3">
 							<div class="flex flex-col gap-0.5">
@@ -242,7 +242,7 @@ const teams = [
 								role="status"
 								class="inline-flex items-center gap-2 text-sm font-semibold text-success"
 							>
-								<UIcon name="i-lucide-circle-check" class="size-[18px]" aria-hidden="true" />
+								<UIcon name="i-lucide-circle-check" class="size-4.5" aria-hidden="true" />
 								Placar zerado
 							</span>
 							<div v-else-if="step === 'reset' || step === 'resetting'" class="flex items-center gap-1.5">
@@ -284,7 +284,7 @@ const teams = [
 						>
 							<div class="flex flex-[1_1_220px] flex-col gap-0.5">
 								<span class="text-sm font-semibold text-error">Apagar placar</span>
-								<span class="text-[13px] leading-[19px] text-fg-soft"
+								<span class="text-[13px] leading-4.75 text-fg-soft"
 									>O placar e o ID deixam de existir. Não dá para desfazer.</span
 								>
 							</div>
@@ -331,7 +331,7 @@ const teams = [
 						variant="ghost"
 						label="Cancelar"
 						:disabled="busy"
-						class="h-12 rounded-field px-[18px] text-[15px] font-semibold text-fg-strong hover:bg-raised hover:text-white"
+						class="h-12 rounded-field px-4.5 text-[15px] font-semibold text-fg-strong hover:bg-raised hover:text-white"
 						@click="close"
 					/>
 					<UButton

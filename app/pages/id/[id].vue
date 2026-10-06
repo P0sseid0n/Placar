@@ -274,7 +274,7 @@ function handleDeleted() {
 		/>
 
 		<div
-			class="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-6"
+			class="mx-auto flex w-full max-w-360 flex-1 flex-col gap-6"
 			:class="
 				telao
 					? 'px-[clamp(16px,3vw,40px)] py-6'
@@ -292,7 +292,7 @@ function handleDeleted() {
 					@click="copyId"
 				>
 					<span><span class="text-fg-dim">#</span>{{ placar.public_id }}</span>
-					<UIcon name="i-lucide-copy" class="size-[15px] opacity-60" aria-hidden="true" />
+					<UIcon name="i-lucide-copy" class="size-3.75 opacity-60" aria-hidden="true" />
 				</button>
 
 				<template v-if="isOwner">

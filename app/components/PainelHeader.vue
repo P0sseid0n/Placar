@@ -24,7 +24,7 @@ watchEffect(() => {
 
 <template>
 	<header class="border-b border-raised">
-		<div class="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-4 px-[clamp(16px,5vw,64px)]">
+		<div class="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-[clamp(16px,5vw,64px)]">
 			<NuxtLink to="/painel" class="rounded-btn" aria-label="Placar, ir para o painel">
 				<AppLogo />
 			</NuxtLink>

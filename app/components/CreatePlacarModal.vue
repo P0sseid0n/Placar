@@ -111,7 +111,7 @@ const fields = [
 	>
 		<template #content="{ close }">
 			<form novalidate class="flex min-h-0 flex-1 flex-col" @submit.prevent="onSubmit">
-				<div aria-hidden="true" class="flex h-[5px] shrink-0">
+				<div aria-hidden="true" class="flex h-1.25 shrink-0">
 					<span class="flex-1 transition-colors" :style="{ background: lookA.stripe }" />
 					<span class="flex-1 transition-colors" :style="{ background: lookB.stripe }" />
 				</div>
@@ -209,7 +209,7 @@ const fields = [
 						variant="ghost"
 						label="Cancelar"
 						:disabled="loading"
-						class="h-12 rounded-field px-[18px] text-[15px] font-semibold text-fg-strong hover:bg-raised hover:text-white"
+						class="h-12 rounded-field px-4.5 text-[15px] font-semibold text-fg-strong hover:bg-raised hover:text-white"
 						@click="close"
 					/>
 					<UButton

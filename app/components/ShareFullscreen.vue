@@ -53,7 +53,7 @@ onBeforeUnmount(() => {
 			role="dialog"
 			aria-modal="true"
 			aria-label="QR code em tela cheia"
-			class="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-[clamp(20px,3vh,32px)] overflow-y-auto bg-canvas bg-dots px-4 py-12 text-center"
+			class="fixed inset-0 z-100 flex flex-col items-center justify-center gap-[clamp(20px,3vh,32px)] overflow-y-auto bg-canvas bg-dots px-4 py-12 text-center"
 		>
 			<UButton
 				ref="closeButton"
@@ -74,7 +74,7 @@ onBeforeUnmount(() => {
 			</div>
 
 			<div
-				class="aspect-square w-[min(56vh,80vw,440px)] rounded-screen bg-white p-[18px] shadow-[0_32px_80px_rgba(0,0,0,0.5)]"
+				class="aspect-square w-[min(56vh,80vw,440px)] rounded-screen bg-white p-4.5 shadow-[0_32px_80px_rgba(0,0,0,0.5)]"
 			>
 				<QrCode :text="url" :label="`QR code com o link do placar #${publicId}`" />
 			</div>

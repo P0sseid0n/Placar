@@ -11,10 +11,10 @@ defineEmits<{ retry: [] }>()
 			aria-hidden="true"
 			class="flex size-16 items-center justify-center rounded-feature bg-error/10 ring-1 ring-error/30 ring-inset"
 		>
-			<UIcon name="i-lucide-triangle-alert" class="size-[30px] text-error" />
+			<UIcon name="i-lucide-triangle-alert" class="size-7.5 text-error" />
 		</span>
-		<h2 class="text-[22px] leading-[30px] font-bold text-white">Não foi possível carregar seus placares</h2>
-		<p class="max-w-[400px] text-[15px] leading-[22px] text-fg-soft">
+		<h2 class="text-[22px] leading-7.5 font-bold text-white">Não foi possível carregar seus placares</h2>
+		<p class="max-w-100 text-[15px] leading-5.5 text-fg-soft">
 			Verifique sua conexão e tente de novo. Seus placares continuam salvos.
 		</p>
 		<UButton
@@ -22,7 +22,7 @@ defineEmits<{ retry: [] }>()
 			variant="subtle"
 			icon="i-lucide-rotate-cw"
 			label="Tentar novamente"
-			class="mt-2 h-12 gap-2 rounded-field bg-raised px-[18px] text-[15px] font-semibold text-white ring-edge hover:bg-edge"
+			class="mt-2 h-12 gap-2 rounded-field bg-raised px-4.5 text-[15px] font-semibold text-white ring-edge hover:bg-edge"
 			@click="$emit('retry')"
 		/>
 	</section>

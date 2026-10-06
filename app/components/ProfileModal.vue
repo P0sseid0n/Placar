@@ -134,9 +134,9 @@ const infoItems = computed(() => [
 					</div>
 
 					<div class="relative z-10 flex items-start gap-4 px-7 max-sm:px-5">
-						<UserAvatar :size="76" class="-mt-[38px] shadow-[0_0_0_5px_var(--color-surface)]" />
+						<UserAvatar :size="76" class="-mt-9.5 shadow-[0_0_0_5px_var(--color-surface)]" />
 						<div class="flex min-w-0 flex-col pt-2.5">
-							<h2 class="truncate text-[22px] leading-[30px] font-bold text-white">{{ fullName }}</h2>
+							<h2 class="truncate text-[22px] leading-7.5 font-bold text-white">{{ fullName }}</h2>
 							<span class="inline-flex items-center gap-1.5 text-[13px] text-fg-soft">
 								<UIcon name="i-simple-icons-discord" class="size-3.5" aria-hidden="true" />
 								Conectado com Discord
@@ -147,7 +147,7 @@ const infoItems = computed(() => [
 					<div
 						role="tablist"
 						aria-label="Seções do perfil"
-						class="mt-[18px] flex gap-1 border-b border-raised px-7 max-sm:px-5"
+						class="mt-4.5 flex gap-1 border-b border-raised px-7 max-sm:px-5"
 						@keydown="onTabKeydown"
 					>
 						<button
@@ -193,7 +193,7 @@ const infoItems = computed(() => [
 									:class="
 										item.number
 											? 'font-score text-[34px] leading-none'
-											: 'truncate text-[17px] leading-[34px]'
+											: 'truncate text-[17px] leading-8.5'
 									"
 								>
 									{{ item.value }}
@@ -233,7 +233,7 @@ const infoItems = computed(() => [
 							>
 								<div class="flex flex-[1_1_220px] flex-col gap-0.5">
 									<span class="text-sm font-semibold text-error">Excluir conta</span>
-									<span role="status" class="text-[13px] leading-[19px] text-fg-soft">{{
+									<span role="status" class="text-[13px] leading-4.75 text-fg-soft">{{
 										deleteText
 									}}</span>
 								</div>

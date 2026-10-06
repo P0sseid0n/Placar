@@ -32,7 +32,7 @@ const scoreClass = (team: 'a' | 'b') =>
 				<div class="flex min-w-0 items-center gap-3.5">
 					<TeamMonogram :name="placar.team_a_name" :look="lookA" class="max-sm:hidden" />
 					<div class="flex min-w-0 flex-col">
-						<span class="text-base font-semibold max-sm:line-clamp-2 max-sm:break-words sm:truncate">{{
+						<span class="text-base font-semibold max-sm:line-clamp-2 max-sm:wrap-break-word sm:truncate">{{
 							placar.team_a_name
 						}}</span>
 						<span class="text-[13px] text-fg-soft">{{ summary.tag.a }}</span>
@@ -47,7 +47,7 @@ const scoreClass = (team: 'a' | 'b') =>
 
 				<div class="flex min-w-0 items-center justify-end gap-3.5 text-right">
 					<div class="flex min-w-0 flex-col">
-						<span class="text-base font-semibold max-sm:line-clamp-2 max-sm:break-words sm:truncate">{{
+						<span class="text-base font-semibold max-sm:line-clamp-2 max-sm:wrap-break-word sm:truncate">{{
 							placar.team_b_name
 						}}</span>
 						<span class="text-[13px] text-fg-soft">{{ summary.tag.b }}</span>
@@ -67,7 +67,7 @@ const scoreClass = (team: 'a' | 'b') =>
 					class="inline-flex h-11 items-center gap-1.5 rounded-btn bg-white px-4 text-sm font-semibold text-canvas group-hover:bg-fg"
 				>
 					Abrir placar
-					<UIcon name="i-lucide-arrow-right" class="size-[18px]" aria-hidden="true" />
+					<UIcon name="i-lucide-arrow-right" class="size-4.5" aria-hidden="true" />
 				</span>
 			</div>
 		</div>

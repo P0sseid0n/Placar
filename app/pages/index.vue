@@ -63,12 +63,12 @@ const highlights = [
 
 <template>
 	<main class="flex min-h-screen items-center justify-center bg-canvas bg-dots p-4 py-12 sm:p-12">
-		<div class="flex w-full max-w-[1180px] flex-wrap items-center justify-center gap-[clamp(40px,6vw,96px)]">
-			<section class="flex max-w-[600px] min-w-0 flex-[1_1_480px] flex-col gap-8">
+		<div class="flex w-full max-w-295 flex-wrap items-center justify-center gap-[clamp(40px,6vw,96px)]">
+			<section class="flex max-w-150 min-w-0 flex-[1_1_480px] flex-col gap-8">
 				<div class="flex flex-col gap-1">
 					<p class="text-lg font-medium text-fg/75">Bem-vindo(a) ao</p>
 					<AppLogo tag="h1" fluid class="text-[clamp(64px,10vw,112px)] tracking-[-2px]" />
-					<p class="mt-3 max-w-[460px] text-lg text-fg-strong">
+					<p class="mt-3 max-w-115 text-lg text-fg-strong">
 						Crie o placar do seu jogo em segundos e compartilhe com todo mundo por um ID.
 					</p>
 				</div>
@@ -81,7 +81,7 @@ const highlights = [
 						:key="item.text"
 						class="flex items-center gap-2 text-sm text-fg-strong"
 					>
-						<UIcon :name="item.icon" class="size-[18px] text-fg-soft" aria-hidden="true" />
+						<UIcon :name="item.icon" class="size-4.5 text-fg-soft" aria-hidden="true" />
 						{{ item.text }}
 					</li>
 				</ul>
@@ -92,7 +92,7 @@ const highlights = [
 				class="flex min-w-0 flex-[0_1_420px] flex-col rounded-panel bg-surface p-[clamp(24px,3vw,36px)] shadow-[inset_0_0_0_1px_var(--color-raised),0_24px_60px_rgba(0,0,0,0.35)]"
 			>
 				<h2 id="entrar" class="text-2xl font-bold text-white">Entrar</h2>
-				<p class="mt-1.5 mb-6 text-[15px] leading-[22px] text-fg-soft">
+				<p class="mt-1.5 mb-6 text-[15px] leading-5.5 text-fg-soft">
 					Entre para criar e controlar seus placares.
 				</p>
 
@@ -103,7 +103,7 @@ const highlights = [
 					icon="i-simple-icons-discord"
 					label="Entrar com Discord"
 					:loading="signingIn"
-					class="h-[52px] gap-2.5 rounded-field text-base font-semibold hover:bg-fg"
+					class="h-13 gap-2.5 rounded-field text-base font-semibold hover:bg-fg"
 					@click="signInWithDiscord"
 				/>
 
@@ -116,7 +116,7 @@ const highlights = [
 				<form class="flex flex-col gap-2" novalidate @submit.prevent="goToPlacar">
 					<label for="placar-id" class="text-sm font-semibold text-white">ID do placar</label>
 					<div
-						class="flex h-[52px] items-center gap-1.5 rounded-field bg-canvas py-1.5 pr-1.5 pl-3.5 ring-1 transition-shadow ring-inset"
+						class="flex h-13 items-center gap-1.5 rounded-field bg-canvas py-1.5 pr-1.5 pl-3.5 ring-1 transition-shadow ring-inset"
 						:class="showError ? 'ring-error' : 'ring-edge focus-within:ring-fg-soft'"
 					>
 						<span aria-hidden="true" class="font-id text-[17px] text-faint">#</span>

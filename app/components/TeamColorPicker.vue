@@ -73,7 +73,7 @@ function pick(id: string) {
 				/>
 				<span class="truncate">{{ current.name }}</span>
 			</span>
-			<UIcon name="i-lucide-chevron-down" class="size-[18px] shrink-0 text-fg-soft" aria-hidden="true" />
+			<UIcon name="i-lucide-chevron-down" class="size-4.5 shrink-0 text-fg-soft" aria-hidden="true" />
 		</button>
 
 		<template #content>
@@ -95,7 +95,7 @@ function pick(id: string) {
 							@click="pick(color.id)"
 						>
 							<span
-								class="size-[26px] rounded-full"
+								class="size-6.5 rounded-full"
 								:style="{ background: color.dot, boxShadow: color.ring }"
 							/>
 						</button>

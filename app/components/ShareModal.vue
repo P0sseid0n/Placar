@@ -61,11 +61,9 @@ function onAfterEnter() {
 	>
 		<template #content="{ close }">
 			<div class="flex min-h-0 flex-1 flex-col">
-				<div
-					class="flex shrink-0 items-start justify-between gap-4 border-b border-raised px-6 pt-[22px] pb-[18px]"
-				>
+				<div class="flex shrink-0 items-start justify-between gap-4 border-b border-raised px-6 pt-5.5 pb-4.5">
 					<div class="flex min-w-0 flex-col gap-1">
-						<h2 class="text-[22px] leading-[30px] font-bold text-white">Compartilhar placar</h2>
+						<h2 class="text-[22px] leading-7.5 font-bold text-white">Compartilhar placar</h2>
 						<span class="text-sm text-fg-soft">Quem abrir acompanha ao vivo, sem precisar entrar.</span>
 					</div>
 					<UButton
@@ -81,7 +79,7 @@ function onAfterEnter() {
 
 				<div class="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto overscroll-contain p-6">
 					<div class="flex flex-col items-center gap-3">
-						<div class="size-[216px] rounded-feature bg-white p-2.5">
+						<div class="size-54 rounded-feature bg-white p-2.5">
 							<QrCode :text="url" :label="`QR code com o link do placar #${publicId}`" />
 						</div>
 						<span class="inline-flex items-center gap-1.5 text-[13px] text-fg-soft">

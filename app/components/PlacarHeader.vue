@@ -16,14 +16,14 @@ defineEmits<{
 <template>
 	<header class="border-b border-raised">
 		<div
-			class="mx-auto grid h-[72px] max-w-[1440px] grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-[clamp(16px,4vw,48px)]"
+			class="mx-auto grid h-18 max-w-360 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-[clamp(16px,4vw,48px)]"
 		>
 			<div class="flex justify-start">
 				<NuxtLink
 					:to="isOwner ? '/painel' : '/'"
 					class="inline-flex h-11 items-center gap-1 rounded-btn pr-3.5 pl-2 text-sm font-semibold text-fg-strong transition-colors hover:bg-raised hover:text-white"
 				>
-					<UIcon name="i-lucide-chevron-left" class="size-[22px]" aria-hidden="true" />
+					<UIcon name="i-lucide-chevron-left" class="size-5.5" aria-hidden="true" />
 					{{ isOwner ? 'Painel' : 'Início' }}
 				</NuxtLink>
 			</div>
@@ -41,7 +41,7 @@ defineEmits<{
 						aria-label="Compartilhar"
 						aria-haspopup="dialog"
 						class="h-11 gap-2 rounded-btn bg-raised px-3.5 text-sm font-semibold text-fg ring-edge hover:bg-edge"
-						:ui="{ leadingIcon: 'size-[18px]' }"
+						:ui="{ leadingIcon: 'size-4.5' }"
 						@click="$emit('share')"
 					>
 						<span class="max-[720px]:hidden">Compartilhar</span>
@@ -64,7 +64,7 @@ defineEmits<{
 					icon="i-lucide-scan"
 					aria-label="Modo telão"
 					class="h-11 gap-2 rounded-btn px-3.5 text-sm font-semibold hover:bg-fg"
-					:ui="{ leadingIcon: 'size-[18px]' }"
+					:ui="{ leadingIcon: 'size-4.5' }"
 					@click="$emit('telao')"
 				>
 					<span class="max-[720px]:hidden">Modo telão</span>

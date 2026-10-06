@@ -27,7 +27,7 @@ const ariaLabel = computed(
 	<NuxtLink
 		:to="`/id/${placar.public_id}`"
 		:aria-label="ariaLabel"
-		class="group flex h-full flex-col gap-4 rounded-card bg-surface px-5 py-[18px] text-white ring-1 ring-raised transition-[box-shadow,background-color,transform] duration-150 ring-inset hover:-translate-y-0.5 hover:bg-[#202024] hover:ring-faint motion-reduce:hover:translate-y-0"
+		class="group flex h-full flex-col gap-4 rounded-card bg-surface px-5 py-4.5 text-white ring-1 ring-raised transition-[box-shadow,background-color,transform] duration-150 ring-inset hover:-translate-y-0.5 hover:bg-[#202024] hover:ring-faint motion-reduce:hover:translate-y-0"
 	>
 		<div class="flex items-center justify-between gap-2">
 			<span class="inline-flex h-6 items-center rounded-chip bg-raised px-2 font-id text-xs text-fg-strong">
@@ -40,7 +40,7 @@ const ariaLabel = computed(
 			<div v-for="row in rows" :key="row.team" class="flex items-center gap-3">
 				<span
 					aria-hidden="true"
-					class="h-7 w-1 shrink-0 rounded-[2px]"
+					class="h-7 w-1 shrink-0 rounded-xs"
 					:style="{ background: row.look.bar, boxShadow: row.look.edge }"
 				/>
 				<span

@@ -49,14 +49,14 @@ const panelStyle = computed(() => ({
 			v-if="animation?.flash"
 			:key="`flash-${animation.key}`"
 			aria-hidden="true"
-			class="pointer-events-none absolute inset-0 z-[1] animate-score-flash rounded-[inherit] opacity-0"
+			class="pointer-events-none absolute inset-0 z-1 animate-score-flash rounded-[inherit] opacity-0"
 			:style="{ background: animation.glow, boxShadow: `inset 0 0 0 2px ${animation.glowEdge}` }"
 		/>
 		<span
 			v-if="animation"
 			:key="`float-${animation.key}`"
 			aria-hidden="true"
-			class="pointer-events-none absolute z-[2] animate-score-float font-score leading-none font-bold opacity-0"
+			class="pointer-events-none absolute z-2 animate-score-float font-score leading-none font-bold opacity-0"
 			:class="floatClass"
 			:style="{ color: animation.textColor }"
 		>
@@ -78,13 +78,13 @@ const panelStyle = computed(() => ({
 				<span
 					v-if="status === 'leader'"
 					class="inline-flex shrink-0 items-center rounded-full bg-white px-2.5 text-xs font-bold text-canvas"
-					:class="isOwner ? 'h-7' : 'h-[26px]'"
+					:class="isOwner ? 'h-7' : 'h-6.5'"
 				>
 					Na frente
 				</span>
 				<span
 					v-else-if="!isOwner"
-					class="inline-flex h-[26px] shrink-0 items-center rounded-full px-2.5 text-xs font-semibold text-fg-soft ring-1 ring-edge ring-inset"
+					class="inline-flex h-6.5 shrink-0 items-center rounded-full px-2.5 text-xs font-semibold text-fg-soft ring-1 ring-edge ring-inset"
 				>
 					{{ status === 'tie' ? 'Empatado' : `${behind} atrás` }}
 				</span>
@@ -112,7 +112,7 @@ const panelStyle = computed(() => ({
 					class="flex size-16 shrink-0 cursor-pointer items-center justify-center rounded-card bg-raised text-white ring-1 ring-edge transition-colors ring-inset hover:bg-edge disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-raised"
 					@click="$emit('minus')"
 				>
-					<UIcon name="i-lucide-minus" class="size-[26px]" />
+					<UIcon name="i-lucide-minus" class="size-6.5" />
 				</button>
 				<button
 					type="button"
