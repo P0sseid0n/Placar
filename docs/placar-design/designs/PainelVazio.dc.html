@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Placar · Painel sem placares</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#18181b}
+a{color:#e4e4e7}a:hover{color:#ffffff}
+.b-solid:hover{background:#e4e4e7 !important}
+.b-subtle:hover{background:#3f3f46 !important}
+.b-ghost:hover{background:#27272a !important;color:#ffffff !important}
+:focus-visible{outline:2px solid #ffffff;outline-offset:2px}
+@keyframes pl-pulse{0%,100%{opacity:.5}50%{opacity:1}}
+.pl-skel{animation:pl-pulse 1.4s ease-in-out infinite}
+@media (max-width:640px){.hide-sm{display:none !important}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #18181b; color: #e4e4e7; font-family: 'Open Sans', system-ui, sans-serif">
+
+<header style="border-bottom: 1px solid #27272a">
+<div style="max-width: 1280px; height: 72px; box-sizing: border-box; margin: 0 auto; padding: 0 clamp(16px, 5vw, 64px); display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<a href="PainelVazio.dc.html" style="display: flex; align-items: center; gap: 10px; color: #ffffff; text-decoration: none">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 8px; background: #ffffff; display: flex; align-items: center; justify-content: center; gap: 3px">
+<span style="width: 4px; height: 14px; border-radius: 2px; background: #18181b"></span>
+<span style="width: 4px; height: 14px; border-radius: 2px; background: #18181b; opacity: 0.45"></span>
+</span>
+<span style="font-size: 22px; font-weight: 700">Placar</span>
+</a>
+<div style="display: flex; align-items: center; gap: 8px">
+<div style="display: flex; align-items: center; gap: 10px; height: 44px; box-sizing: border-box; padding: 0 12px 0 6px; border-radius: 999px; box-shadow: inset 0 0 0 1px #27272a">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 50%; background: #3f3f46; color: #ffffff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">M</span>
+<span class="hide-sm" style="font-size: 14px; font-weight: 600; color: #ffffff">Matheus</span>
+</div>
+<a class="b-ghost" href="Main.dc.html" aria-label="Sair" style="width: 44px; height: 44px; border-radius: 8px; color: #9f9fa9; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>
+</a>
+</div>
+</div>
+</header>
+
+<main style="max-width: 1280px; box-sizing: border-box; margin: 0 auto; padding: 40px clamp(16px, 5vw, 64px) 80px; display: flex; flex-direction: column; gap: 40px">
+<section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0; font-size: 14px; font-weight: 500; color: #9f9fa9">Seu painel</p>
+<h1 style="margin: 0; font-size: clamp(30px, 4vw, 40px); line-height: 1.1; font-weight: 700; color: #ffffff; letter-spacing: -0.5px">Olá, Matheus</h1>
+</div>
+<a class="b-solid" href="CriarPlacar.dc.html" style="height: 48px; box-sizing: border-box; padding: 0 20px 0 16px; border-radius: 8px; background: #ffffff; color: #18181b; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+Criar placar
+</a>
+</section>
+
+<sc-if value="{{vazio}}" hint-placeholder-val="{{ true }}">
+<section aria-labelledby="vazio-t" style="border-radius: 20px; border: 1px dashed #3f3f46; background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 20px 20px; padding: clamp(32px, 6vw, 64px) clamp(20px, 4vw, 48px); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px">
+<div aria-hidden="true" style="border-radius: 16px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a, 0 20px 50px rgba(0,0,0,0.35); padding: 18px 22px; display: flex; align-items: center; gap: 20px">
+<span style="width: 44px; height: 44px; border-radius: 12px; border: 1px dashed #52525c; color: #71717b; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center">?</span>
+<span style="font-family: 'Barlow Condensed', sans-serif; font-size: 56px; line-height: 1; font-weight: 700; color: #52525c">0 : 0</span>
+<span style="width: 44px; height: 44px; border-radius: 12px; border: 1px dashed #52525c; color: #71717b; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center">?</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; align-items: center">
+<h2 id="vazio-t" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 700; color: #ffffff">Nenhum placar criado ainda</h2>
+<p style="margin: 0; max-width: 420px; font-size: 16px; line-height: 24px; color: #9f9fa9">Crie seu primeiro placar e compartilhe o ID com quem vai acompanhar o jogo.</p>
+</div>
+<a class="b-solid" href="CriarPlacar.dc.html" style="height: 52px; box-sizing: border-box; padding: 0 22px; border-radius: 10px; background: #ffffff; color: #18181b; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+Criar primeiro placar
+</a>
+<ol style="list-style: none; margin: 8px 0 0; padding: 0; width: 100%; max-width: 760px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; text-align: left">
+<li style="padding: 16px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; display: flex; gap: 12px; align-items: flex-start">
+<span style="flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: #27272a; font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; color: #ffffff; display: flex; align-items: center; justify-content: center">1</span>
+<span style="font-size: 14px; line-height: 20px; color: #d4d4d8"><strong style="color: #ffffff; font-weight: 600">Crie</strong> o placar com os nomes e as cores dos times.</span>
+</li>
+<li style="padding: 16px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; display: flex; gap: 12px; align-items: flex-start">
+<span style="flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: #27272a; font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; color: #ffffff; display: flex; align-items: center; justify-content: center">2</span>
+<span style="font-size: 14px; line-height: 20px; color: #d4d4d8"><strong style="color: #ffffff; font-weight: 600">Compartilhe</strong> o ID ou o link com quem vai assistir.</span>
+</li>
+<li style="padding: 16px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; display: flex; gap: 12px; align-items: flex-start">
+<span style="flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: #27272a; font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; color: #ffffff; display: flex; align-items: center; justify-content: center">3</span>
+<span style="font-size: 14px; line-height: 20px; color: #d4d4d8"><strong style="color: #ffffff; font-weight: 600">Marque</strong> os pontos e todo mundo vê na hora.</span>
+</li>
+</ol>
+</section>
+</sc-if>
+
+<sc-if value="{{carregando}}" hint-placeholder-val="{{ false }}">
+<div aria-busy="true" aria-label="Carregando placares" style="display: flex; flex-direction: column; gap: 40px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px">
+<sc-for list="{{three}}" as="x" hint-placeholder-count="3">
+<div class="pl-skel" style="height: 96px; box-sizing: border-box; padding: 20px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; display: flex; flex-direction: column; gap: 12px">
+<span style="width: 110px; height: 12px; border-radius: 4px; background: #27272a"></span>
+<span style="width: 56px; height: 32px; border-radius: 6px; background: #27272a"></span>
+</div>
+</sc-for>
+</div>
+<div class="pl-skel" style="height: 168px; border-radius: 16px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a"></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 16px">
+<sc-for list="{{four}}" as="x" hint-placeholder-count="4">
+<div class="pl-skel" style="height: 196px; box-sizing: border-box; padding: 18px 20px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; display: flex; flex-direction: column; gap: 18px">
+<span style="width: 72px; height: 22px; border-radius: 6px; background: #27272a"></span>
+<span style="height: 28px; border-radius: 6px; background: #27272a"></span>
+<span style="height: 28px; border-radius: 6px; background: #27272a"></span>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{erro}}" hint-placeholder-val="{{ false }}">
+<section role="alert" style="border-radius: 20px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; padding: clamp(32px, 6vw, 64px) 24px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px">
+<span aria-hidden="true" style="width: 64px; height: 64px; border-radius: 16px; background: rgba(255,100,103,0.1); box-shadow: inset 0 0 0 1px rgba(255,100,103,0.3); display: flex; align-items: center; justify-content: center">
+<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ff6467" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+</span>
+<h2 style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 700; color: #ffffff">Não foi possível carregar seus placares</h2>
+<p style="margin: 0; max-width: 400px; font-size: 15px; line-height: 22px; color: #9f9fa9">Verifique sua conexão e tente de novo. Seus placares continuam salvos.</p>
+<a class="b-subtle" href="PainelVazio.dc.html" style="margin-top: 8px; height: 48px; box-sizing: border-box; padding: 0 18px; border-radius: 10px; background: #27272a; box-shadow: inset 0 0 0 1px #3f3f46; color: #ffffff; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+Tentar novamente
+</a>
+</section>
+</sc-if>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"estado":{"editor":"enum","options":["vazio","carregando","erro"],"default":"vazio"},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const e = this.props.estado ?? 'vazio';
+    return {
+      vazio: e === 'vazio',
+      carregando: e === 'carregando',
+      erro: e === 'erro',
+      three: [1, 2, 3],
+      four: [1, 2, 3, 4]
+    };
+  }
+}
+</script>
+</body>
+</html>

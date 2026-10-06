@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Placar · Design System</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#e4e4e7}a:hover{color:#ffffff}
+.ds-in::placeholder{color:#71717b}
+</style>
+</helmet>
+<div style="width: 1200px; height: 3000px; box-sizing: border-box; background: #18181b; color: #e4e4e7; font-family: 'Open Sans', system-ui, sans-serif; padding: 72px; display: flex; flex-direction: column; gap: 64px">
+
+<header style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; padding-bottom: 40px; border-bottom: 1px solid #27272a">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #9f9fa9">Placar · Tema escuro · v2</p>
+<h1 style="margin: 0; font-size: 56px; line-height: 1.05; font-weight: 700; color: #ffffff; letter-spacing: -1px">Design System</h1>
+<p style="margin: 0; max-width: 640px; font-size: 16px; line-height: 24px; color: #d4d4d8">Fundo zinc-900, superfícies levemente elevadas, ações em branco e uma cor por time. Números sempre em Barlow Condensed, como num telão.</p>
+</div>
+<div style="display: flex; align-items: center; gap: 14px">
+<span aria-hidden="true" style="width: 72px; height: 72px; border-radius: 18px; background: #ffffff; display: flex; align-items: center; justify-content: center; gap: 6px">
+<span style="width: 8px; height: 30px; border-radius: 4px; background: #18181b"></span>
+<span style="width: 8px; height: 30px; border-radius: 4px; background: #18181b; opacity: 0.45"></span>
+</span>
+<span style="font-size: 44px; font-weight: 700; color: #ffffff; letter-spacing: -1px">Placar</span>
+</div>
+</header>
+
+<section style="display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff">Cores</h2>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 13px; font-weight: 600; color: #9f9fa9">Neutros</span>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{neutrals}}" as="c" hint-placeholder-count="10">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="height: 72px; border-radius: 12px; box-shadow: inset 0 0 0 1px #3f3f46; background: {{c.hex}}"></div>
+<div style="display: flex; flex-direction: column; gap: 1px">
+<span style="font-size: 14px; font-weight: 600; color: #ffffff">{{c.name}}</span>
+<span style="font-size: 12px; color: #d4d4d8">{{c.role}}</span>
+<span style="font-size: 12px; color: #9f9fa9; font-family: ui-monospace, monospace">{{c.hex}} · {{c.token}}</span>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 3fr 1fr; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 13px; font-weight: 600; color: #9f9fa9">Cores dos times · fundo do monograma a 14%</span>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{teams}}" as="c" hint-placeholder-count="6">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="height: 72px; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column">
+<span style="height: 50%; background: {{c.hex}}"></span>
+<span style="height: 50%; background: {{c.tint}}; color: {{c.hex}}; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center">TA</span>
+</div>
+<span style="font-size: 13px; font-weight: 600; color: #ffffff">{{c.name}}</span>
+<span style="font-size: 12px; color: #9f9fa9; font-family: ui-monospace, monospace">{{c.hex}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 13px; font-weight: 600; color: #9f9fa9">Estados</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="height: 72px; border-radius: 12px; background: #ff6467"></div>
+<span style="font-size: 13px; font-weight: 600; color: #ffffff">Erro</span>
+<span style="font-size: 12px; color: #9f9fa9; font-family: ui-monospace, monospace">#FF6467</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="height: 72px; border-radius: 12px; background: #05df72"></div>
+<span style="font-size: 13px; font-weight: 600; color: #ffffff">Sucesso</span>
+<span style="font-size: 12px; color: #9f9fa9; font-family: ui-monospace, monospace">#05DF72</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff">Texto · Open Sans</h2>
+<div style="display: flex; flex-direction: column; border-top: 1px solid #27272a">
+<sc-for list="{{type}}" as="t" hint-placeholder-count="8">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #27272a">
+<span style="font-size: {{t.size}}; font-weight: {{t.w}}; color: {{t.color}}; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{t.sample}}</span>
+<span style="flex: 0 0 auto; font-size: 12px; color: #9f9fa9; text-align: right">{{t.label}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff">Números · Barlow Condensed 700</h2>
+<div style="display: flex; flex-direction: column; border-top: 1px solid #27272a">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #27272a">
+<span style="font-family: 'Barlow Condensed', sans-serif; font-size: 160px; line-height: 0.9; font-weight: 700; color: #ffffff; letter-spacing: -2px">12</span>
+<span style="font-size: 12px; color: #9f9fa9; text-align: right">Placar · 88–320 px<br>P / M / G por clamp(vw)</span>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #27272a">
+<span style="font-family: 'Barlow Condensed', sans-serif; font-size: 88px; line-height: 1; font-weight: 700; color: #ffffff">12 <span style="font-size: 36px; color: #52525c">:</span> 9</span>
+<span style="font-size: 12px; color: #9f9fa9; text-align: right">Destaque e prévia · 56–88</span>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #27272a">
+<span style="font-family: 'Barlow Condensed', sans-serif; font-size: 44px; line-height: 1; font-weight: 700; color: #ffffff">134</span>
+<span style="font-size: 12px; color: #9f9fa9; text-align: right">Resumo do painel · 44</span>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #27272a">
+<span style="font-family: 'Barlow Condensed', sans-serif; font-size: 32px; line-height: 1; font-weight: 700; color: #ffffff">45 <span style="color: #9f9fa9">51</span></span>
+<span style="font-size: 12px; color: #9f9fa9; text-align: right">Card · 32 · quem perde em #9F9FA9</span>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #27272a">
+<span style="font-family: 'Barlow Condensed', sans-serif; font-size: 30px; line-height: 1; font-weight: 700; color: #ffffff">+1</span>
+<span style="font-size: 12px; color: #9f9fa9; text-align: right">Botões de ponto e stepper · 28–30</span>
+</div>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 20px; color: #9f9fa9">IDs em monoespaçada (ui-monospace), com o “#” em #52525C–#71717B.</p>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff">Raios e elevação</h2>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{radii}}" as="r" hint-placeholder-count="7">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="height: 88px; border-radius: {{r.px}}; background: #1d1d20; box-shadow: {{r.shadow}}"></div>
+<span style="font-size: 13px; font-weight: 600; color: #ffffff">{{r.name}}</span>
+<span style="font-size: 12px; line-height: 17px; color: #9f9fa9">{{r.use}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff">Botões</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+<button type="button" style="height: 48px; padding: 0 20px; border: 0; border-radius: 10px; background: #ffffff; color: #18181b; font-family: inherit; font-size: 15px; font-weight: 600">Principal</button>
+<button type="button" style="height: 48px; padding: 0 20px; border: 0; border-radius: 10px; background: #27272a; box-shadow: inset 0 0 0 1px #3f3f46; color: #ffffff; font-family: inherit; font-size: 15px; font-weight: 600">Secundário</button>
+<button type="button" style="height: 48px; padding: 0 18px; border: 0; border-radius: 10px; background: transparent; color: #d4d4d8; font-family: inherit; font-size: 15px; font-weight: 600">Ghost</button>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+<button type="button" style="height: 44px; padding: 0 14px; border: 0; border-radius: 10px; background: transparent; box-shadow: inset 0 0 0 1px rgba(255,100,103,0.4); color: #ff6467; font-family: inherit; font-size: 14px; font-weight: 600">Apagar</button>
+<button type="button" style="height: 44px; padding: 0 14px; border: 0; border-radius: 10px; background: #ff6467; color: #18181b; font-family: inherit; font-size: 14px; font-weight: 700">Sim, apagar</button>
+<button type="button" disabled="disabled" style="height: 44px; padding: 0 14px; border: 0; border-radius: 10px; background: #ffffff; color: #18181b; opacity: 0.4; font-family: inherit; font-size: 14px; font-weight: 600">Desativado</button>
+<button type="button" aria-label="Configurações" style="width: 44px; height: 44px; border: 0; border-radius: 8px; background: #27272a; box-shadow: inset 0 0 0 1px #3f3f46; color: #ffffff; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+</button>
+</div>
+<div style="display: flex; gap: 10px; max-width: 380px">
+<button type="button" aria-label="Tirar ponto" style="flex: 0 0 auto; width: 64px; height: 64px; border: 0; border-radius: 12px; background: #27272a; box-shadow: inset 0 0 0 1px #3f3f46; color: #ffffff; display: flex; align-items: center; justify-content: center">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"></path></svg>
+</button>
+<button type="button" style="flex: 1 1 auto; height: 64px; border: 0; border-radius: 12px; background: #ffffff; color: #18181b; font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 700">+1</button>
+</div>
+<div style="display: flex; align-items: center; gap: 16px">
+<div style="display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 12px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a">
+<button type="button" aria-label="Diminuir" style="width: 40px; height: 40px; border: 0; border-radius: 8px; background: #27272a; color: #ffffff; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"></path></svg></button>
+<span style="width: 56px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 700; color: #ffffff">+1</span>
+<button type="button" aria-label="Aumentar" style="width: 40px; height: 40px; border: 0; border-radius: 8px; background: #27272a; color: #ffffff; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button>
+</div>
+<div style="display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a">
+<span style="height: 40px; padding: 0 14px; border-radius: 8px; color: #9f9fa9; font-size: 13px; font-weight: 600; display: flex; align-items: center">Pequeno</span>
+<span style="height: 40px; padding: 0 14px; border-radius: 8px; color: #9f9fa9; font-size: 13px; font-weight: 600; display: flex; align-items: center">Médio</span>
+<span style="height: 40px; padding: 0 14px; border-radius: 8px; background: #ffffff; color: #18181b; font-size: 13px; font-weight: 600; display: flex; align-items: center">Grande</span>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff">Campos</h2>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="ds-id" style="font-size: 14px; font-weight: 600; color: #ffffff">ID do placar</label>
+<div style="height: 52px; box-sizing: border-box; border-radius: 10px; background: #18181b; box-shadow: inset 0 0 0 1px #3f3f46; display: flex; align-items: center; padding: 6px 6px 6px 14px; gap: 6px">
+<span aria-hidden="true" style="font-family: ui-monospace, monospace; font-size: 17px; color: #52525c">#</span>
+<input id="ds-id" class="ds-in" type="text" value="k3x9a2" style="flex: 1 1 auto; min-width: 0; border: 0; background: transparent; color: #ffffff; font-family: ui-monospace, monospace; font-size: 17px; letter-spacing: 2px"></input>
+<span style="font-size: 12px; color: #71717b">6/6</span>
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 8px; background: #ffffff; color: #18181b; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span>
+</div>
+<span style="font-size: 13px; color: #9f9fa9">Seta branca só quando o ID está completo.</span>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ds-a" style="font-size: 13px; font-weight: 600; color: #ffffff">Padrão</label>
+<input id="ds-a" class="ds-in" type="text" placeholder="Time 1" style="height: 48px; box-sizing: border-box; border: 0; border-radius: 10px; background: #18181b; box-shadow: inset 0 0 0 1px #3f3f46; color: #ffffff; font-family: inherit; font-size: 15px; padding: 0 14px"></input>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ds-b" style="font-size: 13px; font-weight: 600; color: #ffffff">Com erro</label>
+<input id="ds-b" class="ds-in" type="text" placeholder="Time 2" aria-invalid="true" style="height: 48px; box-sizing: border-box; border: 0; border-radius: 10px; background: #18181b; box-shadow: inset 0 0 0 1px #ff6467; color: #ffffff; font-family: inherit; font-size: 15px; padding: 0 14px"></input>
+<span style="font-size: 12px; color: #ff6467">Nome do time B é obrigatório</span>
+</div>
+</div>
+<div style="height: 44px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; display: flex; align-items: center; gap: 8px; color: #71717b; font-size: 14px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9f9fa9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+Buscar por time ou ID
+</div>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff">Selos</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+<span style="height: 36px; box-sizing: border-box; padding: 0 12px; border-radius: 999px; box-shadow: inset 0 0 0 1px #27272a; font-family: ui-monospace, monospace; font-size: 14px; color: #e4e4e7; display: inline-flex; align-items: center"><span style="color: #71717b">#</span>k3x9a2</span>
+<span style="height: 24px; box-sizing: border-box; padding: 0 8px; border-radius: 6px; background: #27272a; font-family: ui-monospace, monospace; font-size: 12px; color: #d4d4d8; display: inline-flex; align-items: center">#k3x9a2</span>
+<span style="height: 32px; box-sizing: border-box; padding: 0 12px; border-radius: 999px; background: rgba(5,223,114,0.08); box-shadow: inset 0 0 0 1px rgba(5,223,114,0.25); font-size: 13px; font-weight: 600; color: #05df72; display: inline-flex; align-items: center; gap: 8px"><span style="width: 7px; height: 7px; border-radius: 50%; background: #05df72; box-shadow: 0 0 0 3px rgba(5,223,114,0.2)"></span>Ao vivo</span>
+<span style="height: 28px; box-sizing: border-box; padding: 0 10px; border-radius: 999px; background: #ffffff; color: #18181b; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">Na frente</span>
+<span style="height: 28px; box-sizing: border-box; padding: 0 10px; border-radius: 999px; box-shadow: inset 0 0 0 1px #3f3f46; color: #9f9fa9; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center">3 atrás</span>
+<span style="height: 36px; box-sizing: border-box; padding: 0 12px; border-radius: 999px; box-shadow: inset 0 0 0 1px #27272a; font-size: 13px; color: #9f9fa9; display: inline-flex; align-items: center; gap: 6px"><strong style="color: #ffffff">+1</strong> por clique</span>
+<span style="width: 56px; height: 56px; border-radius: 50%; box-shadow: inset 0 0 0 1px #3f3f46; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: #9f9fa9; display: flex; align-items: center; justify-content: center">VS</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="height: 36px; box-sizing: border-box; padding: 0 12px 0 10px; border-radius: 8px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a; display: flex; align-items: center; gap: 8px; font-size: 13px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #51a2ff"></span><span style="font-weight: 600; color: #ffffff">Time Azul</span><span style="font-weight: 700; color: #05df72">+1</span><span style="color: #9f9fa9">→ 12 · agora</span></span>
+<span style="height: 36px; box-sizing: border-box; padding: 0 12px 0 10px; border-radius: 8px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a; display: flex; align-items: center; gap: 8px; font-size: 13px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #ff8904"></span><span style="font-weight: 600; color: #ffffff">Time Laranja</span><span style="font-weight: 700; color: #ff6467">−1</span><span style="color: #9f9fa9">→ 8</span></span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff">Identidade do time</h2>
+<div style="display: flex; align-items: center; gap: 16px">
+<span style="width: 52px; height: 52px; border-radius: 12px; background: #51a2ff24; color: #51a2ff; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center">TA</span>
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #ff890424; color: #ff8904; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center">TL</span>
+<span style="width: 4px; height: 28px; border-radius: 2px; background: #05df72"></span>
+<span style="flex: 1 1 auto; height: 6px; border-radius: 3px; display: flex; overflow: hidden"><span style="flex: 1 1 0; background: #51a2ff"></span><span style="flex: 1 1 0; background: #ff8904"></span></span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 20px; color: #9f9fa9">Monograma com 2 iniciais (52 / 44 / 40 px) · barra lateral de 4 px nos cards · faixa de 5–8 px no topo de painéis e modais · quem lidera ganha anel na cor do time a 60%.</p>
+<div style="display: flex; gap: 6px">
+<sc-for list="{{teams}}" as="c" hint-placeholder-count="6">
+<span style="width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; opacity: {{c.op}}">
+<span style="width: 26px; height: 26px; border-radius: 50%; background: {{c.hex}}; box-shadow: {{c.ring}}"></span>
+</span>
+</sc-for>
+</div>
+<p style="margin: 0; font-size: 13px; color: #9f9fa9">Seletor de cor: selecionada com anel branco; cor do outro time desativada.</p>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff">Componentes</h2>
+<div style="display: grid; grid-template-columns: 300px 220px 1fr; gap: 24px; align-items: start">
+<div style="box-sizing: border-box; padding: 18px 20px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span style="height: 24px; box-sizing: border-box; padding: 0 8px; border-radius: 6px; background: #27272a; font-family: ui-monospace, monospace; font-size: 12px; color: #d4d4d8; display: inline-flex; align-items: center">#k3x9a2</span>
+<span style="font-size: 12px; color: #9f9fa9">há 2 min</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 4px; height: 28px; border-radius: 2px; background: #51a2ff"></span><span style="flex: 1 1 auto; font-size: 15px; font-weight: 600; color: #ffffff">Time Azul</span><span style="font-family: 'Barlow Condensed', sans-serif; font-size: 32px; line-height: 1; font-weight: 700; color: #ffffff">12</span></div>
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 4px; height: 28px; border-radius: 2px; background: #ff8904"></span><span style="flex: 1 1 auto; font-size: 15px; font-weight: 600; color: #9f9fa9">Time Laranja</span><span style="font-family: 'Barlow Condensed', sans-serif; font-size: 32px; line-height: 1; font-weight: 700; color: #9f9fa9">9</span></div>
+</div>
+<div style="padding-top: 14px; border-top: 1px solid #27272a; display: flex; justify-content: space-between; font-size: 13px; color: #9f9fa9"><span>Time Azul por 3</span><span style="font-weight: 600">Abrir ›</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="padding: 20px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 13px; font-weight: 500; color: #9f9fa9">Pontos marcados</span>
+<span style="font-family: 'Barlow Condensed', sans-serif; font-size: 44px; line-height: 1; font-weight: 700; color: #ffffff">134</span>
+</div>
+<div style="height: 120px; border-radius: 12px; border: 1px dashed #3f3f46; color: #9f9fa9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 14px; font-weight: 600">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+Novo placar
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="box-sizing: border-box; padding: 14px 16px; border-radius: 12px; background: #1d1d20; box-shadow: 0 0 0 1px #3f3f46, 0 16px 40px rgba(0,0,0,0.55); display: flex; align-items: center; gap: 12px">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#05df72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+<div style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600; color: #ffffff">Link copiado!</span><span style="font-size: 13px; color: #9f9fa9">Quem abrir o link acompanha ao vivo.</span></div>
+</div>
+<div style="box-sizing: border-box; padding: 14px 16px; border-radius: 12px; background: #1d1d20; box-shadow: 0 0 0 1px #3f3f46, 0 16px 40px rgba(0,0,0,0.55); display: flex; align-items: center; gap: 12px">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff6467" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+<div style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600; color: #ffffff">Erro ao criar placar</span><span style="font-size: 13px; color: #9f9fa9">Tente novamente mais tarde.</span></div>
+</div>
+<div style="display: flex; gap: 8px">
+<span style="position: relative; width: 64px; height: 84px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-size: 68px; font-weight: 700; color: #ffffff">4<span style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #18181b"></span></span>
+<span style="position: relative; width: 64px; height: 84px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-size: 68px; font-weight: 700; color: #ffffff">0<span style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #18181b"></span></span>
+<span style="position: relative; width: 64px; height: 84px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-size: 68px; font-weight: 700; color: #ffffff">4<span style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #18181b"></span></span>
+<span style="align-self: center; margin-left: 8px; font-size: 13px; color: #9f9fa9">Placas de dígito · página de erro</span>
+</div>
+</div>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 20px; color: #9f9fa9">Fundos texturizados (login, erro, painel vazio): grade de pontos brancos a 4–5%, a cada 20–24 px. Sobreposição de modal: #09090B a 72% com desfoque de 4 px.</p>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":3000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const teamHex = [
+      ['Azul', '#51a2ff'], ['Laranja', '#ff8904'], ['Verde', '#05df72'],
+      ['Roxo', '#a684ff'], ['Rosa', '#fb64b6'], ['Amarelo', '#fdc700']
+    ];
+    return {
+      neutrals: [
+        { name: 'Fundo', role: 'Base de todas as telas', hex: '#18181B', token: 'zinc-900' },
+        { name: 'Superfície', role: 'Cards, painéis, modais', hex: '#1D1D20', token: 'novo' },
+        { name: 'Elevado', role: 'Bordas, botão secundário', hex: '#27272A', token: 'zinc-800' },
+        { name: 'Acentuado', role: 'Anéis, hover, VS', hex: '#3F3F46', token: 'zinc-700' },
+        { name: 'Discreto', role: '“#”, “:”, placeholders', hex: '#52525C', token: 'zinc-600' },
+        { name: 'Primário', role: 'Botões principais, títulos', hex: '#FFFFFF', token: 'white' },
+        { name: 'Texto', role: 'Corpo', hex: '#E4E4E7', token: 'zinc-200' },
+        { name: 'Texto forte', role: 'Descrições de destaque', hex: '#D4D4D8', token: 'zinc-300' },
+        { name: 'Texto suave', role: 'Rótulos, apoio, quem perde', hex: '#9F9FA9', token: 'zinc-400' },
+        { name: 'Texto apagado', role: 'Contadores, dicas', hex: '#71717B', token: 'zinc-500' }
+      ],
+      teams: teamHex.map((t, i) => ({
+        name: t[0], hex: t[1], tint: t[1] + '24',
+        ring: i === 0 ? '0 0 0 3px #18181b, 0 0 0 5px #ffffff' : 'none',
+        op: i === 1 ? 0.25 : 1
+      })),
+      type: [
+        { sample: 'Placar', size: '56px', w: 700, color: '#ffffff', label: 'Marca · 64–112 / 700' },
+        { sample: 'Olá, Matheus', size: '40px', w: 700, color: '#ffffff', label: 'Título de página · 30–40 / 700' },
+        { sample: 'Time Azul', size: '30px', w: 700, color: '#ffffff', label: 'Nome no placar · 20–34 / 700' },
+        { sample: 'Novo placar', size: '24px', w: 700, color: '#ffffff', label: 'Título de modal · 24 / 700' },
+        { sample: 'Bem-vindo(a) ao', size: '18px', w: 500, color: '#b6b6ba', label: 'Sobretítulo · 18 / 500' },
+        { sample: 'Todos os placares', size: '16px', w: 600, color: '#ffffff', label: 'Seção · 16 / 600' },
+        { sample: 'Crie o placar do seu jogo', size: '15px', w: 400, color: '#d4d4d8', label: 'Corpo · 15–18 / 400' },
+        { sample: 'Pontos somados a cada clique', size: '13px', w: 400, color: '#9f9fa9', label: 'Apoio · 12–13 / 400' }
+      ],
+      radii: [
+        { name: '6', use: 'Chip de ID no card', px: '6px', shadow: 'inset 0 0 0 1px #27272a' },
+        { name: '8', use: 'Botões de cabeçalho, ícones', px: '8px', shadow: 'inset 0 0 0 1px #27272a' },
+        { name: '10', use: 'Botões grandes, campos', px: '10px', shadow: 'inset 0 0 0 1px #27272a' },
+        { name: '12', use: 'Cards, +1, resumo', px: '12px', shadow: 'inset 0 0 0 1px #27272a' },
+        { name: '16', use: 'Destaque, histórico', px: '16px', shadow: 'inset 0 0 0 1px #27272a' },
+        { name: '20', use: 'Painéis de time, modais', px: '20px', shadow: 'inset 0 0 0 1px #27272a, 0 32px 80px rgba(0,0,0,0.6)' },
+        { name: '999', use: 'Selos e avatar', px: '999px', shadow: 'inset 0 0 0 1px #27272a' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

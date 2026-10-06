@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Placar · Time Azul x Time Laranja</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#18181b}
+a{color:#e4e4e7}a:hover{color:#ffffff}
+.b-solid:hover{background:#e4e4e7 !important}
+.b-subtle:hover{background:#3f3f46 !important}
+.b-ghost:hover{background:#27272a !important;color:#ffffff !important}
+:focus-visible{outline:2px solid #ffffff;outline-offset:2px}
+@media (max-width:720px){.hide-sm{display:none !important}}
+</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; background: #18181b; color: #e4e4e7; font-family: 'Open Sans', system-ui, sans-serif; display: flex; flex-direction: column">
+
+<sc-if value="{{normal}}" hint-placeholder-val="{{ true }}">
+<header style="border-bottom: 1px solid #27272a">
+<div style="max-width: 1440px; height: 72px; box-sizing: border-box; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 12px">
+<div style="display: flex; justify-content: flex-start">
+<a class="b-ghost" href="Main.dc.html" style="height: 44px; box-sizing: border-box; padding: 0 14px 0 8px; border-radius: 8px; color: #d4d4d8; font-size: 14px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg>
+Início
+</a>
+</div>
+<div style="display: flex; align-items: center; gap: 10px">
+<span aria-hidden="true" style="width: 28px; height: 28px; border-radius: 7px; background: #ffffff; display: flex; align-items: center; justify-content: center; gap: 3px">
+<span style="width: 3px; height: 12px; border-radius: 2px; background: #18181b"></span>
+<span style="width: 3px; height: 12px; border-radius: 2px; background: #18181b; opacity: 0.45"></span>
+</span>
+<span style="font-size: 20px; font-weight: 700; color: #ffffff">Placar</span>
+</div>
+<div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px">
+<span class="hide-sm" style="height: 32px; box-sizing: border-box; padding: 0 12px; border-radius: 999px; background: rgba(5,223,114,0.08); box-shadow: inset 0 0 0 1px rgba(5,223,114,0.25); font-size: 13px; font-weight: 600; color: #05df72; display: inline-flex; align-items: center; gap: 8px">
+<span aria-hidden="true" style="width: 7px; height: 7px; border-radius: 50%; background: #05df72; box-shadow: 0 0 0 3px rgba(5,223,114,0.2)"></span>
+Ao vivo
+</span>
+<button class="b-solid" type="button" onClick="{{toggle}}" style="height: 44px; padding: 0 14px; border: 0; border-radius: 8px; background: #ffffff; color: #18181b; font-family: inherit; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>
+<span class="hide-sm">Modo telão</span>
+</button>
+</div>
+</div>
+</header>
+</sc-if>
+
+<sc-if value="{{telao}}" hint-placeholder-val="{{ false }}">
+<button class="b-ghost" type="button" onClick="{{toggle}}" aria-label="Sair do modo telão" style="position: absolute; top: 16px; right: 16px; z-index: 2; width: 44px; height: 44px; border: 0; border-radius: 8px; background: transparent; color: #71717b; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v3a2 2 0 0 1-2 2H3"></path><path d="M21 8h-3a2 2 0 0 1-2-2V3"></path><path d="M3 16h3a2 2 0 0 1 2 2v3"></path><path d="M16 21v-3a2 2 0 0 1 2-2h3"></path></svg>
+</button>
+</sc-if>
+
+<div style="max-width: 1440px; width: 100%; box-sizing: border-box; margin: 0 auto; padding: {{pad}}; display: flex; flex-direction: column; gap: 24px; flex: 1 1 auto">
+
+<sc-if value="{{normal}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px">
+<button class="b-ghost" type="button" onClick="{{copyId}}" aria-label="Copiar ID do placar" style="height: 36px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; box-shadow: inset 0 0 0 1px #27272a; color: #e4e4e7; font-family: ui-monospace, monospace; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer">
+<span><span style="color: #71717b">#</span>k3x9a2</span>
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity: 0.6"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+</button>
+<span style="height: 36px; box-sizing: border-box; padding: 0 12px; border-radius: 999px; box-shadow: inset 0 0 0 1px #27272a; font-size: 13px; color: #9f9fa9; display: inline-flex; align-items: center">Você está assistindo</span>
+</div>
+</sc-if>
+
+<main style="flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 20px">
+<section aria-label="Time Azul" style="flex: 1 1 380px; min-width: 0; overflow: hidden; border-radius: 24px; background: #1d1d20; box-shadow: inset 0 0 0 1px #51a2ff99; display: flex; flex-direction: column">
+<div aria-hidden="true" style="height: 8px; background: #51a2ff"></div>
+<div style="padding: clamp(20px, 3vw, 36px); display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1 1 auto">
+<div style="display: flex; align-items: center; justify-content: center; gap: 12px; max-width: 100%">
+<span aria-hidden="true" style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 12px; background: #51a2ff24; color: #51a2ff; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center">TA</span>
+<h2 style="margin: 0; min-width: 0; font-size: clamp(20px, 2.4vw, 34px); font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Time Azul</h2>
+</div>
+<span style="height: 26px; box-sizing: border-box; padding: 0 10px; border-radius: 999px; background: #ffffff; color: #18181b; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center">Na frente</span>
+<span style="flex: 1 1 auto; display: flex; align-items: center; font-family: 'Barlow Condensed', sans-serif; font-size: {{scoreSize}}; line-height: 0.9; font-weight: 700; color: #ffffff; font-variant-numeric: tabular-nums; letter-spacing: -2px">12</span>
+</div>
+</section>
+
+<div aria-hidden="true" style="flex: 0 0 auto; align-self: center; display: flex; flex-direction: column; align-items: center; gap: 10px">
+<span style="width: 56px; height: 56px; border-radius: 50%; box-shadow: inset 0 0 0 1px #3f3f46; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: #9f9fa9; display: flex; align-items: center; justify-content: center">VS</span>
+<span style="font-size: 12px; font-weight: 600; color: #71717b; text-align: center">Diferença<br>3</span>
+</div>
+
+<section aria-label="Time Laranja" style="flex: 1 1 380px; min-width: 0; overflow: hidden; border-radius: 24px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; display: flex; flex-direction: column">
+<div aria-hidden="true" style="height: 8px; background: #ff8904"></div>
+<div style="padding: clamp(20px, 3vw, 36px); display: flex; flex-direction: column; align-items: center; gap: 12px; flex: 1 1 auto">
+<div style="display: flex; align-items: center; justify-content: center; gap: 12px; max-width: 100%">
+<span aria-hidden="true" style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 12px; background: #ff890424; color: #ff8904; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center">TL</span>
+<h2 style="margin: 0; min-width: 0; font-size: clamp(20px, 2.4vw, 34px); font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Time Laranja</h2>
+</div>
+<span style="height: 26px; box-sizing: border-box; padding: 0 10px; border-radius: 999px; box-shadow: inset 0 0 0 1px #3f3f46; color: #9f9fa9; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center">3 atrás</span>
+<span style="flex: 1 1 auto; display: flex; align-items: center; font-family: 'Barlow Condensed', sans-serif; font-size: {{scoreSize}}; line-height: 0.9; font-weight: 700; color: #ffffff; font-variant-numeric: tabular-nums; letter-spacing: -2px">9</span>
+</div>
+</section>
+</main>
+
+<sc-if value="{{normal}}" hint-placeholder-val="{{ true }}">
+<p style="margin: 0; text-align: center; font-size: 13px; color: #9f9fa9">Última jogada: <strong style="color: #ffffff; font-weight: 600">Time Azul +1</strong> · há 1 min</p>
+</sc-if>
+</div>
+
+<sc-if value="{{toast}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position: fixed; right: 24px; bottom: 24px; max-width: calc(100% - 48px); box-sizing: border-box; padding: 14px 16px; border-radius: 12px; background: #1d1d20; box-shadow: 0 0 0 1px #3f3f46, 0 16px 40px rgba(0,0,0,0.55); display: flex; align-items: center; gap: 12px">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#05df72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+<span style="font-size: 14px; font-weight: 600; color: #ffffff">ID copiado!</span>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tamanho":{"editor":"enum","options":["Pequeno","Médio","Grande"],"default":"Grande"},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { telao: false, toast: false }; }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    const sizes = { 'Pequeno': 'clamp(96px, 11vw, 170px)', 'Médio': 'clamp(120px, 16vw, 240px)', 'Grande': 'clamp(140px, 21vw, 320px)' };
+    const tel = this.state.telao;
+    return {
+      telao: tel,
+      normal: !tel,
+      pad: tel ? '24px clamp(16px, 3vw, 40px)' : '28px clamp(16px, 4vw, 48px) 40px',
+      scoreSize: sizes[this.props.tamanho ?? 'Grande'] || sizes['Grande'],
+      toggle: () => this.setState({ telao: !tel }),
+      toast: this.state.toast,
+      copyId: () => {
+        clearTimeout(this.t);
+        this.setState({ toast: true });
+        this.t = setTimeout(() => this.setState({ toast: false }), 2400);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

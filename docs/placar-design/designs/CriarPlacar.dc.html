@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Placar · Novo placar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#18181b}
+a{color:#e4e4e7}a:hover{color:#ffffff}
+.b-solid:hover{background:#e4e4e7 !important}
+.b-subtle:hover{background:#3f3f46 !important}
+.b-subtle:disabled{opacity:.4;cursor:not-allowed}
+.b-ghost:hover{background:#27272a !important;color:#ffffff !important}
+.pl-in::placeholder{color:#71717b}
+.pl-in:focus{outline:none;box-shadow:inset 0 0 0 1px #9f9fa9 !important}
+.pl-sw:disabled{opacity:.25;cursor:not-allowed}
+:focus-visible{outline:2px solid #ffffff;outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; background: #18181b; color: #e4e4e7; font-family: 'Open Sans', system-ui, sans-serif; overflow: hidden">
+
+<div aria-hidden="true">
+<div style="border-bottom: 1px solid #27272a">
+<div style="max-width: 1280px; height: 72px; box-sizing: border-box; margin: 0 auto; padding: 0 clamp(16px, 5vw, 64px); display: flex; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="width: 32px; height: 32px; border-radius: 8px; background: #ffffff"></span>
+<span style="font-size: 22px; font-weight: 700; color: #ffffff">Placar</span>
+</div>
+<span style="width: 120px; height: 44px; border-radius: 999px; box-shadow: inset 0 0 0 1px #27272a"></span>
+</div>
+</div>
+<div style="max-width: 1280px; box-sizing: border-box; margin: 0 auto; padding: 40px clamp(16px, 5vw, 64px); display: flex; flex-direction: column; gap: 40px">
+<div style="font-size: 40px; font-weight: 700; color: #ffffff">Olá, Matheus</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<div style="height: 96px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a"></div>
+<div style="height: 96px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a"></div>
+<div style="height: 96px; border-radius: 12px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a"></div>
+</div>
+<div style="height: 180px; border-radius: 16px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a"></div>
+</div>
+</div>
+
+<div style="position: absolute; inset: 0; overflow-y: auto; background: rgba(9,9,11,0.72); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 24px 16px">
+<form role="dialog" aria-modal="true" aria-labelledby="modal-title" onSubmit="{{submit}}" style="width: 100%; max-width: 640px; box-sizing: border-box; margin: auto 0; overflow: hidden; border-radius: 20px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a, 0 32px 80px rgba(0,0,0,0.6); display: flex; flex-direction: column">
+<div aria-hidden="true" style="display: flex; height: 5px">
+<span style="flex: 1 1 0; background: {{ca}}"></span>
+<span style="flex: 1 1 0; background: {{cb}}"></span>
+</div>
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 24px 28px 0">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 id="modal-title" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 700; color: #ffffff">Novo placar</h2>
+<p style="margin: 0; font-size: 15px; color: #9f9fa9">Defina os times e quanto vale cada ponto.</p>
+</div>
+<a class="b-ghost" href="Painel.dc.html" aria-label="Fechar" style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 8px; color: #9f9fa9; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+</a>
+</div>
+
+<div style="padding: 24px 28px; display: flex; flex-direction: column; gap: 24px">
+<div aria-hidden="true" style="border-radius: 16px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a; padding: 16px 20px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px">
+<div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+<span style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 10px; background: {{tintA}}; color: {{ca}}; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{iniA}}</span>
+<span style="font-size: 15px; font-weight: 600; color: {{nameFgA}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{nameA}}</span>
+</div>
+<span style="font-family: 'Barlow Condensed', sans-serif; font-size: 44px; line-height: 1; font-weight: 700; color: #ffffff">0 <span style="color: #52525c">:</span> 0</span>
+<div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; min-width: 0">
+<span style="font-size: 15px; font-weight: 600; color: {{nameFgB}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{nameB}}</span>
+<span style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 10px; background: {{tintB}}; color: {{cb}}; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{iniB}}</span>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 20px">
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<legend style="padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #ffffff">Primeiro time</legend>
+<label for="time-a" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Nome do primeiro time</label>
+<input id="time-a" class="pl-in" type="text" maxlength="24" placeholder="Time 1" value="{{a}}" onChange="{{onA}}" style="height: 48px; box-sizing: border-box; border: 0; border-radius: 10px; background: #18181b; box-shadow: {{ringA}}; color: #ffffff; font-family: inherit; font-size: 16px; padding: 0 14px"></input>
+<div role="group" aria-label="Cor do primeiro time" style="display: flex; flex-wrap: wrap; gap: 6px; padding-top: 4px">
+<sc-for list="{{swA}}" as="s" hint-placeholder-count="6">
+<button class="pl-sw" type="button" onClick="{{s.pick}}" disabled="{{s.taken}}" aria-pressed="{{s.pressed}}" aria-label="{{s.name}}" style="width: 44px; height: 44px; border: 0; padding: 0; border-radius: 10px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<span style="width: 26px; height: 26px; border-radius: 50%; background: {{s.hex}}; box-shadow: {{s.ring}}"></span>
+</button>
+</sc-for>
+</div>
+<span style="min-height: 20px; font-size: 13px; line-height: 20px; color: #ff6467">{{errA}}</span>
+</fieldset>
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<legend style="padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #ffffff">Segundo time</legend>
+<label for="time-b" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Nome do segundo time</label>
+<input id="time-b" class="pl-in" type="text" maxlength="24" placeholder="Time 2" value="{{b}}" onChange="{{onB}}" style="height: 48px; box-sizing: border-box; border: 0; border-radius: 10px; background: #18181b; box-shadow: {{ringB}}; color: #ffffff; font-family: inherit; font-size: 16px; padding: 0 14px"></input>
+<div role="group" aria-label="Cor do segundo time" style="display: flex; flex-wrap: wrap; gap: 6px; padding-top: 4px">
+<sc-for list="{{swB}}" as="s" hint-placeholder-count="6">
+<button class="pl-sw" type="button" onClick="{{s.pick}}" disabled="{{s.taken}}" aria-pressed="{{s.pressed}}" aria-label="{{s.name}}" style="width: 44px; height: 44px; border: 0; padding: 0; border-radius: 10px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<span style="width: 26px; height: 26px; border-radius: 50%; background: {{s.hex}}; box-shadow: {{s.ring}}"></span>
+</button>
+</sc-for>
+</div>
+<span style="min-height: 20px; font-size: 13px; line-height: 20px; color: #ff6467">{{errB}}</span>
+</fieldset>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding-top: 20px; border-top: 1px solid #27272a">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span id="inc-label" style="font-size: 14px; font-weight: 600; color: #ffffff">Valor da pontuação</span>
+<span style="font-size: 13px; color: #9f9fa9">Pontos somados a cada clique</span>
+</div>
+<div role="group" aria-labelledby="inc-label" style="display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 12px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a">
+<button class="b-subtle" type="button" onClick="{{incDown}}" disabled="{{incMin}}" aria-label="Diminuir" style="width: 44px; height: 44px; border: 0; border-radius: 8px; background: #27272a; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"></path></svg>
+</button>
+<output aria-live="polite" style="width: 64px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 32px; line-height: 1; font-weight: 700; color: #ffffff">+{{inc}}</output>
+<button class="b-subtle" type="button" onClick="{{incUp}}" aria-label="Aumentar" style="width: 44px; height: 44px; border: 0; border-radius: 8px; background: #27272a; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+</button>
+</div>
+</div>
+</div>
+
+<div style="display: flex; justify-content: flex-end; gap: 8px; padding: 16px 28px; background: #18181b; border-top: 1px solid #27272a">
+<a class="b-ghost" href="Painel.dc.html" style="height: 48px; box-sizing: border-box; padding: 0 18px; border-radius: 10px; color: #d4d4d8; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center">Cancelar</a>
+<sc-if value="{{ok}}" hint-placeholder-val="{{ false }}">
+<a class="b-solid" href="Placar.dc.html" style="height: 48px; box-sizing: border-box; padding: 0 20px; border-radius: 10px; background: #ffffff; color: #18181b; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px">Criar placar
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+</a>
+</sc-if>
+<sc-if value="{{notOk}}" hint-placeholder-val="{{ true }}">
+<button class="b-solid" type="submit" style="height: 48px; padding: 0 20px; border: 0; border-radius: 10px; background: #ffffff; color: #18181b; font-family: inherit; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; cursor: pointer">Criar placar
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+</button>
+</sc-if>
+</div>
+</form>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { a: '', b: '', ca: '#51a2ff', cb: '#ff8904', inc: 1, tried: false }; }
+  renderVals() {
+    const s = this.state;
+    const colors = [
+      { name: 'Azul', hex: '#51a2ff' }, { name: 'Laranja', hex: '#ff8904' }, { name: 'Verde', hex: '#05df72' },
+      { name: 'Roxo', hex: '#a684ff' }, { name: 'Rosa', hex: '#fb64b6' }, { name: 'Amarelo', hex: '#fdc700' }
+    ];
+    const sel = '0 0 0 3px #1d1d20, 0 0 0 5px #ffffff';
+    const sw = (mine, other, key) => colors.map((c) => ({
+      name: c.name, hex: c.hex,
+      pressed: mine === c.hex ? 'true' : 'false',
+      taken: other === c.hex,
+      ring: mine === c.hex ? sel : 'none',
+      pick: () => this.setState({ [key]: c.hex })
+    }));
+    const ini = (n, f) => (n.trim() || f).split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+    const ring = 'inset 0 0 0 1px #3f3f46';
+    const bad = 'inset 0 0 0 1px #ff6467';
+    const okA = s.a.trim().length > 0;
+    const okB = s.b.trim().length > 0;
+    const t = s.tried;
+    return {
+      a: s.a, b: s.b, ca: s.ca, cb: s.cb, inc: s.inc,
+      tintA: s.ca + '24', tintB: s.cb + '24',
+      nameA: s.a.trim() || 'Time 1', nameB: s.b.trim() || 'Time 2',
+      nameFgA: okA ? '#ffffff' : '#71717b', nameFgB: okB ? '#ffffff' : '#71717b',
+      iniA: ini(s.a, 'T 1'), iniB: ini(s.b, 'T 2'),
+      swA: sw(s.ca, s.cb, 'ca'), swB: sw(s.cb, s.ca, 'cb'),
+      ok: okA && okB, notOk: !(okA && okB),
+      ringA: t && !okA ? bad : ring, ringB: t && !okB ? bad : ring,
+      errA: t && !okA ? 'Nome do time A é obrigatório' : '',
+      errB: t && !okB ? 'Nome do time B é obrigatório' : '',
+      incMin: s.inc <= 1,
+      incDown: () => this.setState({ inc: Math.max(1, s.inc - 1) }),
+      incUp: () => this.setState({ inc: s.inc + 1 }),
+      onA: (e) => this.setState({ a: e.target.value }),
+      onB: (e) => this.setState({ b: e.target.value }),
+      submit: (e) => { e.preventDefault(); this.setState({ tried: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

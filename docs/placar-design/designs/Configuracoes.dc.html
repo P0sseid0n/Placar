@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Placar · Configurações</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#18181b}
+a{color:#e4e4e7}a:hover{color:#ffffff}
+.b-solid:hover{background:#e4e4e7 !important}
+.b-subtle:hover{background:#3f3f46 !important}
+.b-subtle:disabled{opacity:.4;cursor:not-allowed}
+.b-ghost:hover{background:#27272a !important;color:#ffffff !important}
+.b-danger-ghost:hover{background:rgba(255,100,103,.12) !important}
+.b-danger:hover{background:#ff8183 !important}
+.pl-seg:hover{color:#ffffff !important}
+.pl-in::placeholder{color:#71717b}
+.pl-in:focus{outline:none;box-shadow:inset 0 0 0 1px #9f9fa9 !important}
+:focus-visible{outline:2px solid #ffffff;outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; background: #18181b; color: #e4e4e7; font-family: 'Open Sans', system-ui, sans-serif; overflow: hidden">
+
+<div aria-hidden="true" style="min-height: 100vh; display: flex; flex-direction: column">
+<div style="height: 72px; border-bottom: 1px solid #27272a; display: flex; align-items: center; justify-content: center; gap: 10px">
+<span style="width: 28px; height: 28px; border-radius: 7px; background: #ffffff"></span>
+<span style="font-size: 20px; font-weight: 700; color: #ffffff">Placar</span>
+</div>
+<div style="flex: 1 1 auto; display: flex; gap: 20px; padding: 88px clamp(16px, 4vw, 48px) 48px">
+<div style="flex: 1 1 0; overflow: hidden; border-radius: 20px; background: #1d1d20; box-shadow: inset 0 0 0 1px #51a2ff99; display: flex; flex-direction: column">
+<div style="height: 6px; background: #51a2ff"></div>
+<div style="flex: 1 1 auto; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-size: 18vw; font-weight: 700; color: #ffffff">12</div>
+</div>
+<div style="flex: 1 1 0; overflow: hidden; border-radius: 20px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a; display: flex; flex-direction: column">
+<div style="height: 6px; background: #ff8904"></div>
+<div style="flex: 1 1 auto; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-size: 18vw; font-weight: 700; color: #ffffff">9</div>
+</div>
+</div>
+</div>
+
+<div style="position: absolute; inset: 0; overflow-y: auto; background: rgba(9,9,11,0.72); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 24px 16px">
+<div role="dialog" aria-modal="true" aria-labelledby="cfg-title" style="width: 100%; max-width: 560px; box-sizing: border-box; margin: auto 0; overflow: hidden; border-radius: 20px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a, 0 32px 80px rgba(0,0,0,0.6); display: flex; flex-direction: column">
+<div aria-hidden="true" style="display: flex; height: 5px">
+<span style="flex: 1 1 0; background: #51a2ff"></span>
+<span style="flex: 1 1 0; background: #ff8904"></span>
+</div>
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 22px 28px 18px; border-bottom: 1px solid #27272a">
+<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+<h2 id="cfg-title" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 700; color: #ffffff">Configurações</h2>
+<span style="font-size: 14px; color: #9f9fa9">Time Azul x Time Laranja · <span style="font-family: ui-monospace, monospace; color: #d4d4d8">#k3x9a2</span></span>
+</div>
+<a class="b-ghost" href="Placar.dc.html" aria-label="Fechar" style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 8px; color: #9f9fa9; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+</a>
+</div>
+
+<div style="padding: 24px 28px; display: flex; flex-direction: column; gap: 26px">
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 10px">
+<legend style="padding: 0; margin-bottom: 10px; font-size: 14px; font-weight: 600; color: #ffffff">Times</legend>
+<div style="display: flex; align-items: center; gap: 10px">
+<span aria-hidden="true" style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 10px; background: #51a2ff24; color: #51a2ff; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center">TA</span>
+<label for="cfg-a" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Nome do primeiro time</label>
+<input id="cfg-a" class="pl-in" type="text" value="Time Azul" style="flex: 1 1 auto; min-width: 0; height: 44px; box-sizing: border-box; border: 0; border-radius: 10px; background: #18181b; box-shadow: inset 0 0 0 1px #3f3f46; color: #ffffff; font-family: inherit; font-size: 15px; padding: 0 14px"></input>
+</div>
+<div style="display: flex; align-items: center; gap: 10px">
+<span aria-hidden="true" style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 10px; background: #ff890424; color: #ff8904; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center">TL</span>
+<label for="cfg-b" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Nome do segundo time</label>
+<input id="cfg-b" class="pl-in" type="text" value="Time Laranja" style="flex: 1 1 auto; min-width: 0; height: 44px; box-sizing: border-box; border: 0; border-radius: 10px; background: #18181b; box-shadow: inset 0 0 0 1px #3f3f46; color: #ffffff; font-family: inherit; font-size: 15px; padding: 0 14px"></input>
+</div>
+</fieldset>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span id="inc-label" style="font-size: 14px; font-weight: 600; color: #ffffff">Pontuação por clique</span>
+<span style="font-size: 13px; color: #9f9fa9">Vale para os dois times</span>
+</div>
+<div role="group" aria-labelledby="inc-label" style="display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 12px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a">
+<button class="b-subtle" type="button" onClick="{{incDown}}" disabled="{{incMin}}" aria-label="Diminuir" style="width: 40px; height: 40px; border: 0; border-radius: 8px; background: #27272a; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"></path></svg>
+</button>
+<output style="width: 56px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 28px; line-height: 1; font-weight: 700; color: #ffffff">+{{inc}}</output>
+<button class="b-subtle" type="button" onClick="{{incUp}}" aria-label="Aumentar" style="width: 40px; height: 40px; border: 0; border-radius: 8px; background: #27272a; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+</button>
+</div>
+</div>
+
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column">
+<legend style="padding: 0; margin-bottom: 10px; font-size: 14px; font-weight: 600; color: #ffffff">Tamanho dos números</legend>
+<div role="radiogroup" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 12px; background: #18181b; box-shadow: inset 0 0 0 1px #27272a">
+<sc-for list="{{sizes}}" as="s" hint-placeholder-count="3">
+<button class="pl-seg" type="button" role="radio" aria-checked="{{s.checked}}" onClick="{{s.pick}}" style="height: 76px; border: 0; border-radius: 8px; background: {{s.bg}}; color: {{s.fg}}; font-family: inherit; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; cursor: pointer">
+<span style="font-family: 'Barlow Condensed', sans-serif; font-size: {{s.px}}; line-height: 1; font-weight: 700">12</span>
+<span style="font-size: 12px; font-weight: 600">{{s.label}}</span>
+</button>
+</sc-for>
+</div>
+</fieldset>
+
+<div style="display: flex; flex-direction: column; gap: 12px; padding-top: 22px; border-top: 1px solid #27272a">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; font-weight: 600; color: #ffffff">Reiniciar placar</span>
+<span style="font-size: 13px; color: #9f9fa9">Volta os dois times para 0.</span>
+</div>
+<sc-if value="{{resetIdle}}" hint-placeholder-val="{{ true }}">
+<button class="b-subtle" type="button" onClick="{{askReset}}" style="height: 44px; padding: 0 14px; border: 0; border-radius: 10px; background: #27272a; box-shadow: inset 0 0 0 1px #3f3f46; color: #e4e4e7; font-family: inherit; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; cursor: pointer">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+Reiniciar
+</button>
+</sc-if>
+<sc-if value="{{resetAsk}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 6px">
+<button class="b-ghost" type="button" onClick="{{cancel}}" style="height: 44px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: #d4d4d8; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">Cancelar</button>
+<button class="b-solid" type="button" onClick="{{doReset}}" style="height: 44px; padding: 0 14px; border: 0; border-radius: 10px; background: #ffffff; color: #18181b; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">Zerar placar</button>
+</div>
+</sc-if>
+<sc-if value="{{resetDone}}" hint-placeholder-val="{{ false }}">
+<span role="status" style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #05df72">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+Placar zerado
+</span>
+</sc-if>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; border-radius: 12px; background: rgba(255,100,103,0.05); box-shadow: inset 0 0 0 1px rgba(255,100,103,0.3)">
+<div style="display: flex; flex-direction: column; gap: 2px; flex: 1 1 220px">
+<span style="font-size: 14px; font-weight: 600; color: #ff6467">Apagar placar</span>
+<span style="font-size: 13px; line-height: 19px; color: #9f9fa9">O placar e o ID deixam de existir. Não dá para desfazer.</span>
+</div>
+<sc-if value="{{delIdle}}" hint-placeholder-val="{{ true }}">
+<button class="b-danger-ghost" type="button" onClick="{{askDel}}" style="height: 44px; padding: 0 14px; border: 0; border-radius: 10px; background: transparent; box-shadow: inset 0 0 0 1px rgba(255,100,103,0.4); color: #ff6467; font-family: inherit; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; cursor: pointer">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+Apagar
+</button>
+</sc-if>
+<sc-if value="{{delAsk}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 6px">
+<button class="b-ghost" type="button" onClick="{{cancel}}" style="height: 44px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: #d4d4d8; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">Cancelar</button>
+<a class="b-danger" href="Painel.dc.html" style="height: 44px; box-sizing: border-box; padding: 0 14px; border-radius: 10px; background: #ff6467; color: #18181b; font-size: 14px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center">Sim, apagar</a>
+</div>
+</sc-if>
+</div>
+</div>
+</div>
+
+<div style="display: flex; justify-content: flex-end; gap: 8px; padding: 16px 28px; background: #18181b; border-top: 1px solid #27272a">
+<a class="b-ghost" href="Placar.dc.html" style="height: 48px; box-sizing: border-box; padding: 0 18px; border-radius: 10px; color: #d4d4d8; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center">Cancelar</a>
+<a class="b-solid" href="Placar.dc.html" style="height: 48px; box-sizing: border-box; padding: 0 20px; border-radius: 10px; background: #ffffff; color: #18181b; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center">Salvar alterações</a>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { size: 'G', step: 'idle', inc: 1 }; }
+  renderVals() {
+    const st = this.state;
+    const opts = [
+      { id: 'P', label: 'Pequeno', px: '22px' },
+      { id: 'M', label: 'Médio', px: '30px' },
+      { id: 'G', label: 'Grande', px: '40px' }
+    ];
+    return {
+      inc: st.inc,
+      incMin: st.inc <= 1,
+      incDown: () => this.setState({ inc: Math.max(1, st.inc - 1) }),
+      incUp: () => this.setState({ inc: st.inc + 1 }),
+      sizes: opts.map((o) => ({
+        label: o.label, px: o.px,
+        checked: st.size === o.id ? 'true' : 'false',
+        bg: st.size === o.id ? '#ffffff' : 'transparent',
+        fg: st.size === o.id ? '#18181b' : '#9f9fa9',
+        pick: () => this.setState({ size: o.id })
+      })),
+      resetIdle: st.step !== 'reset' && st.step !== 'resetDone',
+      resetAsk: st.step === 'reset',
+      resetDone: st.step === 'resetDone',
+      delIdle: st.step !== 'del',
+      delAsk: st.step === 'del',
+      askReset: () => this.setState({ step: 'reset' }),
+      askDel: () => this.setState({ step: 'del' }),
+      doReset: () => this.setState({ step: 'resetDone' }),
+      cancel: () => this.setState({ step: 'idle' })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Placar · Login</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&amp;family=Barlow+Condensed:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#18181b}
+a{color:#e4e4e7}a:hover{color:#ffffff}
+.b-solid:hover{background:#e4e4e7 !important}
+.b-arrow:hover{background:#3f3f46 !important}
+.pl-input::placeholder{color:#71717b}
+.pl-input:focus{outline:none}
+.pl-field:focus-within{box-shadow:inset 0 0 0 1px #9f9fa9 !important}
+:focus-visible{outline:2px solid #ffffff;outline-offset:2px}
+@keyframes pl-pop{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+.pl-pop{animation:pl-pop .35s ease-out}
+@media (max-width:900px){.hide-md{display:none !important}}
+</style>
+</helmet>
+<main style="min-height: 100vh; box-sizing: border-box; background-color: #18181b; background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 24px 24px; color: #e4e4e7; font-family: 'Open Sans', system-ui, sans-serif; display: flex; align-items: center; justify-content: center; padding: 48px clamp(16px, 5vw, 64px)">
+<div style="width: 100%; max-width: 1180px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(40px, 6vw, 96px)">
+
+<section style="flex: 1 1 480px; min-width: 0; max-width: 600px; display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<p style="margin: 0; font-size: 18px; line-height: 28px; font-weight: 500; opacity: 0.75">Bem-vindo(a) ao</p>
+<h1 style="margin: 0; display: flex; align-items: center; gap: clamp(12px, 2vw, 20px); font-size: clamp(64px, 10vw, 112px); line-height: 1; font-weight: 700; color: #ffffff; letter-spacing: -2px">
+<span aria-hidden="true" style="flex: 0 0 auto; width: 0.72em; height: 0.72em; border-radius: 0.18em; background: #ffffff; display: flex; align-items: center; justify-content: center; gap: 0.06em">
+<span style="width: 0.07em; height: 0.3em; border-radius: 0.04em; background: #18181b"></span>
+<span style="width: 0.07em; height: 0.3em; border-radius: 0.04em; background: #18181b; opacity: 0.45"></span>
+</span>
+Placar
+</h1>
+<p style="margin: 12px 0 0; max-width: 460px; font-size: 18px; line-height: 28px; color: #d4d4d8">Crie o placar do seu jogo em segundos e compartilhe com todo mundo por um ID.</p>
+</div>
+
+<div aria-hidden="true" class="hide-md" style="border-radius: 20px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a, 0 24px 60px rgba(0,0,0,0.35); overflow: hidden">
+<div style="display: flex; height: 5px">
+<span style="flex: 1 1 0; background: #51a2ff"></span>
+<span style="flex: 1 1 0; background: #ff8904"></span>
+</div>
+<div style="padding: 20px 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span style="font-family: ui-monospace, monospace; font-size: 13px; color: #9f9fa9"><span style="color: #52525c">#</span>k3x9a2</span>
+<span style="height: 26px; box-sizing: border-box; padding: 0 10px; border-radius: 999px; background: rgba(5,223,114,0.08); box-shadow: inset 0 0 0 1px rgba(5,223,114,0.25); font-size: 12px; font-weight: 600; color: #05df72; display: inline-flex; align-items: center; gap: 6px">
+<span style="width: 6px; height: 6px; border-radius: 50%; background: #05df72"></span>Ao vivo
+</span>
+</div>
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px">
+<div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+<span style="flex: 0 0 auto; width: 38px; height: 38px; border-radius: 10px; background: #51a2ff24; color: #51a2ff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">TA</span>
+<span style="font-size: 15px; font-weight: 600; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Time Azul</span>
+</div>
+<div style="display: flex; align-items: center; gap: 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 64px; line-height: 1; font-variant-numeric: tabular-nums">
+<span class="{{popA}}" style="display: inline-block; color: {{fgA}}">{{a}}</span>
+<span style="font-size: 28px; color: #52525c">:</span>
+<span class="{{popB}}" style="display: inline-block; color: {{fgB}}">{{b}}</span>
+</div>
+<div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; min-width: 0">
+<span style="font-size: 15px; font-weight: 600; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Time Laranja</span>
+<span style="flex: 0 0 auto; width: 38px; height: 38px; border-radius: 10px; background: #ff890424; color: #ff8904; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">TL</span>
+</div>
+</div>
+</div>
+</div>
+
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 24px">
+<li style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #d4d4d8">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9f9fa9" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+Pontos com um clique
+</li>
+<li style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #d4d4d8">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9f9fa9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+Compartilhe por ID ou link
+</li>
+<li style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #d4d4d8">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9f9fa9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
+Modo telão para a TV
+</li>
+</ul>
+</section>
+
+<section aria-labelledby="entrar" style="flex: 0 1 420px; min-width: 0; box-sizing: border-box; padding: clamp(24px, 3vw, 36px); border-radius: 20px; background: #1d1d20; box-shadow: inset 0 0 0 1px #27272a, 0 24px 60px rgba(0,0,0,0.35); display: flex; flex-direction: column">
+<h2 id="entrar" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 700; color: #ffffff">Entrar</h2>
+<p style="margin: 6px 0 24px; font-size: 15px; line-height: 22px; color: #9f9fa9">Entre para criar e controlar seus placares.</p>
+<a class="b-solid" href="Painel.dc.html" style="height: 52px; box-sizing: border-box; border-radius: 10px; background: #ffffff; color: #18181b; font-size: 16px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px">
+<svg width="22" height="17" viewBox="0 0 24 18" aria-hidden="true" fill="currentColor"><path d="M20.3 1.5A19.6 19.6 0 0 0 15.4 0l-.6 1.3a18.2 18.2 0 0 0-5.6 0L8.6 0a19.6 19.6 0 0 0-4.9 1.5C.6 6.1-.3 10.6.1 15a19.8 19.8 0 0 0 6 3l1.3-2.1a12.8 12.8 0 0 1-2-1l.5-.4a14 14 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.7 19.7 0 0 0 6-3c.5-5.1-.8-9.6-3.6-13.5ZM8 12.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 7.5 8 7.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"></path></svg>
+Entrar com Discord
+</a>
+
+<div role="separator" style="margin: 28px 0; display: flex; align-items: center; gap: 12px">
+<span style="flex: 1 1 0; height: 1px; background: #27272a"></span>
+<span style="font-size: 13px; font-weight: 500; color: #9f9fa9">ou assista a um placar</span>
+<span style="flex: 1 1 0; height: 1px; background: #27272a"></span>
+</div>
+
+<form onSubmit="{{submit}}" style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<label for="placar-id" style="font-size: 14px; font-weight: 600; color: #ffffff">ID do placar</label>
+<div class="pl-field" style="height: 52px; box-sizing: border-box; border-radius: 10px; background: #18181b; box-shadow: {{ring}}; display: flex; align-items: center; padding: 6px 6px 6px 14px; gap: 6px">
+<span aria-hidden="true" style="font-family: ui-monospace, monospace; font-size: 17px; color: #52525c">#</span>
+<input id="placar-id" class="pl-input" type="text" maxlength="6" autocomplete="off" spellcheck="false" placeholder="k3x9a2" value="{{id}}" onChange="{{onId}}" aria-describedby="placar-id-msg" style="flex: 1 1 auto; min-width: 0; height: 100%; border: 0; background: transparent; color: #ffffff; font-family: ui-monospace, monospace; font-size: 17px; letter-spacing: 2px"></input>
+<span style="font-size: 12px; font-variant-numeric: tabular-nums; color: #71717b">{{len}}/6</span>
+<sc-if value="{{valid}}" hint-placeholder-val="{{ false }}">
+<a class="b-solid" href="PlacarVisitante.dc.html" aria-label="Abrir placar" style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 8px; background: #ffffff; color: #18181b; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+</a>
+</sc-if>
+<sc-if value="{{invalid}}" hint-placeholder-val="{{ true }}">
+<button class="b-arrow" type="submit" aria-label="Abrir placar" style="flex: 0 0 auto; width: 40px; height: 40px; border: 0; border-radius: 8px; background: #27272a; color: #9f9fa9; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+</button>
+</sc-if>
+</div>
+<p id="placar-id-msg" role="status" style="margin: 0; min-height: 20px; font-size: 13px; line-height: 20px; color: {{msgColor}}">{{msg}}</p>
+</form>
+</section>
+</div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { id: '', tried: false, a: 12, b: 9, last: null, n: 0 }; }
+  componentDidMount() {
+    this.iv = setInterval(() => {
+      const s = this.state;
+      if (s.a + s.b > 40) { this.setState({ a: 12, b: 9, last: null }); return; }
+      const t = Math.random() < 0.55 ? 'A' : 'B';
+      this.setState(t === 'A' ? { a: s.a + 1, last: 'A', n: s.n + 1 } : { b: s.b + 1, last: 'B', n: s.n + 1 });
+    }, 2600);
+  }
+  componentWillUnmount() { clearInterval(this.iv); }
+  renderVals() {
+    const s = this.state;
+    const raw = s.id.replace(/[^a-z0-9]/gi, '').toLowerCase().slice(0, 6);
+    const valid = raw.length === 6;
+    const showErr = s.tried && !valid;
+    const pop = s.n % 2 === 0 ? 'pl-pop' : 'pl-pop ';
+    return {
+      a: s.a, b: s.b,
+      fgA: s.a >= s.b ? '#ffffff' : '#9f9fa9',
+      fgB: s.b >= s.a ? '#ffffff' : '#9f9fa9',
+      popA: s.last === 'A' ? pop : '',
+      popB: s.last === 'B' ? pop : '',
+      id: raw, len: raw.length,
+      valid: valid, invalid: !valid,
+      msg: showErr ? (raw.length === 0 ? 'Digite o ID do placar.' : 'O ID tem 6 letras ou números.') : 'Peça o ID para quem criou o placar.',
+      msgColor: showErr ? '#ff6467' : '#9f9fa9',
+      ring: showErr ? 'inset 0 0 0 1px #ff6467' : 'inset 0 0 0 1px #3f3f46',
+      onId: (e) => this.setState({ id: e.target.value, tried: false }),
+      submit: (e) => { e.preventDefault(); this.setState({ tried: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
