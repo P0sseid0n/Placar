@@ -50,7 +50,7 @@ const rootStyle = computed(() =>
 </script>
 
 <template>
-	<component :is="tag" class="inline-flex items-center font-bold leading-none text-white" :style="rootStyle">
+	<component :is="tag" class="inline-flex items-center leading-none font-bold text-white" :style="rootStyle">
 		<span aria-hidden="true" class="flex shrink-0 items-center justify-center bg-white" :style="markStyle">
 			<span class="bg-canvas" :style="barStyle" />
 			<span class="bg-canvas opacity-45" :style="barStyle" />

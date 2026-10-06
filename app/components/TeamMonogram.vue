@@ -1,6 +1,10 @@
 <script setup lang="ts">
 // Monograma do time: iniciais na cor do time, sobre a mesma cor a ~14% (alfa 24 em hex)
-const { name, color, size = 52 } = defineProps<{
+const {
+	name,
+	color,
+	size = 52,
+} = defineProps<{
 	name: string
 	/** Cor do time em hex de 6 dígitos (#rrggbb) */
 	color: string

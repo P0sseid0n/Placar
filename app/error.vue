@@ -10,7 +10,10 @@ const user = useSupabaseUser()
 const MESSAGES: Record<number, { title: string; text: string }> = {
 	400: { title: 'ID inválido', text: 'O ID do placar tem 6 caracteres, só letras minúsculas e números.' },
 	404: { title: 'Página não encontrada', text: 'Esse endereço não existe. Confira o link ou volte para o início.' },
-	500: { title: 'Erro interno do servidor', text: 'Algo deu errado do nosso lado. Tente de novo em alguns instantes.' },
+	500: {
+		title: 'Erro interno do servidor',
+		text: 'Algo deu errado do nosso lado. Tente de novo em alguns instantes.',
+	},
 }
 
 const PLACAR_NOT_FOUND_MESSAGE = {
@@ -56,7 +59,7 @@ useHead({ title: () => `Placar | ${content.value.title}` })
 					v-for="(digit, index) in String(code).split('')"
 					:key="index"
 					aria-hidden="true"
-					class="relative flex h-[clamp(104px,16vw,168px)] w-[clamp(76px,12vw,128px)] items-center justify-center overflow-hidden rounded-[clamp(12px,1.6vw,18px)] bg-surface font-score text-[clamp(84px,13vw,140px)] font-bold leading-none text-white shadow-[inset_0_0_0_1px_var(--color-raised),0_20px_50px_rgba(0,0,0,0.4)]"
+					class="relative flex h-[clamp(104px,16vw,168px)] w-[clamp(76px,12vw,128px)] items-center justify-center overflow-hidden rounded-[clamp(12px,1.6vw,18px)] bg-surface font-score text-[clamp(84px,13vw,140px)] leading-none font-bold text-white shadow-[inset_0_0_0_1px_var(--color-raised),0_20px_50px_rgba(0,0,0,0.4)]"
 				>
 					{{ digit }}
 					<span class="absolute inset-x-0 top-1/2 h-0.5 bg-canvas" />

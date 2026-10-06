@@ -32,7 +32,9 @@ watchEffect(() => {
 			</NuxtLink>
 
 			<div class="flex items-center gap-2">
-				<div class="flex h-11 items-center gap-2.5 rounded-full py-0 pr-1.5 pl-1.5 ring-1 ring-inset ring-raised sm:pr-3">
+				<div
+					class="flex h-11 items-center gap-2.5 rounded-full py-0 pr-1.5 pl-1.5 ring-1 ring-raised ring-inset sm:pr-3"
+				>
 					<img
 						v-if="avatarUrl && !avatarFailed"
 						:src="avatarUrl"

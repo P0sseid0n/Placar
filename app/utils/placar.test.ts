@@ -161,6 +161,10 @@ describe('mergeRealtimePlacar', () => {
 	})
 
 	it('mantém as pontuações da tela enquanto há cliques sendo salvos, mas aceita o resto', () => {
-		expect(mergeRealtimePlacar(current, incoming, 2)).toEqual({ team_a_score: 7, team_b_score: 2, team_a_name: 'Casa FC' })
+		expect(mergeRealtimePlacar(current, incoming, 2)).toEqual({
+			team_a_score: 7,
+			team_b_score: 2,
+			team_a_name: 'Casa FC',
+		})
 	})
 })

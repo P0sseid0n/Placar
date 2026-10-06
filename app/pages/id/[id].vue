@@ -51,9 +51,7 @@ const teams = computed(() =>
 		color: colors.value[team],
 		score: summary.value[team],
 		status: (summary.value.tie ? 'tie' : summary.value.leader === team ? 'leader' : 'trailing') as
-			| 'leader'
-			| 'trailing'
-			| 'tie',
+			'leader' | 'trailing' | 'tie',
 	})),
 )
 
@@ -122,7 +120,11 @@ function handleUpdateScore(team: 'a' | 'b', action: 'increment' | 'decrement') {
 		pendingSaves--
 
 		if (saved === null) {
-			toast.add({ color: 'error', title: 'Não foi possível salvar o ponto', description: 'O placar foi recarregado.' })
+			toast.add({
+				color: 'error',
+				title: 'Não foi possível salvar o ponto',
+				description: 'O placar foi recarregado.',
+			})
 			await Promise.all([refreshNuxtData(`placar-${placarPublicId}`), refreshEvents()])
 			return
 		}
@@ -278,7 +280,7 @@ function handleDeleted() {
 				<button
 					type="button"
 					:aria-label="`Copiar ID do placar ${placar.public_id}`"
-					class="inline-flex h-9 cursor-pointer items-center gap-2 rounded-full px-3 font-id text-sm text-fg ring-1 ring-inset ring-raised transition-colors hover:bg-raised hover:text-white"
+					class="inline-flex h-9 cursor-pointer items-center gap-2 rounded-full px-3 font-id text-sm text-fg ring-1 ring-raised transition-colors ring-inset hover:bg-raised hover:text-white"
 					@click="copyId"
 				>
 					<span><span class="text-fg-dim">#</span>{{ placar.public_id }}</span>
@@ -286,14 +288,21 @@ function handleDeleted() {
 				</button>
 
 				<template v-if="isOwner">
-					<span class="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-[13px] text-fg-soft ring-1 ring-inset ring-raised">
+					<span
+						class="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-[13px] text-fg-soft ring-1 ring-raised ring-inset"
+					>
 						<strong class="font-bold text-white">+{{ placar.score_increment }}</strong> por clique
 					</span>
-					<span class="inline-flex h-9 items-center rounded-full px-3 text-[13px] text-fg-soft ring-1 ring-inset ring-raised max-[720px]:hidden">
+					<span
+						class="inline-flex h-9 items-center rounded-full px-3 text-[13px] text-fg-soft ring-1 ring-raised ring-inset max-[720px]:hidden"
+					>
 						Criado {{ relativeTime(placar.created_at, now) }}
 					</span>
 				</template>
-				<span v-else class="inline-flex h-9 items-center rounded-full px-3 text-[13px] text-fg-soft ring-1 ring-inset ring-raised">
+				<span
+					v-else
+					class="inline-flex h-9 items-center rounded-full px-3 text-[13px] text-fg-soft ring-1 ring-raised ring-inset"
+				>
 					Você está assistindo
 				</span>
 			</div>
@@ -307,7 +316,7 @@ function handleDeleted() {
 						class="flex shrink-0 flex-col items-center gap-2.5 self-center py-2"
 					>
 						<span
-							class="flex size-14 items-center justify-center rounded-full font-score text-[22px] font-bold text-fg-soft ring-1 ring-inset ring-edge"
+							class="flex size-14 items-center justify-center rounded-full font-score text-[22px] font-bold text-fg-soft ring-1 ring-edge ring-inset"
 							:class="isOwner && 'bg-canvas'"
 						>
 							VS
@@ -338,7 +347,7 @@ function handleDeleted() {
 			<section
 				v-if="isOwner"
 				aria-labelledby="jogadas"
-				class="flex flex-col gap-2 rounded-feature bg-surface px-5 py-4 ring-1 ring-inset ring-raised"
+				class="flex flex-col gap-2 rounded-feature bg-surface px-5 py-4 ring-1 ring-raised ring-inset"
 			>
 				<div class="flex items-center justify-between gap-3">
 					<h2 id="jogadas" class="text-sm font-semibold text-white">Últimas jogadas</h2>
@@ -359,12 +368,14 @@ function handleDeleted() {
 					<li
 						v-for="event in eventChips"
 						:key="event.id"
-						class="flex h-9 items-center gap-2 rounded-btn bg-canvas pr-3 pl-2.5 text-[13px] ring-1 ring-inset ring-raised"
+						class="flex h-9 items-center gap-2 rounded-btn bg-canvas pr-3 pl-2.5 text-[13px] ring-1 ring-raised ring-inset"
 						:class="event.faded && 'opacity-75'"
 					>
 						<span aria-hidden="true" class="size-2 rounded-full" :style="{ background: event.color }" />
 						<span class="font-semibold text-white">{{ event.team }}</span>
-						<span class="font-bold" :class="event.positive ? 'text-success' : 'text-error'">{{ event.delta }}</span>
+						<span class="font-bold" :class="event.positive ? 'text-success' : 'text-error'">{{
+							event.delta
+						}}</span>
 						<span class="text-fg-soft">→ {{ event.after }} · {{ event.when }}</span>
 					</li>
 				</ol>

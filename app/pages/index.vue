@@ -22,7 +22,11 @@ async function signInWithDiscord() {
 	// Em caso de sucesso o navegador sai da página; só volta aqui se der erro
 	if (error) {
 		signingIn.value = false
-		useToast().add({ color: 'error', title: 'Não foi possível entrar com o Discord', description: 'Tente novamente.' })
+		useToast().add({
+			color: 'error',
+			title: 'Não foi possível entrar com o Discord',
+			description: 'Tente novamente.',
+		})
 	}
 }
 
@@ -60,7 +64,7 @@ const highlights = [
 <template>
 	<main class="flex min-h-screen items-center justify-center bg-canvas bg-dots p-4 py-12 sm:p-12">
 		<div class="flex w-full max-w-[1180px] flex-wrap items-center justify-center gap-[clamp(40px,6vw,96px)]">
-			<section class="flex min-w-0 max-w-[600px] flex-[1_1_480px] flex-col gap-8">
+			<section class="flex max-w-[600px] min-w-0 flex-[1_1_480px] flex-col gap-8">
 				<div class="flex flex-col gap-1">
 					<p class="text-lg font-medium text-fg/75">Bem-vindo(a) ao</p>
 					<AppLogo tag="h1" fluid class="text-[clamp(64px,10vw,112px)] tracking-[-2px]" />
@@ -72,7 +76,11 @@ const highlights = [
 				<LoginPreview class="max-[900px]:hidden" />
 
 				<ul class="flex flex-wrap gap-x-6 gap-y-2.5">
-					<li v-for="item in highlights" :key="item.text" class="flex items-center gap-2 text-sm text-fg-strong">
+					<li
+						v-for="item in highlights"
+						:key="item.text"
+						class="flex items-center gap-2 text-sm text-fg-strong"
+					>
 						<UIcon :name="item.icon" class="size-[18px] text-fg-soft" aria-hidden="true" />
 						{{ item.text }}
 					</li>
@@ -84,7 +92,9 @@ const highlights = [
 				class="flex min-w-0 flex-[0_1_420px] flex-col rounded-panel bg-surface p-[clamp(24px,3vw,36px)] shadow-[inset_0_0_0_1px_var(--color-raised),0_24px_60px_rgba(0,0,0,0.35)]"
 			>
 				<h2 id="entrar" class="text-2xl font-bold text-white">Entrar</h2>
-				<p class="mt-1.5 mb-6 text-[15px] leading-[22px] text-fg-soft">Entre para criar e controlar seus placares.</p>
+				<p class="mt-1.5 mb-6 text-[15px] leading-[22px] text-fg-soft">
+					Entre para criar e controlar seus placares.
+				</p>
 
 				<UButton
 					color="neutral"
@@ -106,7 +116,7 @@ const highlights = [
 				<form class="flex flex-col gap-2" novalidate @submit.prevent="goToPlacar">
 					<label for="placar-id" class="text-sm font-semibold text-white">ID do placar</label>
 					<div
-						class="flex h-[52px] items-center gap-1.5 rounded-field bg-canvas py-1.5 pr-1.5 pl-3.5 ring-1 ring-inset transition-shadow"
+						class="flex h-[52px] items-center gap-1.5 rounded-field bg-canvas py-1.5 pr-1.5 pl-3.5 ring-1 transition-shadow ring-inset"
 						:class="showError ? 'ring-error' : 'ring-edge focus-within:ring-fg-soft'"
 					>
 						<span aria-hidden="true" class="font-id text-[17px] text-faint">#</span>
@@ -130,7 +140,9 @@ const highlights = [
 							type="submit"
 							aria-label="Abrir placar"
 							class="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-btn transition-colors"
-							:class="isComplete ? 'bg-white text-canvas hover:bg-fg' : 'bg-raised text-fg-soft hover:bg-edge'"
+							:class="
+								isComplete ? 'bg-white text-canvas hover:bg-fg' : 'bg-raised text-fg-soft hover:bg-edge'
+							"
 						>
 							<UIcon name="i-lucide-arrow-right" class="size-5" />
 						</button>

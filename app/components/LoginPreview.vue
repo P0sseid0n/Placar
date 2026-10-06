@@ -32,7 +32,10 @@ const colorB = DEFAULT_TEAM_COLORS.b
 </script>
 
 <template>
-	<div aria-hidden="true" class="overflow-hidden rounded-panel bg-surface shadow-[inset_0_0_0_1px_var(--color-raised),0_24px_60px_rgba(0,0,0,0.35)]">
+	<div
+		aria-hidden="true"
+		class="overflow-hidden rounded-panel bg-surface shadow-[inset_0_0_0_1px_var(--color-raised),0_24px_60px_rgba(0,0,0,0.35)]"
+	>
 		<div class="flex h-[5px]">
 			<span class="flex-1" :style="{ background: colorA }" />
 			<span class="flex-1" :style="{ background: colorB }" />
@@ -47,11 +50,14 @@ const colorB = DEFAULT_TEAM_COLORS.b
 					<TeamMonogram name="Time Azul" :color="colorA" :size="38" />
 					<span class="truncate text-[15px] font-semibold text-white">Time Azul</span>
 				</div>
-				<div class="flex items-center gap-3.5 font-score text-[64px] font-bold leading-none">
+				<div class="flex items-center gap-3.5 font-score text-[64px] leading-none font-bold">
 					<span
 						:key="last === 'a' ? tick : 'a'"
 						class="inline-block"
-						:class="[scores.a >= scores.b ? 'text-white' : 'text-fg-soft', last === 'a' && 'animate-score-pop']"
+						:class="[
+							scores.a >= scores.b ? 'text-white' : 'text-fg-soft',
+							last === 'a' && 'animate-score-pop',
+						]"
 					>
 						{{ scores.a }}
 					</span>
@@ -59,7 +65,10 @@ const colorB = DEFAULT_TEAM_COLORS.b
 					<span
 						:key="last === 'b' ? tick : 'b'"
 						class="inline-block"
-						:class="[scores.b >= scores.a ? 'text-white' : 'text-fg-soft', last === 'b' && 'animate-score-pop']"
+						:class="[
+							scores.b >= scores.a ? 'text-white' : 'text-fg-soft',
+							last === 'b' && 'animate-score-pop',
+						]"
 					>
 						{{ scores.b }}
 					</span>

@@ -1,14 +1,6 @@
 <script setup lang="ts">
 // Painel de um time na página do placar. `owner` tem os botões de pontuar; `viewer` é só leitura.
-const {
-	name,
-	color,
-	score,
-	increment,
-	scoreSize,
-	variant,
-	status,
-} = defineProps<{
+const { name, color, score, increment, scoreSize, variant, status } = defineProps<{
 	name: string
 	color: string
 	score: number
@@ -61,7 +53,7 @@ const panelStyle = computed(() => ({
 				</span>
 				<span
 					v-else-if="status === 'trailing' && !isOwner"
-					class="inline-flex h-[26px] shrink-0 items-center rounded-full px-2.5 text-xs font-semibold text-fg-soft ring-1 ring-inset ring-edge"
+					class="inline-flex h-[26px] shrink-0 items-center rounded-full px-2.5 text-xs font-semibold text-fg-soft ring-1 ring-edge ring-inset"
 				>
 					{{ behind }} atrás
 				</span>
@@ -80,7 +72,7 @@ const panelStyle = computed(() => ({
 					type="button"
 					:aria-label="`Tirar ${increment} do ${name}`"
 					:disabled="score <= 0"
-					class="flex size-16 shrink-0 cursor-pointer items-center justify-center rounded-card bg-raised text-white ring-1 ring-inset ring-edge transition-colors hover:bg-edge disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-raised"
+					class="flex size-16 shrink-0 cursor-pointer items-center justify-center rounded-card bg-raised text-white ring-1 ring-edge transition-colors ring-inset hover:bg-edge disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-raised"
 					@click="$emit('minus')"
 				>
 					<UIcon name="i-lucide-minus" class="size-[26px]" />

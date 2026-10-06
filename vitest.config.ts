@@ -9,8 +9,8 @@ export default defineVitestConfig({
 			provider: 'v8',
 			reporter: ['text', 'json', 'html'],
 			include: ['app/services/**/*.ts', 'app/utils/**/*.ts', 'app/components/**/*.vue', 'app/pages/**/*.vue'],
-			exclude: ['**/*.test.ts', '**/*.spec.ts', 'types/**', 'coverage/**']
+			exclude: ['**/*.test.ts', '**/*.spec.ts', 'types/**', 'coverage/**'],
 		},
-		globals: true
-	}
+		globals: true,
+	},
 })

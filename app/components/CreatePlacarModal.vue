@@ -77,8 +77,24 @@ async function onSubmit() {
 }
 
 const fields = [
-	{ team: 'A', legend: 'Primeiro time', label: 'Nome do primeiro time', placeholder: 'Time 1', name: 'teamA', color: 'colorA', other: 'colorB' },
-	{ team: 'B', legend: 'Segundo time', label: 'Nome do segundo time', placeholder: 'Time 2', name: 'teamB', color: 'colorB', other: 'colorA' },
+	{
+		team: 'A',
+		legend: 'Primeiro time',
+		label: 'Nome do primeiro time',
+		placeholder: 'Time 1',
+		name: 'teamA',
+		color: 'colorA',
+		other: 'colorB',
+	},
+	{
+		team: 'B',
+		legend: 'Segundo time',
+		label: 'Nome do segundo time',
+		placeholder: 'Time 2',
+		name: 'teamB',
+		color: 'colorB',
+		other: 'colorA',
+	},
 ] as const
 </script>
 
@@ -114,24 +130,42 @@ const fields = [
 					/>
 				</div>
 
-				<div class="flex min-h-0 flex-col overflow-y-auto gap-6 px-7 py-6 max-sm:px-5">
+				<div class="flex min-h-0 flex-col gap-6 overflow-y-auto px-7 py-6 max-sm:px-5">
 					<!-- Prévia ao vivo -->
 					<div
 						aria-hidden="true"
-						class="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 rounded-feature bg-canvas px-5 py-4 ring-1 ring-inset ring-raised max-sm:gap-2 max-sm:px-3"
+						class="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 rounded-feature bg-canvas px-5 py-4 ring-1 ring-raised ring-inset max-sm:gap-2 max-sm:px-3"
 					>
 						<div class="flex min-w-0 items-center gap-2.5">
-							<TeamMonogram :name="preview.a || 'T 1'" :color="state.colorA" :size="40" class="max-sm:hidden" />
-							<span class="truncate text-[15px] font-semibold" :class="preview.a ? 'text-white' : 'text-fg-dim'">
+							<TeamMonogram
+								:name="preview.a || 'T 1'"
+								:color="state.colorA"
+								:size="40"
+								class="max-sm:hidden"
+							/>
+							<span
+								class="truncate text-[15px] font-semibold"
+								:class="preview.a ? 'text-white' : 'text-fg-dim'"
+							>
 								{{ preview.a || 'Time 1' }}
 							</span>
 						</div>
-						<span class="font-score text-[44px] leading-none font-bold text-white">0 <span class="text-faint">:</span> 0</span>
+						<span class="font-score text-[44px] leading-none font-bold text-white"
+							>0 <span class="text-faint">:</span> 0</span
+						>
 						<div class="flex min-w-0 items-center justify-end gap-2.5">
-							<span class="truncate text-[15px] font-semibold" :class="preview.b ? 'text-white' : 'text-fg-dim'">
+							<span
+								class="truncate text-[15px] font-semibold"
+								:class="preview.b ? 'text-white' : 'text-fg-dim'"
+							>
 								{{ preview.b || 'Time 2' }}
 							</span>
-							<TeamMonogram :name="preview.b || 'T 2'" :color="state.colorB" :size="40" class="max-sm:hidden" />
+							<TeamMonogram
+								:name="preview.b || 'T 2'"
+								:color="state.colorB"
+								:size="40"
+								class="max-sm:hidden"
+							/>
 						</div>
 					</div>
 

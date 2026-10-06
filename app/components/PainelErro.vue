@@ -5,11 +5,11 @@ defineEmits<{ retry: [] }>()
 <template>
 	<section
 		role="alert"
-		class="flex flex-col items-center gap-4 rounded-panel bg-surface px-6 py-[clamp(32px,6vw,64px)] text-center ring-1 ring-inset ring-raised"
+		class="flex flex-col items-center gap-4 rounded-panel bg-surface px-6 py-[clamp(32px,6vw,64px)] text-center ring-1 ring-raised ring-inset"
 	>
 		<span
 			aria-hidden="true"
-			class="flex size-16 items-center justify-center rounded-feature bg-error/10 ring-1 ring-inset ring-error/30"
+			class="flex size-16 items-center justify-center rounded-feature bg-error/10 ring-1 ring-error/30 ring-inset"
 		>
 			<UIcon name="i-lucide-triangle-alert" class="size-[30px] text-error" />
 		</span>

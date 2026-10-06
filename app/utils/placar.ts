@@ -83,7 +83,9 @@ export interface ScoreSummary {
 	tag: Record<Team, string>
 }
 
-export function scoreSummary(placar: Pick<PlacarRow, 'team_a_name' | 'team_a_score' | 'team_b_name' | 'team_b_score'>): ScoreSummary {
+export function scoreSummary(
+	placar: Pick<PlacarRow, 'team_a_name' | 'team_a_score' | 'team_b_name' | 'team_b_score'>,
+): ScoreSummary {
 	const a = placar.team_a_score ?? 0
 	const b = placar.team_b_score ?? 0
 	const diff = Math.abs(a - b)

@@ -25,7 +25,7 @@ const sizes = {
 	<div
 		role="group"
 		:aria-labelledby="labelledby"
-		class="flex items-center gap-1 rounded-card bg-canvas p-1 ring-1 ring-inset ring-raised"
+		class="flex items-center gap-1 rounded-card bg-canvas p-1 ring-1 ring-raised ring-inset"
 	>
 		<button
 			type="button"
@@ -37,7 +37,11 @@ const sizes = {
 		>
 			<UIcon name="i-lucide-minus" :class="sizes[size].icon" />
 		</button>
-		<output aria-live="polite" class="text-center font-score leading-none font-bold text-white" :class="sizes[size].value">
+		<output
+			aria-live="polite"
+			class="text-center font-score leading-none font-bold text-white"
+			:class="sizes[size].value"
+		>
 			+{{ model }}
 		</output>
 		<button

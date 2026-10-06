@@ -17,9 +17,15 @@ const steps = [
 			aria-hidden="true"
 			class="flex items-center gap-5 rounded-feature bg-surface px-[22px] py-[18px] shadow-[inset_0_0_0_1px_var(--color-raised),0_20px_50px_rgba(0,0,0,0.35)]"
 		>
-			<span class="flex size-11 items-center justify-center rounded-card border border-dashed border-faint text-lg font-bold text-fg-dim">?</span>
+			<span
+				class="flex size-11 items-center justify-center rounded-card border border-dashed border-faint text-lg font-bold text-fg-dim"
+				>?</span
+			>
 			<span class="font-score text-[56px] leading-none font-bold text-faint">0 : 0</span>
-			<span class="flex size-11 items-center justify-center rounded-card border border-dashed border-faint text-lg font-bold text-fg-dim">?</span>
+			<span
+				class="flex size-11 items-center justify-center rounded-card border border-dashed border-faint text-lg font-bold text-fg-dim"
+				>?</span
+			>
 		</div>
 
 		<div class="flex flex-col items-center gap-2">
@@ -42,7 +48,7 @@ const steps = [
 			<li
 				v-for="(step, index) in steps"
 				:key="step.title"
-				class="flex items-start gap-3 rounded-card bg-surface p-4 ring-1 ring-inset ring-raised"
+				class="flex items-start gap-3 rounded-card bg-surface p-4 ring-1 ring-raised ring-inset"
 			>
 				<span
 					aria-hidden="true"

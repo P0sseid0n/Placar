@@ -2,7 +2,11 @@
 // Seletor de cor do time: a escolhida ganha anel branco; a cor do outro time fica desativada.
 const model = defineModel<string>({ required: true })
 
-const { taken, label, disabled = false } = defineProps<{
+const {
+	taken,
+	label,
+	disabled = false,
+} = defineProps<{
 	/** Cor do outro time */
 	taken: string
 	/** Nome do grupo para leitores de tela, ex.: "Cor do primeiro time" */

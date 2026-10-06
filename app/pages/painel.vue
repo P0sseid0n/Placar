@@ -9,11 +9,7 @@ const user = useSupabaseUser()
 const greetingName = computed(() => firstName(user.value?.user_metadata?.full_name as string | undefined))
 
 // lazy: ao navegar dentro do app a página abre na hora e mostra o skeleton
-const {
-	data: placares,
-	status,
-	refresh,
-} = useAsyncData('placares', () => Services.placar.getAll(), { lazy: true })
+const { data: placares, status, refresh } = useAsyncData('placares', () => Services.placar.getAll(), { lazy: true })
 
 const createPlacarModal = ref(false)
 
@@ -95,7 +91,7 @@ const filtered = computed(() => {
 					<div
 						v-for="stat in stats"
 						:key="stat.label"
-						class="flex flex-col gap-1 rounded-card bg-surface p-5 ring-1 ring-inset ring-raised"
+						class="flex flex-col gap-1 rounded-card bg-surface p-5 ring-1 ring-raised ring-inset"
 					>
 						<span class="text-[13px] font-medium text-fg-soft">{{ stat.label }}</span>
 						<span class="font-score text-[44px] leading-none font-bold text-white">{{ stat.value }}</span>
@@ -116,7 +112,7 @@ const filtered = computed(() => {
 						<div class="flex flex-[0_1_420px] flex-wrap gap-2">
 							<label for="busca" class="sr-only">Buscar placar</label>
 							<div
-								class="flex h-11 flex-[1_1_220px] items-center gap-2 rounded-btn bg-surface px-3 text-fg-soft ring-1 ring-inset ring-raised focus-within:ring-fg-dim"
+								class="flex h-11 flex-[1_1_220px] items-center gap-2 rounded-btn bg-surface px-3 text-fg-soft ring-1 ring-raised ring-inset focus-within:ring-fg-dim"
 							>
 								<UIcon name="i-lucide-search" class="size-[18px] shrink-0" aria-hidden="true" />
 								<input
@@ -132,7 +128,7 @@ const filtered = computed(() => {
 							<select
 								id="ordem"
 								v-model="order"
-								class="h-11 shrink-0 cursor-pointer rounded-btn bg-surface px-3 text-sm text-fg ring-1 ring-inset ring-raised"
+								class="h-11 shrink-0 cursor-pointer rounded-btn bg-surface px-3 text-sm text-fg ring-1 ring-raised ring-inset"
 							>
 								<option v-for="option in orderOptions" :key="option.value" :value="option.value">
 									{{ option.label }}
@@ -148,10 +144,13 @@ const filtered = computed(() => {
 						<li>
 							<button
 								type="button"
-								class="flex h-full min-h-49 w-full cursor-pointer flex-col items-center justify-center gap-2.5 rounded-card text-fg-soft ring-1 ring-inset ring-edge transition-[box-shadow,color] hover:text-white hover:ring-fg-dim"
+								class="flex h-full min-h-49 w-full cursor-pointer flex-col items-center justify-center gap-2.5 rounded-card text-fg-soft ring-1 ring-edge transition-[box-shadow,color] ring-inset hover:text-white hover:ring-fg-dim"
 								@click="createPlacarModal = true"
 							>
-								<span aria-hidden="true" class="flex size-11 items-center justify-center rounded-full ring-1 ring-inset ring-edge">
+								<span
+									aria-hidden="true"
+									class="flex size-11 items-center justify-center rounded-full ring-1 ring-edge ring-inset"
+								>
 									<UIcon name="i-lucide-plus" class="size-[22px]" />
 								</span>
 								<span class="text-sm font-semibold">Novo placar</span>

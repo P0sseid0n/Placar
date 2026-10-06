@@ -13,7 +13,13 @@ export interface PlacarSettings {
 }
 
 export default {
-	async create(payload: { score: number; teamA: string; teamB: string; colorA: string; colorB: string }): Promise<string> {
+	async create(payload: {
+		score: number
+		teamA: string
+		teamB: string
+		colorA: string
+		colorB: string
+	}): Promise<string> {
 		const alphabet = '0123456789abcdefghijklmnopqrstuvwxyz'
 		const nanoid = customAlphabet(alphabet, 6)
 		const id = nanoid()

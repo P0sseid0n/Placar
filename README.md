@@ -18,12 +18,12 @@ O Placar é um app para marcar e compartilhar, em tempo real, a pontuação de q
 
 ## Prints 📸
 
-| Painel | Novo placar |
-|---|---|
+| Painel                                                                                      | Novo placar                                                                                                  |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | ![Painel com resumo, placar em destaque e lista de placares](./docs/screenshots/painel.jpg) | ![Modal de novo placar com prévia, cores dos times e valor da pontuação](./docs/screenshots/novo-placar.jpg) |
 
-| Placar (dono) | Placar (quem assiste) |
-|---|---|
+| Placar (dono)                                                                                          | Placar (quem assiste)                                                                             |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
 | ![Placar visto pelo dono, com botões de pontuar e últimas jogadas](./docs/screenshots/placar-dono.jpg) | ![Placar visto por quem assiste, com o botão Modo telão](./docs/screenshots/placar-visitante.jpg) |
 
 <p align="center">
@@ -68,13 +68,13 @@ Requer o [Docker](https://www.docker.com/) rodando. O Supabase roda localmente v
 
 ### Comandos do banco
 
-| Comando | O que faz |
-|---|---|
-| `bun run db:start` / `bun run db:stop` | Sobe e para o Supabase local |
-| `bun run db:status` | Mostra URLs e chaves |
-| `bun run db:reset` | Recria o banco e reaplica as migrations e o seed |
-| `bun run db:test` | Roda os testes do banco (pgTAP, em `supabase/tests/`) |
-| `bun run database` | Regenera `app/types/database.types.ts` a partir do banco local |
+| Comando                                | O que faz                                                      |
+| -------------------------------------- | -------------------------------------------------------------- |
+| `bun run db:start` / `bun run db:stop` | Sobe e para o Supabase local                                   |
+| `bun run db:status`                    | Mostra URLs e chaves                                           |
+| `bun run db:reset`                     | Recria o banco e reaplica as migrations e o seed               |
+| `bun run db:test`                      | Roda os testes do banco (pgTAP, em `supabase/tests/`)          |
+| `bun run database`                     | Regenera `app/types/database.types.ts` a partir do banco local |
 
 O Supabase Studio fica em http://127.0.0.1:54323.
 

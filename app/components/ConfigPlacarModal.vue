@@ -129,7 +129,9 @@ const teams = [
 					<span class="flex-1" :style="{ background: colorB }" />
 				</div>
 
-				<div class="flex shrink-0 items-start justify-between gap-4 border-b border-raised px-7 pt-[22px] pb-[18px] max-sm:px-5">
+				<div
+					class="flex shrink-0 items-start justify-between gap-4 border-b border-raised px-7 pt-[22px] pb-[18px] max-sm:px-5"
+				>
 					<div class="flex min-w-0 flex-col gap-1">
 						<h2 class="text-2xl font-bold text-white">Configurações</h2>
 						<span class="truncate text-sm text-fg-soft">
@@ -149,7 +151,7 @@ const teams = [
 					/>
 				</div>
 
-				<div class="flex min-h-0 flex-col overflow-y-auto gap-[26px] px-7 py-6 max-sm:px-5">
+				<div class="flex min-h-0 flex-col gap-[26px] overflow-y-auto px-7 py-6 max-sm:px-5">
 					<!-- Times -->
 					<fieldset class="flex flex-col gap-2.5">
 						<legend class="mb-2.5 text-sm font-semibold text-white">Times</legend>
@@ -173,7 +175,11 @@ const teams = [
 									:class="errors[team.field] ? 'ring-error' : 'ring-edge focus:ring-fg-soft'"
 								/>
 							</div>
-							<span v-if="errors[team.field]" :id="`cfg-${team.key}-erro`" class="pl-[54px] text-[13px] leading-5 text-error">
+							<span
+								v-if="errors[team.field]"
+								:id="`cfg-${team.key}-erro`"
+								class="pl-[54px] text-[13px] leading-5 text-error"
+							>
 								{{ errors[team.field] }}
 							</span>
 						</div>
@@ -182,7 +188,9 @@ const teams = [
 					<!-- Pontuação por clique -->
 					<div class="flex flex-wrap items-center justify-between gap-3">
 						<div class="flex flex-col gap-0.5">
-							<span id="cfg-inc-label" class="text-sm font-semibold text-white">Pontuação por clique</span>
+							<span id="cfg-inc-label" class="text-sm font-semibold text-white"
+								>Pontuação por clique</span
+							>
 							<span class="text-[13px] text-fg-soft">Vale para os dois times</span>
 						</div>
 						<ScoreStepper v-model="draft.score" size="md" labelledby="cfg-inc-label" :disabled="busy" />
@@ -191,7 +199,10 @@ const teams = [
 					<!-- Tamanho dos números -->
 					<fieldset>
 						<legend class="mb-2.5 text-sm font-semibold text-white">Tamanho dos números</legend>
-						<div role="radiogroup" class="grid grid-cols-3 gap-1 rounded-card bg-canvas p-1 ring-1 ring-inset ring-raised">
+						<div
+							role="radiogroup"
+							class="grid grid-cols-3 gap-1 rounded-card bg-canvas p-1 ring-1 ring-raised ring-inset"
+						>
 							<button
 								v-for="size in SCORE_SIZES"
 								:key="size.value"
@@ -200,10 +211,19 @@ const teams = [
 								:aria-checked="draft.scoreSize === size.value"
 								:disabled="busy"
 								class="flex h-[76px] cursor-pointer flex-col items-center justify-center gap-1.5 rounded-btn transition-colors"
-								:class="draft.scoreSize === size.value ? 'bg-white text-canvas' : 'text-fg-soft hover:text-white'"
+								:class="
+									draft.scoreSize === size.value
+										? 'bg-white text-canvas'
+										: 'text-fg-soft hover:text-white'
+								"
 								@click="draft.scoreSize = size.value"
 							>
-								<span aria-hidden="true" class="font-score leading-none font-bold" :class="sizePreview[size.value]">12</span>
+								<span
+									aria-hidden="true"
+									class="font-score leading-none font-bold"
+									:class="sizePreview[size.value]"
+									>12</span
+								>
 								<span class="text-xs font-semibold">{{ size.label }}</span>
 							</button>
 						</div>
@@ -217,7 +237,11 @@ const teams = [
 								<span class="text-[13px] text-fg-soft">Volta os dois times para 0.</span>
 							</div>
 
-							<span v-if="step === 'resetDone'" role="status" class="inline-flex items-center gap-2 text-sm font-semibold text-success">
+							<span
+								v-if="step === 'resetDone'"
+								role="status"
+								class="inline-flex items-center gap-2 text-sm font-semibold text-success"
+							>
 								<UIcon name="i-lucide-circle-check" class="size-[18px]" aria-hidden="true" />
 								Placar zerado
 							</span>
@@ -255,10 +279,14 @@ const teams = [
 						</div>
 
 						<!-- Apagar (zona de perigo) -->
-						<div class="flex flex-wrap items-center justify-between gap-3 rounded-card bg-error/5 p-4 ring-1 ring-inset ring-error/30">
+						<div
+							class="flex flex-wrap items-center justify-between gap-3 rounded-card bg-error/5 p-4 ring-1 ring-error/30 ring-inset"
+						>
 							<div class="flex flex-[1_1_220px] flex-col gap-0.5">
 								<span class="text-sm font-semibold text-error">Apagar placar</span>
-								<span class="text-[13px] leading-[19px] text-fg-soft">O placar e o ID deixam de existir. Não dá para desfazer.</span>
+								<span class="text-[13px] leading-[19px] text-fg-soft"
+									>O placar e o ID deixam de existir. Não dá para desfazer.</span
+								>
 							</div>
 
 							<div v-if="step === 'delete' || step === 'deleting'" class="flex items-center gap-1.5">
