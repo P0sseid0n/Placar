@@ -8,7 +8,13 @@
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare",
-		"database": "supabase gen types typescript --project-id pzficlbhjivvldwbqzne > DatabaseDefinitions.ts"
+		"database": "supabase gen types typescript --project-id pzficlbhjivvldwbqzne > DatabaseDefinitions.ts",
+		"test": "vitest",
+		"test:run": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"test:watch": "vitest --watch",
+		"test:ui": "vitest --ui",
+		"test:services": "vitest run app/services/"
 	},
 	"devDependencies": {
 		"@iconify-json/iconamoon": "^1.2.2",

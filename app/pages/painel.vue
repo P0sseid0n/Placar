@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import Services from '~/services'
 
-const { data: placares, status: placaresStatus } = useAsyncData(() => Services.placar.getAll())
+const { data: placares, status: placaresStatus } = useAsyncData(() => {
+	return Services.placar.getAll()
+})
 
 const createPlacarModal = ref(false)
 
