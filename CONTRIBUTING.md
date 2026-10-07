@@ -10,7 +10,7 @@ Siga a seção "Como rodar o projeto" do [README](./README.md) (precisa de Bun e
 
 1. Crie uma branch a partir da `main` (ex.: `cor-dupla-times`).
 2. Faça commits pequenos, em português e com o verbo no presente: `Adiciona …`, `Corrige …`, `Remove …`.
-3. Abra o pull request explicando o que mudou e por quê. Se mudar alguma tela, inclua prints de desktop e celular.
+3. Abra o pull request explicando o que mudou e por quê. Se mudar alguma tela, inclua screenshots de desktop e celular.
 
 ## Convenções
 

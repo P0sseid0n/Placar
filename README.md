@@ -2,7 +2,7 @@
 
 O Placar é um app para marcar e compartilhar, em tempo real, a pontuação de qualquer disputa: futebol, jogo de cartas, jogo de tabuleiro, gincana… Quem cria o placar controla os pontos; quem tem o ID ou o link acompanha ao vivo, inclusive numa TV pelo modo telão.
 
-![Tela de login com a prévia de um placar ao vivo](./docs/screenshots/login.jpg)
+![Placar ao vivo: cada ponto aparece na hora para quem está assistindo, com animação](./docs/screenshots/placar.gif)
 
 ## Funcionalidades ✨
 
@@ -16,7 +16,11 @@ O Placar é um app para marcar e compartilhar, em tempo real, a pontuação de q
 - **Configurações** do placar: nomes, pontos por clique, tamanho dos números, reiniciar e apagar.
 - Funciona no celular a partir de 360px.
 
-## Prints 📸
+## Screenshots 📸
+
+<p align="center">
+  <img src="./docs/screenshots/login.jpg" alt="Tela de login com a prévia de um placar ao vivo">
+</p>
 
 | Painel                                                                                      | Novo placar                                                                                                  |
 | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -117,7 +121,7 @@ supabase/
   migrations/     tabelas, políticas de acesso, funções e realtime
   tests/          testes do banco (pgTAP)
   seed.sql        dados de exemplo para o banco local
-docs/             relatório do projeto, handoff do redesign e prints
+docs/             relatório do projeto, handoff do redesign e screenshots
 ```
 
 ## Contribuição 🤝
