@@ -11,7 +11,22 @@ export default defineNuxtConfig({
 				{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico', sizes: '32x32' },
 				{ rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
 			],
-			meta: [{ name: 'theme-color', content: '#18181b' }],
+			meta: [
+				{ name: 'theme-color', content: '#18181b' },
+				{
+					name: 'description',
+					content: 'Crie o placar do seu jogo em segundos e compartilhe com todo mundo por um ID.',
+				},
+				{ property: 'og:site_name', content: 'Placar' },
+				{ property: 'og:type', content: 'website' },
+				{ property: 'og:locale', content: 'pt_BR' },
+				{ property: 'og:title', content: 'Placar' },
+				{
+					property: 'og:description',
+					content: 'Crie o placar do seu jogo em segundos e compartilhe com todo mundo por um ID.',
+				},
+				{ name: 'twitter:card', content: 'summary' },
+			],
 		},
 	},
 	fonts: {

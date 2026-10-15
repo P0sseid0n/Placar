@@ -48,7 +48,7 @@ const filtered = computed(() => {
 </script>
 
 <template>
-	<div class="min-h-screen bg-canvas text-fg">
+	<div class="min-h-dvh bg-canvas text-fg">
 		<CreatePlacarModal v-model="createPlacarModal" />
 		<PainelHeader />
 

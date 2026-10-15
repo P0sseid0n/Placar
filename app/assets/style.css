@@ -18,6 +18,7 @@
 	/* Neutros */
 	--color-canvas: #18181b; /* fundo de todas as telas */
 	--color-surface: #1d1d20; /* cards, painéis, modais, campos de busca */
+	--color-surface-hover: #202024; /* hover de cards sobre a superfície */
 	--color-raised: #27272a; /* bordas, botão secundário, chips */
 	--color-edge: #3f3f46; /* anéis de campos e botões secundários, hover */
 	--color-faint: #52525c; /* "#" do ID, ":" entre placares */
@@ -28,6 +29,9 @@
 	--color-fg-strong: #d4d4d8; /* descrições de destaque */
 	--color-fg-soft: #9f9fa9; /* rótulos, apoio, time que está perdendo */
 	--color-fg-dim: #71717b; /* contadores, dicas */
+
+	/* Hover do botão de apagar (o erro em si vem do Nuxt UI) */
+	--color-error-hover: #ff8183;
 
 	/* Cores dos times: ficam em app/utils/teamColors.ts (16 opções, guardadas por id no banco) */
 
@@ -155,6 +159,26 @@
 	[role='button']:not([aria-disabled='true']),
 	select:not(:disabled) {
 		cursor: pointer;
+	}
+
+	/*
+	 * Anel de foco único para o teclado em tudo que não é do Nuxt UI (cards, chips, seletores de cor).
+	 * Campos com `focus:outline-none` continuam usando o próprio anel, porque utilitários vencem a base.
+	 */
+	:focus-visible {
+		outline: 2px solid var(--color-fg-soft);
+		outline-offset: 2px;
+	}
+
+	/* Evita uma palavra sozinha na última linha de títulos e textos */
+	h1,
+	h2,
+	h3 {
+		text-wrap: balance;
+	}
+
+	p {
+		text-wrap: pretty;
 	}
 }
 

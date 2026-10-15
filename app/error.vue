@@ -46,7 +46,7 @@ useHead({ title: () => `Placar | ${content.value.title}` })
 </script>
 
 <template>
-	<div class="flex min-h-screen flex-col bg-canvas bg-dots text-fg">
+	<div class="flex min-h-dvh flex-col bg-canvas bg-dots text-fg">
 		<header class="flex h-18 items-center px-[clamp(16px,5vw,64px)]">
 			<NuxtLink to="/" class="rounded-btn" aria-label="Placar, ir para o início">
 				<AppLogo />

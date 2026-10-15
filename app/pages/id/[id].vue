@@ -252,7 +252,7 @@ function handleDeleted() {
 </script>
 
 <template>
-	<div v-if="placar" class="relative flex min-h-screen flex-col bg-canvas text-fg">
+	<div v-if="placar" class="relative flex min-h-dvh flex-col bg-canvas text-fg">
 		<PlacarHeader
 			v-if="!telao"
 			:is-owner="isOwner"

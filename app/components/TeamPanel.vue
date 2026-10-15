@@ -109,7 +109,7 @@ const panelStyle = computed(() => ({
 					type="button"
 					:aria-label="`Tirar ${increment} do ${name}`"
 					:disabled="score <= 0"
-					class="flex size-16 shrink-0 cursor-pointer items-center justify-center rounded-card bg-raised text-white ring-1 ring-edge transition-colors ring-inset hover:bg-edge disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-raised"
+					class="flex size-16 shrink-0 cursor-pointer items-center justify-center rounded-card bg-raised text-white ring-1 ring-edge transition-[background-color,transform] ring-inset hover:bg-edge active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-raised disabled:active:scale-100"
 					@click="$emit('minus')"
 				>
 					<UIcon name="i-lucide-minus" class="size-6.5" />

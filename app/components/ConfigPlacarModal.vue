@@ -305,7 +305,7 @@ const teams = [
 									variant="solid"
 									label="Sim, apagar"
 									:loading="step === 'deleting'"
-									class="h-11 rounded-field bg-error px-3.5 text-sm font-bold text-canvas hover:bg-[#ff8183]"
+									class="h-11 rounded-field bg-error px-3.5 text-sm font-bold text-canvas hover:bg-error-hover"
 									@click="confirmDelete"
 								/>
 							</div>

@@ -62,7 +62,7 @@ const highlights = [
 </script>
 
 <template>
-	<main class="flex min-h-screen items-center justify-center bg-canvas bg-dots p-4 py-12 sm:p-12">
+	<main class="flex min-h-dvh items-center justify-center bg-canvas bg-dots p-4 py-12 sm:p-12">
 		<div class="flex w-full max-w-295 flex-wrap items-center justify-center gap-[clamp(40px,6vw,96px)]">
 			<section class="flex max-w-150 min-w-0 flex-[1_1_480px] flex-col gap-8">
 				<div class="flex flex-col gap-1">
