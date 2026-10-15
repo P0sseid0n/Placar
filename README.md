@@ -42,21 +42,6 @@ O Placar é um app para marcar e compartilhar, em tempo real, a pontuação de q
 - [Vitest](https://vitest.dev/) + `@nuxt/test-utils` e [pgTAP](https://pgtap.org/) para os testes do banco
 - [Bun](https://bun.sh/) como gerenciador de pacotes
 
-## Roadmap 🗺️
-
-- [x] Modal de usuário: ver o perfil e as preferências da conta
-- [x] Cor dupla para os times (duas cores por time, como uniformes listrados)
-- [x] Mais opções de cor para os times, como preto e vermelho
-- [x] Animação ao marcar ponto: o número "pula" e a faixa da cor do time pisca por um instante, com som e vibração opcionais no celular
-- [ ] Cronômetro: tempo de jogo com pausar e retomar, mostrado ao lado do placar e no modo telão
-- [ ] Modo celular de juiz: uma tela só com os botões +1 grandes, ocupando a tela inteira, para quem marca os pontos de pé na quadra
-- [x] QR code no compartilhar: a pessoa aponta a câmera e abre o placar, sem digitar o ID
-- [ ] Tela de fim de jogo: "Time Azul venceu 21 × 17", com as cores do vencedor, a duração da partida e um botão para compartilhar como imagem
-- [ ] Estatísticas no perfil: gráficos simples de vitórias e derrotas e dos times mais usados
-- [ ] Tema claro (os tokens de cor já estão organizados para isso)
-- [ ] Escudos dos times: enviar uma imagem no lugar do monograma
-- [ ] Publicar em produção (novo projeto no Supabase e deploy)
-
 ## Como rodar o projeto 🚀
 
 Requer o [Docker](https://www.docker.com/) rodando. O Supabase roda localmente via [Supabase CLI](https://supabase.com/docs/guides/local-development).

@@ -1,6 +1,6 @@
 # Contribuindo com o Placar
 
-Obrigado pelo interesse! Para bugs e ideias, abra uma [issue](https://github.com/P0sseid0n/Placar/issues). Para mudanças grandes (telas novas, banco, dependências), converse numa issue antes de começar. O Roadmap do [README](./README.md) lista o que já está planejado.
+Obrigado pelo interesse! Para bugs e ideias, abra uma [issue](https://github.com/P0sseid0n/Placar/issues). Para mudanças grandes (telas novas, banco, dependências), converse numa issue antes de começar. As [issues abertas](https://github.com/P0sseid0n/Placar/issues) listam o que já está planejado.
 
 ## Ambiente
 
