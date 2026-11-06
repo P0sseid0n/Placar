@@ -21,3 +21,6 @@ logs
 .env
 .env.*
 !.env.example
+
+# Configuração local do VS Code (depuração)
+.vscode/launch.json
