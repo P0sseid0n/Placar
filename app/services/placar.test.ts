@@ -100,6 +100,23 @@ describe('placar.create', () => {
 
 		await expect(placarService.create(newPlacar)).rejects.toBe(dbError)
 	})
+
+	it('gera outro ID e tenta de novo quando o ID já existe', async () => {
+		const duplicate = query({ error: { code: '23505', message: 'duplicate key' } })
+		const insert = query({ error: null })
+		const from = useQueries(duplicate, insert)
+
+		await expect(placarService.create(newPlacar)).resolves.toBe('abc123')
+		expect(from).toHaveBeenCalledTimes(2)
+	})
+
+	it('desiste depois de 5 IDs repetidos', async () => {
+		const dbError = { code: '23505', message: 'duplicate key' }
+		const from = useQueries(...Array.from({ length: 5 }, () => query({ error: dbError })))
+
+		await expect(placarService.create(newPlacar)).rejects.toBe(dbError)
+		expect(from).toHaveBeenCalledTimes(5)
+	})
 })
 
 describe('placar.getAll', () => {
