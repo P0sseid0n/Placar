@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Directive } from 'vue'
+
 // Textos da home para buscadores e IAs: o conteúdo chega no HTML porque a "/" tem SSR
 // (o retorno do login fica em /confirmar, onde o @nuxtjs/supabase desliga o SSR)
 const TITLE = 'Placar: placar online ao vivo para qualquer jogo'
@@ -110,11 +112,18 @@ useHead({
 const client = useSupabaseClient()
 const user = useSupabaseUser()
 
-watchEffect(() => {
-	if (user.value) {
-		navigateTo('/painel')
-	}
-})
+// Logado também pode ver a home: o card de entrar vira um atalho para o painel.
+// A sessão vem do cookie no SSR, então a página já chega certa, sem piscar o botão de login.
+const fullName = computed(() => (user.value?.user_metadata?.full_name as string | undefined) ?? '')
+const greetingName = computed(() => firstName(fullName.value))
+
+const signingOut = ref(false)
+
+async function signOut() {
+	signingOut.value = true
+	await client.auth.signOut()
+	signingOut.value = false
+}
 
 type Provider = 'google' | 'discord'
 const PROVIDER_LABEL: Record<Provider, string> = { google: 'Google', discord: 'Discord' }
@@ -160,9 +169,56 @@ function onIdInput(event: Event) {
 	tried.value = false
 }
 
+const idField = ref<HTMLElement | null>(null)
+
+function prefersReducedMotion() {
+	return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
+// Balança o campo quando o ID está incompleto, para o erro chamar atenção
+function shakeIdField() {
+	if (!idField.value || prefersReducedMotion()) return
+	idField.value.animate(
+		[
+			{ transform: 'translateX(0)' },
+			{ transform: 'translateX(-6px)' },
+			{ transform: 'translateX(5px)' },
+			{ transform: 'translateX(-3px)' },
+			{ transform: 'translateX(2px)' },
+			{ transform: 'translateX(0)' },
+		],
+		{ duration: 380, easing: 'ease-out' },
+	)
+}
+
 function goToPlacar() {
 	tried.value = true
 	if (isComplete.value) navigateTo(`/id/${placarId.value}`)
+	else shakeIdField()
+}
+
+// v-reveal: o elemento aparece subindo quando entra na tela ao rolar.
+// Só esconde o que ainda está abaixo da tela, e só no cliente: o HTML do SSR (e os buscadores) veem tudo.
+// O valor é o atraso em ms, para escalonar itens de uma lista.
+const vReveal: Directive<HTMLElement, number | undefined> = {
+	mounted(el, { value: delay = 0 }) {
+		if (!('IntersectionObserver' in window) || prefersReducedMotion()) return
+		if (el.getBoundingClientRect().top < window.innerHeight) return
+
+		el.classList.add('reveal', 'reveal-hidden')
+		el.style.transitionDelay = `${delay}ms`
+
+		const observer = new IntersectionObserver(
+			entries => {
+				if (!entries.some(entry => entry.isIntersecting)) return
+				el.classList.remove('reveal-hidden')
+				observer.disconnect()
+			},
+			// Topo enorme: quem pulou a tela de uma vez (Home/End, link âncora) já conta como visto
+			{ rootMargin: '100000px 0px -10% 0px' },
+		)
+		observer.observe(el)
+	},
 }
 
 // Links da frase de consentimento embaixo do botão de entrar
@@ -182,20 +238,25 @@ const highlights = [
 				<div class="flex w-full max-w-295 flex-wrap items-center justify-center gap-[clamp(40px,6vw,96px)]">
 					<section class="flex max-w-150 min-w-0 flex-[1_1_480px] flex-col gap-8">
 						<div class="flex flex-col gap-1">
-							<p class="text-lg font-medium text-fg/75">Bem-vindo(a) ao</p>
-							<AppLogo tag="h1" fluid class="text-[clamp(64px,10vw,112px)] tracking-[-2px]" />
-							<p class="mt-3 max-w-115 text-lg text-fg-strong">
+							<p class="animate-rise text-lg font-medium text-fg/75">Bem-vindo(a) ao</p>
+							<AppLogo
+								tag="h1"
+								fluid
+								class="animate-rise text-[clamp(64px,10vw,112px)] tracking-[-2px] [animation-delay:80ms]"
+							/>
+							<p class="mt-3 max-w-115 animate-rise text-lg text-fg-strong [animation-delay:160ms]">
 								Crie o placar do seu jogo em segundos e compartilhe com todo mundo por um ID.
 							</p>
 						</div>
 
-						<LoginPreview class="max-[900px]:hidden" />
+						<LoginPreview class="animate-rise [animation-delay:260ms] max-[900px]:hidden" />
 
 						<ul class="flex flex-wrap gap-x-6 gap-y-2.5">
 							<li
-								v-for="item in highlights"
+								v-for="(item, index) in highlights"
 								:key="item.text"
-								class="flex items-center gap-2 text-sm text-fg-strong"
+								class="flex animate-rise items-center gap-2 text-sm text-fg-strong"
+								:style="{ animationDelay: `${360 + index * 70}ms` }"
 							>
 								<UIcon :name="item.icon" class="size-4.5 text-fg-soft" aria-hidden="true" />
 								{{ item.text }}
@@ -205,70 +266,112 @@ const highlights = [
 
 					<section
 						aria-labelledby="entrar"
-						class="flex min-w-0 flex-[0_1_420px] flex-col rounded-panel bg-surface p-[clamp(24px,3vw,36px)] shadow-[inset_0_0_0_1px_var(--color-raised),0_24px_60px_rgba(0,0,0,0.35)]"
+						class="flex min-w-0 flex-[0_1_420px] animate-rise flex-col rounded-panel bg-surface p-[clamp(24px,3vw,36px)] shadow-[inset_0_0_0_1px_var(--color-raised),0_24px_60px_rgba(0,0,0,0.35)] [animation-delay:200ms]"
 					>
-						<h2 id="entrar" class="text-2xl font-bold text-white">Entrar</h2>
-						<p class="mt-1.5 mb-6 text-[15px] leading-5.5 text-fg-soft">
-							Entre para criar e controlar seus placares.
-						</p>
+						<Transition name="card-swap" mode="out-in">
+							<div v-if="user" key="user" class="flex flex-col">
+								<h2 id="entrar" class="text-2xl font-bold text-white">
+									{{ greetingName ? `Olá, ${greetingName}` : 'Olá!' }}
+								</h2>
+								<p class="mt-1.5 mb-6 text-[15px] leading-5.5 text-fg-soft">
+									Seus placares estão no painel.
+								</p>
 
-						<div class="flex flex-col gap-2.5">
-							<UButton
-								color="neutral"
-								variant="solid"
-								block
-								label="Entrar com Google"
-								:loading="signingIn === 'google'"
-								:disabled="signingIn !== null"
-								class="h-13 gap-2.5 rounded-field text-base font-semibold hover:bg-fg"
-								@click="signIn('google')"
-							>
-								<template #leading>
-									<!-- "G" colorido do Google, como pedem as diretrizes de marca do botão de login -->
-									<svg
-										v-if="signingIn !== 'google'"
-										viewBox="0 0 48 48"
-										class="size-5 shrink-0"
-										aria-hidden="true"
+								<div
+									class="mb-3 flex items-center gap-3 rounded-field bg-canvas py-2.5 pr-2.5 pl-3 ring-1 ring-edge ring-inset"
+								>
+									<UserAvatar :size="36" />
+									<div class="flex min-w-0 flex-1 flex-col">
+										<span class="text-xs text-fg-dim">Conectado como</span>
+										<span class="truncate text-sm font-semibold text-white">{{
+											fullName || 'Sua conta'
+										}}</span>
+									</div>
+									<UButton
+										color="neutral"
+										variant="ghost"
+										icon="i-lucide-log-out"
+										label="Sair"
+										:loading="signingOut"
+										class="h-9 shrink-0 gap-1.5 rounded-btn px-3 text-sm font-semibold text-fg-soft hover:bg-raised hover:text-white"
+										@click="signOut"
+									/>
+								</div>
+
+								<UButton
+									to="/painel"
+									color="neutral"
+									variant="solid"
+									block
+									trailing-icon="i-lucide-arrow-right"
+									label="Ir para o painel"
+									class="h-13 justify-center gap-2.5 rounded-field text-base font-semibold hover:bg-fg"
+								/>
+							</div>
+							<div v-else key="guest" class="flex flex-col">
+								<h2 id="entrar" class="text-2xl font-bold text-white">Entrar</h2>
+								<p class="mt-1.5 mb-6 text-[15px] leading-5.5 text-fg-soft">
+									Entre para criar e controlar seus placares.
+								</p>
+
+								<div class="flex flex-col gap-2.5">
+									<UButton
+										color="neutral"
+										variant="solid"
+										block
+										label="Entrar com Google"
+										:loading="signingIn === 'google'"
+										:disabled="signingIn !== null"
+										class="h-13 gap-2.5 rounded-field text-base font-semibold hover:bg-fg"
+										@click="signIn('google')"
 									>
-										<path
-											fill="#EA4335"
-											d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
-										/>
-										<path
-											fill="#4285F4"
-											d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
-										/>
-										<path
-											fill="#FBBC05"
-											d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
-										/>
-										<path
-											fill="#34A853"
-											d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
-										/>
-									</svg>
-								</template>
-							</UButton>
-							<UButton
-								color="neutral"
-								variant="subtle"
-								block
-								icon="i-simple-icons-discord"
-								label="Entrar com Discord"
-								:loading="signingIn === 'discord'"
-								:disabled="signingIn !== null"
-								class="h-13 gap-2.5 rounded-field bg-raised text-base font-semibold text-white ring-edge hover:bg-edge"
-								@click="signIn('discord')"
-							/>
-						</div>
-						<p class="mt-3 text-center text-xs leading-4.5 text-fg-dim">
-							Ao entrar, você concorda com os
-							<NuxtLink to="/termos" :class="consentLink">Termos de Uso</NuxtLink>
-							e a
-							<NuxtLink to="/privacidade" :class="consentLink">Política de Privacidade</NuxtLink>.
-						</p>
-
+										<template #leading>
+											<!-- "G" colorido do Google, como pedem as diretrizes de marca do botão de login -->
+											<svg
+												v-if="signingIn !== 'google'"
+												viewBox="0 0 48 48"
+												class="size-5 shrink-0"
+												aria-hidden="true"
+											>
+												<path
+													fill="#EA4335"
+													d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+												/>
+												<path
+													fill="#4285F4"
+													d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+												/>
+												<path
+													fill="#FBBC05"
+													d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+												/>
+												<path
+													fill="#34A853"
+													d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+												/>
+											</svg>
+										</template>
+									</UButton>
+									<UButton
+										color="neutral"
+										variant="subtle"
+										block
+										icon="i-simple-icons-discord"
+										label="Entrar com Discord"
+										:loading="signingIn === 'discord'"
+										:disabled="signingIn !== null"
+										class="h-13 gap-2.5 rounded-field bg-raised text-base font-semibold text-white ring-edge hover:bg-edge"
+										@click="signIn('discord')"
+									/>
+								</div>
+								<p class="mt-3 text-center text-xs leading-4.5 text-fg-dim">
+									Ao entrar, você concorda com os
+									<NuxtLink to="/termos" :class="consentLink">Termos de Uso</NuxtLink>
+									e a
+									<NuxtLink to="/privacidade" :class="consentLink">Política de Privacidade</NuxtLink>.
+								</p>
+							</div>
+						</Transition>
 						<div role="separator" class="my-7 flex items-center gap-3">
 							<span class="h-px flex-1 bg-raised" />
 							<span class="text-[13px] font-medium text-fg-soft">ou assista a um placar</span>
@@ -278,6 +381,7 @@ const highlights = [
 						<form class="flex flex-col gap-2" novalidate @submit.prevent="goToPlacar">
 							<label for="placar-id" class="text-sm font-semibold text-white">ID do placar</label>
 							<div
+								ref="idField"
 								class="flex h-13 items-center gap-1.5 rounded-field bg-canvas py-1.5 pr-1.5 pl-3.5 ring-1 transition-shadow ring-inset"
 								:class="showError ? 'ring-error' : 'ring-edge focus-within:ring-fg-soft'"
 							>
@@ -297,18 +401,25 @@ const highlights = [
 									class="h-full min-w-0 flex-1 bg-transparent font-id text-[17px] tracking-[2px] text-white placeholder:text-fg-dim focus:outline-none"
 									@input="onIdInput"
 								/>
-								<span class="text-xs text-fg-dim tabular-nums">{{ placarId.length }}/6</span>
+								<span
+									class="text-xs tabular-nums transition-colors duration-200"
+									:class="isComplete ? 'text-success' : 'text-fg-dim'"
+									>{{ placarId.length }}/6</span
+								>
 								<button
 									type="submit"
 									aria-label="Abrir placar"
-									class="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-btn transition-colors"
+									class="group flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-btn transition-[background-color,color,transform] duration-200 active:scale-95"
 									:class="
 										isComplete
 											? 'bg-white text-canvas hover:bg-fg'
 											: 'bg-raised text-fg-soft hover:bg-edge'
 									"
 								>
-									<UIcon name="i-lucide-arrow-right" class="size-5" />
+									<UIcon
+										name="i-lucide-arrow-right"
+										class="size-5 transition-transform duration-200 group-hover:translate-x-0.5"
+									/>
 								</button>
 							</div>
 							<p
@@ -327,7 +438,7 @@ const highlights = [
 			<!-- Conteúdo em texto para quem chega pela busca (e para buscadores e IAs). Fica abaixo da primeira tela. -->
 			<div class="mx-auto flex w-full max-w-295 flex-col gap-[clamp(64px,8vw,104px)] px-4 pt-8 pb-20 sm:px-12">
 				<section aria-labelledby="como-funciona" class="flex flex-col gap-8">
-					<div class="flex max-w-150 flex-col gap-2">
+					<div v-reveal class="flex max-w-150 flex-col gap-2">
 						<h2 id="como-funciona" class="text-[clamp(24px,3vw,32px)] leading-tight font-bold text-white">
 							Como funciona o Placar
 						</h2>
@@ -340,6 +451,7 @@ const highlights = [
 						<li
 							v-for="(step, index) in steps"
 							:key="step.title"
+							v-reveal="index * 110"
 							class="flex flex-col gap-3 rounded-card bg-surface p-6 shadow-[inset_0_0_0_1px_var(--color-raised)]"
 						>
 							<div class="flex items-center justify-between">
@@ -360,12 +472,17 @@ const highlights = [
 				</section>
 
 				<section aria-labelledby="perguntas" class="flex flex-col gap-8">
-					<h2 id="perguntas" class="text-[clamp(24px,3vw,32px)] leading-tight font-bold text-white">
+					<h2 id="perguntas" v-reveal class="text-[clamp(24px,3vw,32px)] leading-tight font-bold text-white">
 						Perguntas frequentes
 					</h2>
 
 					<dl class="grid gap-x-12 gap-y-8 md:grid-cols-2">
-						<div v-for="item in faq" :key="item.question" class="flex flex-col gap-2">
+						<div
+							v-for="(item, index) in faq"
+							:key="item.question"
+							v-reveal="(index % 2) * 90"
+							class="flex flex-col gap-2"
+						>
 							<dt class="text-base font-semibold text-white">{{ item.question }}</dt>
 							<dd class="text-[15px] leading-6 text-fg-soft">{{ item.answer }}</dd>
 						</div>

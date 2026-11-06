@@ -51,6 +51,18 @@
 	/* Animações */
 	--animate-score-pop: score-pop 0.35s ease-out; /* número que acabou de mudar */
 	--animate-skeleton: skeleton 1.4s ease-in-out infinite; /* carregando */
+	--animate-rise: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; /* entrada da home (atraso via [animation-delay:…]) */
+
+	@keyframes rise {
+		0% {
+			opacity: 0;
+			transform: translateY(18px);
+		}
+		100% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
 
 	/* Animação ao marcar ponto (HANDOFF, seção 5) */
 	--animate-score-up: score-up 0.42s cubic-bezier(0.2, 0.8, 0.2, 1); /* +N: o número pula */
@@ -141,8 +153,43 @@
 	.animate-score-up,
 	.animate-score-down,
 	.animate-score-flash,
-	.animate-score-float {
+	.animate-score-float,
+	.animate-rise {
 		animation: none;
+	}
+}
+
+/* Revelar ao rolar (diretiva v-reveal da home): só age no cliente, então o HTML do SSR mostra tudo */
+.reveal {
+	transition:
+		opacity 0.6s ease-out,
+		transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal-hidden {
+	opacity: 0;
+	transform: translateY(24px);
+}
+
+/* Troca entre o card de entrar e o de quem já está logado */
+.card-swap-enter-active,
+.card-swap-leave-active {
+	transition:
+		opacity 0.2s ease,
+		transform 0.2s ease;
+}
+
+.card-swap-enter-from,
+.card-swap-leave-to {
+	opacity: 0;
+	transform: translateY(6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reveal,
+	.card-swap-enter-active,
+	.card-swap-leave-active {
+		transition: none;
 	}
 }
 
