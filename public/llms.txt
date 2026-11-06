@@ -1,0 +1,28 @@
+# Placar
+
+> Placar é um app web, em português, para marcar e compartilhar em tempo real a pontuação de qualquer disputa entre dois times ou jogadores: futebol, vôlei, basquete, truco, dominó, jogos de tabuleiro, videogame, quiz e gincanas. Quem cria o placar controla os pontos; quem tem o ID, o link ou o QR code acompanha ao vivo, inclusive numa TV pelo modo telão.
+
+- Endereço: https://placar.p0sseid0n.dev
+- Sem instalar nada: funciona no navegador do celular, tablet, computador ou TV
+- Criar e controlar placares exige login com Discord; assistir não exige conta
+
+## Funcionalidades
+
+- Placares personalizados: nome de cada time, 16 cores (8 sólidas e 8 duplas, como uniformes listrados) e quanto vale cada ponto
+- Pontuação ao vivo: quem está assistindo vê cada ponto na hora, com animação, sem atualizar a página
+- Compartilhamento por ID de 6 caracteres, link ou QR code
+- Modo telão: mostra só o placar em tela cheia, para TV ou projetor
+- Últimas jogadas com Desfazer, para corrigir pontos marcados errado
+- Painel com todos os seus placares, busca e ordenação
+
+## Como usar
+
+1. Entre com o Discord e crie o placar (nomes, cores e valor do ponto).
+2. Compartilhe o ID, o link ou o QR code com quem vai acompanhar.
+3. Marque os pontos; quem assiste vê tudo ao vivo.
+
+## Páginas
+
+- [Início e perguntas frequentes](https://placar.p0sseid0n.dev/)
+- [Termos de Uso](https://placar.p0sseid0n.dev/termos)
+- [Política de Privacidade](https://placar.p0sseid0n.dev/privacidade)

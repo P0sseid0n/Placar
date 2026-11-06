@@ -1,6 +1,110 @@
 <script setup lang="ts">
+// Textos da home para buscadores e IAs: o conteúdo chega no HTML porque a "/" tem SSR
+// (o retorno do login fica em /confirmar, onde o @nuxtjs/supabase desliga o SSR)
+const TITLE = 'Placar: placar online ao vivo para qualquer jogo'
+const DESCRIPTION =
+	'Crie o placar do seu jogo e compartilhe por ID, link ou QR code. Quem assiste vê cada ponto ao vivo, até na TV pelo modo telão. Para futebol, vôlei, truco, jogos de tabuleiro e gincanas.'
+
+useSeoMeta({
+	title: TITLE,
+	description: DESCRIPTION,
+	ogTitle: TITLE,
+	ogDescription: DESCRIPTION,
+})
+
+const canonicalUrl = useCanonical()
+
+const steps = [
+	{
+		icon: 'i-lucide-plus',
+		title: 'Crie o placar',
+		text: 'Entre com o Discord e escolha o nome de cada time, as cores e quanto vale cada ponto.',
+	},
+	{
+		icon: 'i-lucide-share-2',
+		title: 'Compartilhe',
+		text: 'Mande o ID de 6 caracteres, o link ou o QR code para quem vai acompanhar. Ninguém precisa de conta para assistir.',
+	},
+	{
+		icon: 'i-lucide-monitor',
+		title: 'Marque os pontos',
+		text: 'Cada ponto aparece na hora para quem está assistindo, no celular ou numa TV pelo modo telão.',
+	},
+]
+
+const faq = [
+	{
+		question: 'Preciso instalar algum aplicativo?',
+		answer: 'Não. O Placar funciona direto no navegador, no celular, no computador ou na TV.',
+	},
+	{
+		question: 'Preciso de conta para assistir a um placar?',
+		answer: 'Não. Para assistir, basta o ID de 6 caracteres, o link ou o QR code do placar. A conta, com login pelo Discord, só é necessária para criar e controlar placares.',
+	},
+	{
+		question: 'Para quais jogos o Placar serve?',
+		answer: 'Para qualquer disputa entre dois times ou jogadores: futebol, vôlei, basquete, truco, dominó, jogos de tabuleiro, videogame, quiz e gincanas. Você escolhe os nomes, as cores e quanto vale cada ponto.',
+	},
+	{
+		question: 'Como mostrar o placar na TV ou no projetor?',
+		answer: 'Abra o placar no navegador da TV ou de um computador ligado a ela e use o modo telão, que mostra só o placar em tela cheia. O jeito mais rápido de abrir é ler o QR code do placar.',
+	},
+	{
+		question: 'Quem está assistindo vê os pontos na hora?',
+		answer: 'Sim. Os pontos aparecem ao vivo, com animação, sem precisar atualizar a página.',
+	},
+	{
+		question: 'Dá para corrigir um ponto marcado errado?',
+		answer: 'Sim. Você pode diminuir a pontuação de um time ou usar o Desfazer nas últimas jogadas.',
+	},
+	{
+		question: 'Funciona no celular?',
+		answer: 'Sim. O Placar funciona em celulares, tablets e computadores, a partir de telas de 360px.',
+	},
+]
+
+// Dados estruturados (schema.org) para buscadores e respostas de IA
+const siteUrl = useRuntimeConfig().public.siteUrl
 useHead({
-	title: 'Placar | Login',
+	script: [
+		{
+			type: 'application/ld+json',
+			innerHTML: JSON.stringify({
+				'@context': 'https://schema.org',
+				'@graph': [
+					{
+						'@type': 'WebApplication',
+						'@id': `${siteUrl}/#app`,
+						name: 'Placar',
+						url: canonicalUrl,
+						description: DESCRIPTION,
+						applicationCategory: 'SportsApplication',
+						operatingSystem: 'Qualquer navegador',
+						browserRequirements: 'Requer JavaScript',
+						inLanguage: 'pt-BR',
+						image: `${siteUrl}/og-image.jpg`,
+						featureList: [
+							'Pontuação ao vivo para quem assiste',
+							'Compartilhamento por ID, link ou QR code',
+							'Modo telão para TV e projetor',
+							'Nomes, cores e valor do ponto personalizáveis',
+							'Últimas jogadas com Desfazer',
+						],
+					},
+					{
+						'@type': 'FAQPage',
+						'@id': `${siteUrl}/#faq`,
+						inLanguage: 'pt-BR',
+						mainEntity: faq.map(item => ({
+							'@type': 'Question',
+							name: item.question,
+							acceptedAnswer: { '@type': 'Answer', text: item.answer },
+						})),
+					},
+				],
+			}),
+		},
+	],
 })
 
 const client = useSupabaseClient()
@@ -17,7 +121,10 @@ const signingIn = ref(false)
 async function signInWithDiscord() {
 	signingIn.value = true
 
-	const { error } = await client.auth.signInWithOAuth({ provider: 'discord' })
+	const { error } = await client.auth.signInWithOAuth({
+		provider: 'discord',
+		options: { redirectTo: `${window.location.origin}/confirmar` },
+	})
 
 	// Em caso de sucesso o navegador sai da página; só volta aqui se der erro
 	if (error) {
@@ -54,6 +161,9 @@ function goToPlacar() {
 	if (isComplete.value) navigateTo(`/id/${placarId.value}`)
 }
 
+// Links da frase de consentimento embaixo do botão de entrar
+const consentLink = 'text-fg-soft underline underline-offset-2 hover:text-white'
+
 const highlights = [
 	{ icon: 'i-lucide-plus', text: 'Pontos com um clique' },
 	{ icon: 'i-lucide-link', text: 'Compartilhe por ID ou link' },
@@ -62,101 +172,174 @@ const highlights = [
 </script>
 
 <template>
-	<main class="flex min-h-dvh items-center justify-center bg-canvas bg-dots p-4 py-12 sm:p-12">
-		<div class="flex w-full max-w-295 flex-wrap items-center justify-center gap-[clamp(40px,6vw,96px)]">
-			<section class="flex max-w-150 min-w-0 flex-[1_1_480px] flex-col gap-8">
-				<div class="flex flex-col gap-1">
-					<p class="text-lg font-medium text-fg/75">Bem-vindo(a) ao</p>
-					<AppLogo tag="h1" fluid class="text-[clamp(64px,10vw,112px)] tracking-[-2px]" />
-					<p class="mt-3 max-w-115 text-lg text-fg-strong">
-						Crie o placar do seu jogo em segundos e compartilhe com todo mundo por um ID.
-					</p>
-				</div>
+	<div class="bg-canvas bg-dots">
+		<main>
+			<div class="flex min-h-dvh items-center justify-center p-4 py-12 sm:p-12">
+				<div class="flex w-full max-w-295 flex-wrap items-center justify-center gap-[clamp(40px,6vw,96px)]">
+					<section class="flex max-w-150 min-w-0 flex-[1_1_480px] flex-col gap-8">
+						<div class="flex flex-col gap-1">
+							<p class="text-lg font-medium text-fg/75">Bem-vindo(a) ao</p>
+							<AppLogo tag="h1" fluid class="text-[clamp(64px,10vw,112px)] tracking-[-2px]" />
+							<p class="mt-3 max-w-115 text-lg text-fg-strong">
+								Crie o placar do seu jogo em segundos e compartilhe com todo mundo por um ID.
+							</p>
+						</div>
 
-				<LoginPreview class="max-[900px]:hidden" />
+						<LoginPreview class="max-[900px]:hidden" />
 
-				<ul class="flex flex-wrap gap-x-6 gap-y-2.5">
-					<li
-						v-for="item in highlights"
-						:key="item.text"
-						class="flex items-center gap-2 text-sm text-fg-strong"
+						<ul class="flex flex-wrap gap-x-6 gap-y-2.5">
+							<li
+								v-for="item in highlights"
+								:key="item.text"
+								class="flex items-center gap-2 text-sm text-fg-strong"
+							>
+								<UIcon :name="item.icon" class="size-4.5 text-fg-soft" aria-hidden="true" />
+								{{ item.text }}
+							</li>
+						</ul>
+					</section>
+
+					<section
+						aria-labelledby="entrar"
+						class="flex min-w-0 flex-[0_1_420px] flex-col rounded-panel bg-surface p-[clamp(24px,3vw,36px)] shadow-[inset_0_0_0_1px_var(--color-raised),0_24px_60px_rgba(0,0,0,0.35)]"
 					>
-						<UIcon :name="item.icon" class="size-4.5 text-fg-soft" aria-hidden="true" />
-						{{ item.text }}
-					</li>
-				</ul>
-			</section>
+						<h2 id="entrar" class="text-2xl font-bold text-white">Entrar</h2>
+						<p class="mt-1.5 mb-6 text-[15px] leading-5.5 text-fg-soft">
+							Entre para criar e controlar seus placares.
+						</p>
 
-			<section
-				aria-labelledby="entrar"
-				class="flex min-w-0 flex-[0_1_420px] flex-col rounded-panel bg-surface p-[clamp(24px,3vw,36px)] shadow-[inset_0_0_0_1px_var(--color-raised),0_24px_60px_rgba(0,0,0,0.35)]"
-			>
-				<h2 id="entrar" class="text-2xl font-bold text-white">Entrar</h2>
-				<p class="mt-1.5 mb-6 text-[15px] leading-5.5 text-fg-soft">
-					Entre para criar e controlar seus placares.
-				</p>
-
-				<UButton
-					color="neutral"
-					variant="solid"
-					block
-					icon="i-simple-icons-discord"
-					label="Entrar com Discord"
-					:loading="signingIn"
-					class="h-13 gap-2.5 rounded-field text-base font-semibold hover:bg-fg"
-					@click="signInWithDiscord"
-				/>
-
-				<div role="separator" class="my-7 flex items-center gap-3">
-					<span class="h-px flex-1 bg-raised" />
-					<span class="text-[13px] font-medium text-fg-soft">ou assista a um placar</span>
-					<span class="h-px flex-1 bg-raised" />
-				</div>
-
-				<form class="flex flex-col gap-2" novalidate @submit.prevent="goToPlacar">
-					<label for="placar-id" class="text-sm font-semibold text-white">ID do placar</label>
-					<div
-						class="flex h-13 items-center gap-1.5 rounded-field bg-canvas py-1.5 pr-1.5 pl-3.5 ring-1 transition-shadow ring-inset"
-						:class="showError ? 'ring-error' : 'ring-edge focus-within:ring-fg-soft'"
-					>
-						<span aria-hidden="true" class="font-id text-[17px] text-faint">#</span>
-						<input
-							id="placar-id"
-							:value="placarId"
-							type="text"
-							inputmode="text"
-							maxlength="6"
-							autocomplete="off"
-							autocapitalize="off"
-							spellcheck="false"
-							placeholder="k3x9a2"
-							aria-describedby="placar-id-msg"
-							:aria-invalid="showError"
-							class="h-full min-w-0 flex-1 bg-transparent font-id text-[17px] tracking-[2px] text-white placeholder:text-fg-dim focus:outline-none"
-							@input="onIdInput"
+						<UButton
+							color="neutral"
+							variant="solid"
+							block
+							icon="i-simple-icons-discord"
+							label="Entrar com Discord"
+							:loading="signingIn"
+							class="h-13 gap-2.5 rounded-field text-base font-semibold hover:bg-fg"
+							@click="signInWithDiscord"
 						/>
-						<span class="text-xs text-fg-dim tabular-nums">{{ placarId.length }}/6</span>
-						<button
-							type="submit"
-							aria-label="Abrir placar"
-							class="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-btn transition-colors"
-							:class="
-								isComplete ? 'bg-white text-canvas hover:bg-fg' : 'bg-raised text-fg-soft hover:bg-edge'
-							"
-						>
-							<UIcon name="i-lucide-arrow-right" class="size-5" />
-						</button>
+						<p class="mt-3 text-center text-xs leading-4.5 text-fg-dim">
+							Ao entrar, você concorda com os
+							<NuxtLink to="/termos" :class="consentLink">Termos de Uso</NuxtLink>
+							e a
+							<NuxtLink to="/privacidade" :class="consentLink">Política de Privacidade</NuxtLink>.
+						</p>
+
+						<div role="separator" class="my-7 flex items-center gap-3">
+							<span class="h-px flex-1 bg-raised" />
+							<span class="text-[13px] font-medium text-fg-soft">ou assista a um placar</span>
+							<span class="h-px flex-1 bg-raised" />
+						</div>
+
+						<form class="flex flex-col gap-2" novalidate @submit.prevent="goToPlacar">
+							<label for="placar-id" class="text-sm font-semibold text-white">ID do placar</label>
+							<div
+								class="flex h-13 items-center gap-1.5 rounded-field bg-canvas py-1.5 pr-1.5 pl-3.5 ring-1 transition-shadow ring-inset"
+								:class="showError ? 'ring-error' : 'ring-edge focus-within:ring-fg-soft'"
+							>
+								<span aria-hidden="true" class="font-id text-[17px] text-faint">#</span>
+								<input
+									id="placar-id"
+									:value="placarId"
+									type="text"
+									inputmode="text"
+									maxlength="6"
+									autocomplete="off"
+									autocapitalize="off"
+									spellcheck="false"
+									placeholder="k3x9a2"
+									aria-describedby="placar-id-msg"
+									:aria-invalid="showError"
+									class="h-full min-w-0 flex-1 bg-transparent font-id text-[17px] tracking-[2px] text-white placeholder:text-fg-dim focus:outline-none"
+									@input="onIdInput"
+								/>
+								<span class="text-xs text-fg-dim tabular-nums">{{ placarId.length }}/6</span>
+								<button
+									type="submit"
+									aria-label="Abrir placar"
+									class="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-btn transition-colors"
+									:class="
+										isComplete
+											? 'bg-white text-canvas hover:bg-fg'
+											: 'bg-raised text-fg-soft hover:bg-edge'
+									"
+								>
+									<UIcon name="i-lucide-arrow-right" class="size-5" />
+								</button>
+							</div>
+							<p
+								id="placar-id-msg"
+								role="status"
+								class="min-h-5 text-[13px] leading-5"
+								:class="showError ? 'text-error' : 'text-fg-soft'"
+							>
+								{{ message }}
+							</p>
+						</form>
+					</section>
+				</div>
+			</div>
+
+			<!-- Conteúdo em texto para quem chega pela busca (e para buscadores e IAs). Fica abaixo da primeira tela. -->
+			<div class="mx-auto flex w-full max-w-295 flex-col gap-[clamp(64px,8vw,104px)] px-4 pt-8 pb-20 sm:px-12">
+				<section aria-labelledby="como-funciona" class="flex flex-col gap-8">
+					<div class="flex max-w-150 flex-col gap-2">
+						<h2 id="como-funciona" class="text-[clamp(24px,3vw,32px)] leading-tight font-bold text-white">
+							Como funciona o Placar
+						</h2>
+						<p class="text-base text-fg-soft">
+							Um placar online que você controla pelo celular e todo mundo acompanha ao vivo.
+						</p>
 					</div>
-					<p
-						id="placar-id-msg"
-						role="status"
-						class="min-h-5 text-[13px] leading-5"
-						:class="showError ? 'text-error' : 'text-fg-soft'"
-					>
-						{{ message }}
-					</p>
-				</form>
-			</section>
-		</div>
-	</main>
+
+					<ol class="grid gap-4 md:grid-cols-3">
+						<li
+							v-for="(step, index) in steps"
+							:key="step.title"
+							class="flex flex-col gap-3 rounded-card bg-surface p-6 shadow-[inset_0_0_0_1px_var(--color-raised)]"
+						>
+							<div class="flex items-center justify-between">
+								<span class="flex size-10 items-center justify-center rounded-btn bg-raised">
+									<UIcon :name="step.icon" class="size-5 text-white" aria-hidden="true" />
+								</span>
+								<span
+									aria-hidden="true"
+									class="font-score text-[32px] leading-none font-bold text-faint"
+								>
+									{{ index + 1 }}
+								</span>
+							</div>
+							<h3 class="text-lg font-semibold text-white">{{ step.title }}</h3>
+							<p class="text-[15px] leading-6 text-fg-soft">{{ step.text }}</p>
+						</li>
+					</ol>
+				</section>
+
+				<section aria-labelledby="perguntas" class="flex flex-col gap-8">
+					<h2 id="perguntas" class="text-[clamp(24px,3vw,32px)] leading-tight font-bold text-white">
+						Perguntas frequentes
+					</h2>
+
+					<dl class="grid gap-x-12 gap-y-8 md:grid-cols-2">
+						<div v-for="item in faq" :key="item.question" class="flex flex-col gap-2">
+							<dt class="text-base font-semibold text-white">{{ item.question }}</dt>
+							<dd class="text-[15px] leading-6 text-fg-soft">{{ item.answer }}</dd>
+						</div>
+					</dl>
+				</section>
+			</div>
+		</main>
+
+		<footer
+			class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-raised px-4 py-8 text-sm text-fg-dim"
+		>
+			<span>© 2026 Placar</span>
+			<NuxtLink to="/termos" class="rounded-btn text-fg-soft transition-colors hover:text-white"
+				>Termos de Uso</NuxtLink
+			>
+			<NuxtLink to="/privacidade" class="rounded-btn text-fg-soft transition-colors hover:text-white">
+				Política de Privacidade
+			</NuxtLink>
+		</footer>
+	</div>
 </template>

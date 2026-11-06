@@ -48,10 +48,23 @@ export default defineNuxtConfig({
 	supabase: {
 		redirectOptions: {
 			login: '/',
-			callback: '/',
+			// Rota própria para o retorno do login: o módulo desliga o SSR nela, e a home precisa de SSR (SEO)
+			callback: '/confirmar',
 			include: ['/painel'],
 			exclude: ['/id/*'],
 		},
+	},
+	runtimeConfig: {
+		public: {
+			// Endereço oficial, usado no canonical e nos dados estruturados (NUXT_PUBLIC_SITE_URL muda)
+			siteUrl: 'https://placar.p0sseid0n.dev',
+		},
+	},
+	routeRules: {
+		// Placares, painel e retorno do login não entram nos buscadores (a prévia de link continua funcionando)
+		'/id/**': { headers: { 'X-Robots-Tag': 'noindex' } },
+		'/painel': { headers: { 'X-Robots-Tag': 'noindex' } },
+		'/confirmar': { headers: { 'X-Robots-Tag': 'noindex' } },
 	},
 	nitro: {
 		// Na Vercel, o servidor roda em São Paulo, perto do banco (Supabase em sa-east-1)
