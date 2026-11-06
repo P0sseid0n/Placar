@@ -29,7 +29,7 @@ function onTabKeydown(event: KeyboardEvent) {
 
 // Os números usam os placares que o /painel já carregou; se não houver, busca
 const { data: cachedPlacares } = useNuxtData<Awaited<ReturnType<typeof Services.placar.getAll>>>('placares')
-const fetchedPlacares = ref<typeof cachedPlacares.value>(null)
+const fetchedPlacares = ref<NonNullable<typeof cachedPlacares.value> | null>(null)
 const placares = computed(() => cachedPlacares.value ?? fetchedPlacares.value ?? [])
 const stats = computed(() => profileStats(placares.value))
 

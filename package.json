@@ -14,6 +14,7 @@
 		"db:reset": "supabase db reset",
 		"db:status": "supabase status",
 		"db:test": "supabase test db",
+		"typecheck": "nuxt typecheck",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"format": "prettier --write .",
@@ -41,12 +42,14 @@
 		"@vitest/coverage-v8": "^5.0.3",
 		"@vue/test-utils": "^2.5.1",
 		"eslint": "^10.12.0",
-		"happy-dom": "^20.14.5",
-		"nuxt": "^4.5.2",
+		"happy-dom": "^21.0.4",
+		"nuxt": "^4.6.3",
 		"prettier": "^3.9.9",
 		"prettier-plugin-tailwindcss": "^0.8.1",
 		"supabase": "^2.119.0",
-		"vitest": "^5.0.3"
+		"typescript": "^6",
+		"vitest": "^5.0.3",
+		"vue-tsc": "^3.3.14"
 	},
 	"overrides": {
 		"vue": "latest"
