@@ -165,7 +165,7 @@ function handleUndo() {
 // tanto para o dono quanto para o visitante. Reiniciar e desfazer só atualizam o número.
 const { animations, play } = useScoreAnimation(looks)
 
-const { connected } = usePlacarRealtime(placar, {
+const { connected, ownerOnline } = usePlacarRealtime(placar, isOwner, {
 	onUpdate(row) {
 		if (!placar.value) return
 		placar.value = mergeRealtimePlacar(placar.value, row, pendingSaves)
@@ -256,7 +256,7 @@ function handleDeleted() {
 		<PlacarHeader
 			v-if="!telao"
 			:is-owner="isOwner"
-			:live="connected"
+			:live="connected && ownerOnline"
 			@share="shareModal = true"
 			@settings="configModal = true"
 			@telao="enterTelao"

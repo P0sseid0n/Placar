@@ -18,9 +18,7 @@ const rows = computed(() =>
 	})),
 )
 
-const ariaLabel = computed(
-	() => `Abrir placar ${placar.team_a_name} ${summary.value.a} x ${summary.value.b} ${placar.team_b_name}`,
-)
+const ariaLabel = computed(() => placarAriaLabel(placar))
 </script>
 
 <template>
@@ -58,14 +56,8 @@ const ariaLabel = computed(
 			</div>
 		</div>
 
-		<div class="mt-auto flex items-center justify-between gap-2 border-t border-raised pt-3.5">
-			<span class="truncate text-[13px] text-fg-soft">{{ summary.status }}</span>
-			<span
-				class="inline-flex shrink-0 items-center gap-1 text-[13px] font-semibold text-fg-soft group-hover:text-white"
-			>
-				Abrir
-				<UIcon name="i-lucide-arrow-right" class="size-4" aria-hidden="true" />
-			</span>
+		<div class="mt-auto border-t border-raised pt-3.5">
+			<p class="truncate text-[13px] text-fg-soft">{{ summary.status }}</p>
 		</div>
 	</NuxtLink>
 </template>

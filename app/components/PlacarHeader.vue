@@ -2,7 +2,7 @@
 // Cabeçalho da página do placar: voltar, logomarca, "Ao vivo" e ações do dono ou do visitante
 const { isOwner, live } = defineProps<{
 	isOwner: boolean
-	/** Realtime conectado */
+	/** Realtime conectado e o dono com o placar aberto */
 	live: boolean
 }>()
 

@@ -17,10 +17,14 @@ const scoreClass = (team: 'a' | 'b') =>
 <template>
 	<NuxtLink
 		:to="`/id/${placar.public_id}`"
-		:aria-label="`Abrir placar ${placar.team_a_name} ${summary.a} x ${summary.b} ${placar.team_b_name}`"
-		class="group relative flex flex-col overflow-hidden rounded-feature bg-surface text-white ring-1 ring-raised ring-inset"
+		:aria-label="placarAriaLabel(placar)"
+		class="group relative flex flex-col overflow-hidden rounded-feature bg-surface text-white ring-1 ring-raised transition-[box-shadow,background-color,transform] duration-200 ease-out ring-inset hover:-translate-y-0.5 hover:bg-surface-hover hover:ring-faint active:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
 	>
-		<div aria-hidden="true" class="flex h-1.5">
+		<!-- No hover a faixa com as cores dos times engrossa (só transform, sem mexer no layout) -->
+		<div
+			aria-hidden="true"
+			class="flex h-1.5 origin-top transition-transform duration-200 ease-out group-hover:scale-y-[1.67] motion-reduce:transition-none"
+		>
 			<span class="flex-1" :style="{ background: lookA.stripe }" />
 			<span class="flex-1" :style="{ background: lookB.stripe }" />
 		</div>
@@ -56,20 +60,10 @@ const scoreClass = (team: 'a' | 'b') =>
 				</div>
 			</div>
 
-			<div
-				class="flex shrink-0 flex-col items-end gap-2.5 max-sm:w-full max-sm:flex-row max-sm:items-center max-sm:justify-between"
-			>
-				<span class="text-[13px] text-fg-soft">
-					<span class="font-id text-fg-strong">#{{ placar.public_id }}</span> ·
-					{{ relativeTime(placar.created_at) }}
-				</span>
-				<span
-					class="inline-flex h-11 items-center gap-1.5 rounded-btn bg-white px-4 text-sm font-semibold text-canvas group-hover:bg-fg"
-				>
-					Abrir placar
-					<UIcon name="i-lucide-arrow-right" class="size-4.5" aria-hidden="true" />
-				</span>
-			</div>
+			<span class="shrink-0 text-[13px] text-fg-soft max-sm:w-full">
+				<span class="font-id text-fg-strong">#{{ placar.public_id }}</span> ·
+				{{ relativeTime(placar.created_at) }}
+			</span>
 		</div>
 	</NuxtLink>
 </template>

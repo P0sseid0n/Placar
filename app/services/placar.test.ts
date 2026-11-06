@@ -120,17 +120,39 @@ describe('placar.create', () => {
 })
 
 describe('placar.getAll', () => {
-	it('busca só os placares do usuário, do mais recente para o mais antigo', async () => {
-		const rows = [{ id: 1, public_id: 'test' }]
+	it('busca só os placares do usuário, do mais recente para o mais antigo, com a última jogada', async () => {
+		const rows = [{ id: 1, public_id: 'test', created_at: '2026-11-01T10:00:00Z', PlacarEvent: [] }]
 		const select = query({ data: rows })
 		useQueries(select)
 
-		await expect(placarService.getAll()).resolves.toEqual(rows)
+		await expect(placarService.getAll()).resolves.toEqual([
+			{ id: 1, public_id: 'test', created_at: '2026-11-01T10:00:00Z', last_activity: '2026-11-01T10:00:00Z' },
+		])
 		expect(select.calls).toEqual([
-			['select', ['*']],
+			['select', ['*, PlacarEvent(created_at)']],
 			['eq', ['creator', 'user123']],
 			['order', ['created_at', { ascending: false }]],
+			['order', ['created_at', { referencedTable: 'PlacarEvent', ascending: false }]],
+			['limit', [1, { referencedTable: 'PlacarEvent' }]],
 		])
+	})
+
+	it('usa a hora da última jogada como última atividade', async () => {
+		useQueries(
+			query({
+				data: [
+					{
+						id: 1,
+						created_at: '2026-11-01T10:00:00Z',
+						PlacarEvent: [{ created_at: '2026-11-04T18:30:00Z' }],
+					},
+				],
+			}),
+		)
+
+		const [placar] = await placarService.getAll()
+		expect(placar?.last_activity).toBe('2026-11-04T18:30:00Z')
+		expect(placar).not.toHaveProperty('PlacarEvent')
 	})
 
 	it('retorna lista vazia sem usuário logado', async () => {

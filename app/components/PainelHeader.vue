@@ -6,13 +6,22 @@ const client = useSupabaseClient<Database>()
 
 const fullName = computed(() => (user.value?.user_metadata?.full_name as string | undefined) ?? '')
 
+const toast = useToast()
+
 const profileOpen = ref(false)
 const signingOut = ref(false)
 
 async function signOut() {
 	signingOut.value = true
-	await client.auth.signOut()
-	signingOut.value = false
+	try {
+		const { error } = await client.auth.signOut()
+		if (error) throw error
+	} catch (error) {
+		console.error(error)
+		toast.add({ color: 'error', title: 'Não foi possível sair', description: 'Tente novamente.' })
+	} finally {
+		signingOut.value = false
+	}
 }
 
 watchEffect(() => {

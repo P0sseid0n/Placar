@@ -108,6 +108,21 @@ export function relativeTime(date: string | Date, now: Date = new Date()): strin
 	return `há ${years} ${years === 1 ? 'ano' : 'anos'}`
 }
 
+/**
+ * Nome acessível dos cards do painel. O `aria-label` substitui o conteúdo do link,
+ * então inclui tudo o que o card mostra: placar, situação, ID e quando foi criado.
+ */
+export function placarAriaLabel(
+	placar: Pick<
+		PlacarRow,
+		'team_a_name' | 'team_a_score' | 'team_b_name' | 'team_b_score' | 'public_id' | 'created_at'
+	>,
+	now: Date = new Date(),
+): string {
+	const summary = scoreSummary(placar)
+	return `Abrir placar ${placar.team_a_name} ${summary.a} x ${summary.b} ${placar.team_b_name}. ${summary.status}. ID ${placar.public_id}, criado ${relativeTime(placar.created_at, now)}`
+}
+
 /** Texto do centro do placar: ["Empate"] ou ["Diferença", "3"] */
 export function diffLines(a: number, b: number): string[] {
 	const diff = Math.abs(a - b)

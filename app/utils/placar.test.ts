@@ -5,6 +5,7 @@ import {
 	formatDelta,
 	mergeRealtimePlacar,
 	organizerSince,
+	placarAriaLabel,
 	profileStats,
 	scoreSizeClass,
 	isValidPlacarId,
@@ -109,6 +110,24 @@ describe('relativeTime', () => {
 
 	it('não mostra tempo negativo para datas no futuro', () => {
 		expect(relativeTime(new Date(now.getTime() + MIN), now)).toBe('agora')
+	})
+})
+
+describe('placarAriaLabel', () => {
+	it('inclui placar, situação, ID e quando foi criado', () => {
+		const now = new Date('2026-11-05T12:00:00Z')
+		const label = placarAriaLabel(
+			{
+				team_a_name: 'Azul',
+				team_a_score: 5,
+				team_b_name: 'Verde',
+				team_b_score: 2,
+				public_id: 'qiylut',
+				created_at: '2026-11-05T11:58:00Z',
+			},
+			now,
+		)
+		expect(label).toBe('Abrir placar Azul 5 x 2 Verde. Azul por 3. ID qiylut, criado há 2 min')
 	})
 })
 

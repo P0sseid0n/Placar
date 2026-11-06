@@ -11,7 +11,7 @@ const steps = [
 <template>
 	<section
 		aria-labelledby="vazio-titulo"
-		class="flex flex-col items-center gap-6 rounded-panel border border-dashed border-edge bg-[radial-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] bg-size-[20px_20px] px-[clamp(20px,4vw,48px)] py-[clamp(32px,6vw,64px)] text-center"
+		class="flex flex-col items-center gap-6 rounded-panel border border-dashed border-edge bg-dots px-[clamp(20px,4vw,48px)] py-[clamp(32px,6vw,64px)] text-center"
 	>
 		<div
 			aria-hidden="true"

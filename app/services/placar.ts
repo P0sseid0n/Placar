@@ -5,6 +5,9 @@ import type { ScoreSize } from '~/utils/placar'
 type PlacarRow = Database['public']['Tables']['Placar']['Row']
 type PlacarEventRow = Database['public']['Tables']['PlacarEvent']['Row']
 
+/** Placar com a data da última jogada (ou da criação, se ainda não houve jogada) */
+export type PlacarWithActivity = PlacarRow & { last_activity: string }
+
 export interface PlacarSettings {
 	teamA: string
 	teamB: string
@@ -51,8 +54,11 @@ export default {
 		}
 	},
 
-	/** Placares do usuário logado, do mais recente para o mais antigo */
-	async getAll(): Promise<PlacarRow[]> {
+	/**
+	 * Placares do usuário logado, do mais recente para o mais antigo (pela criação).
+	 * `last_activity` é a hora da última jogada; sem jogadas (ou depois de zerar), é a criação.
+	 */
+	async getAll(): Promise<PlacarWithActivity[]> {
 		const user = useSupabaseUser()
 		const client = useSupabaseClient<Database>()
 
@@ -60,13 +66,18 @@ export default {
 
 		const placares = await client
 			.from('Placar')
-			.select('*')
+			.select('*, PlacarEvent(created_at)')
 			.eq('creator', user.value.sub)
 			.order('created_at', { ascending: false })
+			.order('created_at', { referencedTable: 'PlacarEvent', ascending: false })
+			.limit(1, { referencedTable: 'PlacarEvent' })
 
 		if (placares.error) throw placares.error
 
-		return placares.data
+		return placares.data.map(({ PlacarEvent: events, ...placar }) => ({
+			...placar,
+			last_activity: events[0]?.created_at ?? placar.created_at,
+		}))
 	},
 
 	async getById(id: string): Promise<PlacarRow | null> {

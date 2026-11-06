@@ -95,9 +95,14 @@ const panelStyle = computed(() => ({
 				class="flex flex-1 items-center justify-center font-score leading-[0.9] font-bold tracking-[-2px] text-white"
 				:class="scoreSizeClass(scoreSize, variant)"
 			>
+				<!--
+					will-change-transform põe o número numa camada própria. Sem ela, o Chrome no Windows
+					desenha o número gigante com ClearType (franjas coloridas e serrilhado nas curvas);
+					na camada ele usa antialiasing em tons de cinza, que fica liso.
+				-->
 				<span
 					:key="animation?.key ?? 0"
-					class="inline-block"
+					class="inline-block will-change-transform"
 					:class="animation && (animation.kind === 'up' ? 'animate-score-up' : 'animate-score-down')"
 				>
 					{{ score }}
