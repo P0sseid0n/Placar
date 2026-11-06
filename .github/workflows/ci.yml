@@ -1,0 +1,69 @@
+# Verificações a cada push na main e em todo pull request.
+# O deploy continua com a Vercel; este workflow só avisa se algo quebrou.
+name: CI
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+
+concurrency:
+    group: ci-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    app:
+        name: Lint, tipos e testes
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        env:
+            # O módulo do Supabase exige as variáveis; os testes usam mocks e não acessam o banco
+            SUPABASE_URL: http://127.0.0.1:54321
+            SUPABASE_KEY: ci-placeholder
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: oven-sh/setup-bun@v2
+              with:
+                  bun-version: 1.4.2
+
+            - name: Instalar dependências
+              run: bun install --frozen-lockfile
+
+            - name: Lint
+              run: bun run lint
+
+            - name: Formatação
+              run: bun run format:check
+
+            - name: Tipos
+              run: bun run typecheck
+
+            - name: Testes
+              run: bun run test:run
+
+    database:
+        name: Testes do banco
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        env:
+            # O config.toml lê as credenciais de login por env(); no CI só precisam existir
+            SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID: ci-placeholder
+            SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET: ci-placeholder
+            SUPABASE_AUTH_EXTERNAL_DISCORD_CLIENT_ID: ci-placeholder
+            SUPABASE_AUTH_EXTERNAL_DISCORD_SECRET: ci-placeholder
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: supabase/setup-cli@v1
+              with:
+                  version: 2.119.0
+
+            - name: Subir o Postgres (migrations e seed)
+              run: supabase db start
+
+            - name: pgTAP
+              run: supabase test db

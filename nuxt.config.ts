@@ -69,7 +69,8 @@ export default defineNuxtConfig({
 				'X-Frame-Options': 'DENY',
 				'Referrer-Policy': 'strict-origin-when-cross-origin',
 				'Cross-Origin-Opener-Policy': 'same-origin',
-				'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
+				'Permissions-Policy':
+					'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
 			},
 		},
 		// Placares, painel e retorno do login não entram nos buscadores (a prévia de link continua funcionando)

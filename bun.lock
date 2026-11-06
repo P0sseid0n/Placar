@@ -3,7 +3,7 @@
   "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "nuxt-app",
+      "name": "placar",
       "dependencies": {
         "nanoid": "^6.0.2",
         "pinia": "^4.0.3",

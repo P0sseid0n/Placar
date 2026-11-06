@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://placar.p0sseid0n.dev/sitemap.xml

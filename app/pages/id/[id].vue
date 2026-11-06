@@ -120,10 +120,12 @@ function handleUpdateScore(team: 'a' | 'b', action: 'increment' | 'decrement') {
 		pendingSaves--
 
 		if (saved === null) {
+			// id fixo: vários cliques recusados juntos (ex.: limite de jogadas por segundo) viram um aviso só
 			toast.add({
+				id: 'placar-ponto-nao-salvo',
 				color: 'error',
 				title: 'Não foi possível salvar o ponto',
-				description: 'O placar foi recarregado.',
+				description: 'O placar foi recarregado. Se estiver marcando muito rápido, espere alguns segundos.',
 			})
 			await Promise.all([refreshNuxtData(`placar-${placarPublicId}`), refreshEvents()])
 			return

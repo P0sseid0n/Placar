@@ -48,10 +48,10 @@ function buildCsp(nonce: string, supabaseUrl: string | undefined): string {
 		'frame-ancestors': ["'none'"],
 	}
 
-	return [
-		...Object.entries(directives).map(([name, values]) => `${name} ${values.join(' ')}`),
-		'upgrade-insecure-requests',
-	].join('; ')
+	const csp = Object.entries(directives).map(([name, values]) => `${name} ${values.join(' ')}`)
+	// Em produção tudo é HTTPS; no preview local (Supabase em http://127.0.0.1) isso quebraria as conexões
+	if (supabaseUrl?.startsWith('https:')) csp.push('upgrade-insecure-requests')
+	return csp.join('; ')
 }
 
 export default defineNitroPlugin(nitroApp => {
@@ -61,7 +61,8 @@ export default defineNitroPlugin(nitroApp => {
 		const nonce = randomBytes(16).toString('base64')
 		event.context.cspNonce = nonce
 
-		const addNonce = (chunks: string[]) => chunks.map(chunk => chunk.replace(SCRIPT_TAG_RE, `<script nonce="${nonce}"`))
+		const addNonce = (chunks: string[]) =>
+			chunks.map(chunk => chunk.replace(SCRIPT_TAG_RE, `<script nonce="${nonce}"`))
 		html.head = addNonce(html.head)
 		html.bodyPrepend = addNonce(html.bodyPrepend)
 		html.body = addNonce(html.body)
