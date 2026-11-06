@@ -29,8 +29,9 @@ const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
 			<li>seu e-mail, que o sistema de login exige para criar a conta.</li>
 		</ul>
 		<p>
-			Se você entrar com o Google e com o Discord usando o mesmo e-mail, as duas formas de login ficam ligadas à
-			mesma conta do Placar.
+			Se você entrar com o Google e com o Discord usando o mesmo e-mail, ou conectar as duas em
+			<strong>Perfil › Contas</strong>, as duas formas de login ficam ligadas à mesma conta do Placar. Você pode
+			desconectar uma delas ali mesmo.
 		</p>
 		<p>
 			O Placar <strong>não tem acesso</strong> à sua senha, aos seus e-mails, arquivos ou contatos do Google, nem
