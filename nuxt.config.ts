@@ -25,7 +25,7 @@ export default defineNuxtConfig({
 					property: 'og:description',
 					content: 'Crie o placar do seu jogo em segundos e compartilhe com todo mundo por um ID.',
 				},
-				{ name: 'twitter:card', content: 'summary' },
+				{ name: 'twitter:card', content: 'summary_large_image' },
 			],
 		},
 	},
