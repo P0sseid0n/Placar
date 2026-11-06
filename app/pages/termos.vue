@@ -5,10 +5,11 @@ useSeoMeta({
 })
 
 const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
+const CONTACT_MAILTO = `mailto:${CONTACT_EMAIL}`
 </script>
 
 <template>
-	<LegalPage title="Termos de Uso" updated-at="5 de novembro de 2026">
+	<LegalPage title="Termos de Uso" updated-at="6 de novembro de 2026">
 		<p>
 			Estes termos explicam as regras para usar o Placar (<strong>placar.p0sseid0n.dev</strong>). Ao entrar com
 			sua conta ou usar o site, você concorda com eles. Se não concordar, não use o Placar.
@@ -56,7 +57,8 @@ const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
 		</ul>
 		<p>
 			Placares e contas que descumprirem essas regras podem ser apagados ou bloqueados, sem aviso. Se encontrar
-			uma falha de segurança, avise pelo canal de contato no fim desta página.
+			uma falha de segurança, avise em particular por <a :href="CONTACT_MAILTO">{{ CONTACT_EMAIL }}</a
+			>, e não em uma issue pública.
 		</p>
 
 		<h2>5. Seu conteúdo</h2>
@@ -106,7 +108,8 @@ const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
 
 		<h2>12. Contato</h2>
 		<p>
-			Dúvidas, sugestões ou problemas: abra uma
+			Dúvidas e outros assuntos: <a :href="CONTACT_MAILTO">{{ CONTACT_EMAIL }}</a
+			>. Sugestões e problemas no site também podem ser abertos como
 			<a :href="ISSUES_URL" target="_blank" rel="noopener">issue no GitHub do Placar</a>.
 		</p>
 	</LegalPage>

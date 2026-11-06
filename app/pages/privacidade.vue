@@ -2,11 +2,11 @@
 useHead({ title: 'Placar | Política de Privacidade' })
 useSeoMeta({ description: 'Quais dados o Placar coleta, para que usa, com quem compartilha e como excluir.' })
 
-const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
+const CONTACT_MAILTO = `mailto:${CONTACT_EMAIL}`
 </script>
 
 <template>
-	<LegalPage title="Política de Privacidade" updated-at="5 de novembro de 2026">
+	<LegalPage title="Política de Privacidade" updated-at="6 de novembro de 2026">
 		<p>
 			Esta política explica quais dados o Placar (<strong>placar.p0sseid0n.dev</strong>) coleta, para que usa e
 			como você pode pedir para apagá-los, de acordo com a Lei Geral de Proteção de Dados (LGPD, Lei nº
@@ -16,8 +16,10 @@ const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
 
 		<h2>1. Quem cuida dos seus dados</h2>
 		<p>
-			O Placar é mantido por P0sseid0n, que é o responsável (controlador) pelos dados descritos aqui. O contato
-			está no fim desta página.
+			O Placar é mantido por P0sseid0n, que é o responsável (controlador) pelos dados descritos aqui. Para
+			qualquer assunto sobre seus dados, escreva para
+			<a :href="CONTACT_MAILTO">{{ CONTACT_EMAIL }}</a
+			>.
 		</p>
 
 		<h2>2. Dados que coletamos</h2>
@@ -132,7 +134,11 @@ const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
 				<strong>Tirar o acesso do Placar:</strong> no Google, em Conta do Google › Segurança › Apps e serviços
 				de terceiros; no Discord, em Configurações de Usuário › Aplicativos Autorizados.
 			</li>
-			<li><strong>Outros pedidos:</strong> pelo contato no fim desta página.</li>
+			<li>
+				<strong>Outros pedidos</strong> (por exemplo, saber quais dados temos sobre você):
+				<a :href="CONTACT_MAILTO">{{ CONTACT_EMAIL }}</a
+				>.
+			</li>
 		</ul>
 		<p>
 			Você também pode reclamar à Autoridade Nacional de Proteção de Dados (<a
@@ -164,9 +170,8 @@ const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
 
 		<h2>12. Contato</h2>
 		<p>
-			Dúvidas ou pedidos sobre seus dados: abra uma
-			<a :href="ISSUES_URL" target="_blank" rel="noopener">issue no GitHub do Placar</a>. Não coloque dados
-			pessoais na issue, porque ela é pública: descreva o pedido e combinamos por lá um canal privado.
+			Dúvidas ou pedidos sobre seus dados: escreva para <a :href="CONTACT_MAILTO">{{ CONTACT_EMAIL }}</a
+			>. Para confirmar que o pedido é seu, mande o e-mail do mesmo endereço da conta que você usa no Placar.
 		</p>
 	</LegalPage>
 </template>

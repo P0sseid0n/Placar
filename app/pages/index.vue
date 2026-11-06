@@ -501,6 +501,9 @@ const highlights = [
 			<NuxtLink to="/privacidade" class="rounded-btn text-fg-soft transition-colors hover:text-white">
 				Política de Privacidade
 			</NuxtLink>
+			<a :href="`mailto:${CONTACT_EMAIL}`" class="rounded-btn text-fg-soft transition-colors hover:text-white">
+				Contato
+			</a>
 		</footer>
 	</div>
 </template>
