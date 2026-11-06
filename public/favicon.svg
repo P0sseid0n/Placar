@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-	<!-- Logomarca invertida: quadrado escuro com barras brancas, para aparecer em abas claras e escuras -->
-	<rect width="32" height="32" rx="8" fill="#18181b"/>
-	<rect x="10.5" y="9" width="4" height="14" rx="2" fill="#ffffff"/>
-	<rect x="17.5" y="9" width="4" height="14" rx="2" fill="#ffffff" fill-opacity="0.45"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#18181b" rx="8"/><rect width="4" height="14" x="10.5" y="9" fill="#fff" rx="2"/><rect width="4" height="14" x="17.5" y="9" fill="#fff" fill-opacity=".45" rx="2"/></svg>
