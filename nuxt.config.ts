@@ -53,6 +53,10 @@ export default defineNuxtConfig({
 			exclude: ['/id/*'],
 		},
 	},
+	nitro: {
+		// Na Vercel, o servidor roda em São Paulo, perto do banco (Supabase em sa-east-1)
+		vercel: { functions: { regions: ['gru1'] } },
+	},
 	sourcemap: true,
 	compatibilityDate: '2024-09-16',
 })
