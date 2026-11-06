@@ -1,17 +1,19 @@
 <script setup lang="ts">
-// Stepper de "+N" usado em Novo placar (lg) e Configurações (md). Mínimo 1.
+// Stepper de "+N" usado em Novo placar (lg) e Configurações (md). De 1 a SCORE_INCREMENT_MAX.
 const model = defineModel<number>({ required: true })
 
 const {
 	size = 'lg',
 	labelledby,
 	min = 1,
+	max = SCORE_INCREMENT_MAX,
 	disabled = false,
 } = defineProps<{
 	size?: 'md' | 'lg'
 	/** id do texto que nomeia o grupo */
 	labelledby?: string
 	min?: number
+	max?: number
 	disabled?: boolean
 }>()
 
@@ -47,10 +49,10 @@ const sizes = {
 		<button
 			type="button"
 			aria-label="Aumentar"
-			:disabled="disabled"
-			class="flex cursor-pointer items-center justify-center rounded-btn bg-raised text-white transition-colors hover:bg-edge disabled:cursor-not-allowed disabled:opacity-40"
+			:disabled="disabled || model >= max"
+			class="flex cursor-pointer items-center justify-center rounded-btn bg-raised text-white transition-colors hover:bg-edge disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-raised"
 			:class="sizes[size].button"
-			@click="model = model + 1"
+			@click="model = Math.min(max, model + 1)"
 		>
 			<UIcon name="i-lucide-plus" :class="sizes[size].icon" />
 		</button>

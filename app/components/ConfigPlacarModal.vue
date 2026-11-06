@@ -20,7 +20,10 @@ const toast = useToast()
 const schema = z.object({
 	teamA: z.string().trim().min(1, 'Nome do time A é obrigatório').max(TEAM_NAME_MAX_LENGTH),
 	teamB: z.string().trim().min(1, 'Nome do time B é obrigatório').max(TEAM_NAME_MAX_LENGTH),
-	score: z.number().min(1, 'O valor da pontuação deve ser maior que 0'),
+	score: z
+		.number()
+		.min(1, 'O valor da pontuação deve ser maior que 0')
+		.max(SCORE_INCREMENT_MAX, `O valor da pontuação é no máximo ${SCORE_INCREMENT_MAX}`),
 	scoreSize: z.enum(['P', 'M', 'G']),
 })
 

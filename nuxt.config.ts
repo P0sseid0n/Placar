@@ -61,6 +61,17 @@ export default defineNuxtConfig({
 		},
 	},
 	routeRules: {
+		// Cabeçalhos de segurança de todas as respostas (a Content-Security-Policy das páginas fica em
+		// server/plugins/security-headers.ts, porque leva um nonce novo a cada resposta)
+		'/**': {
+			headers: {
+				'X-Content-Type-Options': 'nosniff',
+				'X-Frame-Options': 'DENY',
+				'Referrer-Policy': 'strict-origin-when-cross-origin',
+				'Cross-Origin-Opener-Policy': 'same-origin',
+				'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
+			},
+		},
 		// Placares, painel e retorno do login não entram nos buscadores (a prévia de link continua funcionando)
 		'/id/**': { headers: { 'X-Robots-Tag': 'noindex' } },
 		'/painel': { headers: { 'X-Robots-Tag': 'noindex' } },

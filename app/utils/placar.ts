@@ -33,6 +33,9 @@ export const SCORE_SIZES: { value: ScoreSize; label: string }[] = [
 /** Nome do time: 1 a 24 caracteres (mesma regra do banco) */
 export const TEAM_NAME_MAX_LENGTH = 24
 
+/** Pontos por clique: 1 a 100 (mesma regra do banco) */
+export const SCORE_INCREMENT_MAX = 100
+
 /** Iniciais para o monograma: primeira letra das duas primeiras palavras ("Time Azul" → "TA") */
 export function teamInitials(name: string): string {
 	return name

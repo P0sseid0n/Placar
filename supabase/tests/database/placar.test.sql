@@ -4,7 +4,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(34);
+select plan(42);
 
 -- ------------------------------------------------------------
 -- Dados
@@ -60,6 +60,10 @@ select throws_ok(
 select throws_ok(
 	$$ update public."Placar" set score_increment = 0 where public_id = 'tst001' $$,
 	'23514', null, 'incremento é no mínimo 1'
+);
+select throws_ok(
+	$$ update public."Placar" set score_increment = 101 where public_id = 'tst001' $$,
+	'23514', null, 'incremento é no máximo 100'
 );
 select throws_ok(
 	$$ update public."Placar" set team_a_color = '#51a2ff' where public_id = 'tst001' $$,
@@ -191,6 +195,80 @@ select is(
 select throws_ok(
 	$$ select public.placar_add_points('tst001', 'a', 'increment') $$,
 	'42501', null, 'visitante não pode chamar as funções'
+);
+
+-- ------------------------------------------------------------
+-- Limites contra abuso
+-- ------------------------------------------------------------
+
+select pg_temp.logout();
+set local role postgres;
+
+select throws_ok(
+	$$ insert into public."Placar" (creator, public_id, team_a_name, team_b_name)
+		values ('aaaaaaaa-0000-0000-0000-000000000002', 'ABC-12', 'A', 'B') $$,
+	'23514', null, 'ID público precisa ter 6 letras minúsculas ou números'
+);
+
+-- 30 placares do usuário 2 na última hora
+insert into public."Placar" (creator, public_id, team_a_name, team_b_name)
+select 'aaaaaaaa-0000-0000-0000-000000000002', 'u2' || lpad(n::text, 4, '0'), 'A', 'B'
+from generate_series(1, 30) n;
+
+select pg_temp.login_as('aaaaaaaa-0000-0000-0000-000000000002');
+select throws_ok(
+	$$ insert into public."Placar" (creator, public_id, team_a_name, team_b_name)
+		values ('aaaaaaaa-0000-0000-0000-000000000002', 'u2hora', 'A', 'B') $$,
+	'P0001', 'Você criou muitos placares na última hora. Tente de novo mais tarde.',
+	'no máximo 30 placares por hora'
+);
+
+-- Os 30 ficam antigos e o usuário chega a 200 placares
+select pg_temp.logout();
+set local role postgres;
+update public."Placar" set created_at = now() - interval '2 hours'
+where creator = 'aaaaaaaa-0000-0000-0000-000000000002';
+insert into public."Placar" (creator, public_id, team_a_name, team_b_name, created_at)
+select 'aaaaaaaa-0000-0000-0000-000000000002', 'u2' || lpad(n::text, 4, '0'), 'A', 'B', now() - interval '2 hours'
+from generate_series(31, 200) n;
+
+select pg_temp.login_as('aaaaaaaa-0000-0000-0000-000000000002');
+select throws_ok(
+	$$ insert into public."Placar" (creator, public_id, team_a_name, team_b_name)
+		values ('aaaaaaaa-0000-0000-0000-000000000002', 'u2tota', 'A', 'B') $$,
+	'P0001', 'Você chegou ao limite de 200 placares. Apague algum para criar outro.',
+	'no máximo 200 placares por usuário'
+);
+
+-- Jogadas: no máximo 30 a cada 10 segundos por placar
+select lives_ok(
+	$$ select public.placar_add_points('u20001', 'a', 'increment') from generate_series(1, 30) $$,
+	'aceita 30 jogadas seguidas'
+);
+select throws_ok(
+	$$ select public.placar_add_points('u20001', 'a', 'increment') $$,
+	'P0001', 'Muitas jogadas em pouco tempo. Espere alguns segundos.',
+	'recusa a 31ª jogada em 10 segundos'
+);
+
+-- Histórico: só as 500 jogadas mais recentes
+select pg_temp.logout();
+set local role postgres;
+insert into public."PlacarEvent" (placar_id, team, delta, score_after, created_at)
+select p.id, 'a', 1, n, now() - interval '1 hour' + n * interval '1 second'
+from public."Placar" p, generate_series(1, 510) n
+where p.public_id = 'u20002'
+order by n;
+
+select is(
+	(select count(*)::int from public."PlacarEvent" e join public."Placar" p on p.id = e.placar_id where p.public_id = 'u20002'),
+	500,
+	'guarda no máximo 500 jogadas por placar'
+);
+select is(
+	(select min(score_after) from public."PlacarEvent" e join public."Placar" p on p.id = e.placar_id where p.public_id = 'u20002'),
+	11,
+	'apaga as jogadas mais antigas'
 );
 
 -- ------------------------------------------------------------
