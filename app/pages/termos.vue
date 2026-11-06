@@ -20,19 +20,20 @@ const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
 			controla os pontos; quem tem o ID ou o link acompanha ao vivo. O Placar é mantido por P0sseid0n.
 		</p>
 
-		<h2>2. Conta e login com Discord</h2>
+		<h2>2. Conta e login</h2>
 		<ul>
 			<li>
-				Para criar e controlar placares, você entra com sua conta do Discord. Para assistir, não precisa de
-				conta.
+				Para criar e controlar placares, você entra com sua conta do Google ou do Discord. Para assistir, não
+				precisa de conta.
 			</li>
 			<li>
-				Você precisa ter a idade mínima exigida pelo Discord no seu país e seguir também os
-				<a href="https://discord.com/terms" target="_blank" rel="noopener">Termos de Serviço do Discord</a>.
+				Você precisa ter a idade mínima exigida pelo serviço que usar para entrar e seguir também os termos dele
+				(<a href="https://policies.google.com/terms" target="_blank" rel="noopener">Termos do Google</a> ou
+				<a href="https://discord.com/terms" target="_blank" rel="noopener">Termos de Serviço do Discord</a>).
 			</li>
 			<li>
 				Você é responsável pelo que for feito com a sua conta. Se perceber um acesso estranho, saia da conta e
-				revogue o acesso do Placar no Discord.
+				revogue o acesso do Placar no Google ou no Discord.
 			</li>
 		</ul>
 

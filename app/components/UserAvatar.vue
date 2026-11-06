@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Foto do Discord (user_metadata.avatar_url); sem foto, ou se ela falhar, mostra a inicial do nome
+// Foto da conta do Google ou do Discord (user_metadata.avatar_url); sem foto, ou se ela falhar, mostra a inicial do nome
 const { size = 32 } = defineProps<{
 	/** Lado em px: 32 no cabeçalho, 76 no perfil */
 	size?: number

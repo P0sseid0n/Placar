@@ -331,6 +331,12 @@ client_id = "env(SUPABASE_AUTH_EXTERNAL_DISCORD_CLIENT_ID)"
 secret = "env(SUPABASE_AUTH_EXTERNAL_DISCORD_SECRET)"
 redirect_uri = ""
 
+[auth.external.google]
+enabled = true
+client_id = "env(SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID)"
+secret = "env(SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET)"
+redirect_uri = ""
+
 [auth.external.apple]
 enabled = false
 client_id = ""

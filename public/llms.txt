@@ -4,7 +4,7 @@
 
 - Endereço: https://placar.p0sseid0n.dev
 - Sem instalar nada: funciona no navegador do celular, tablet, computador ou TV
-- Criar e controlar placares exige login com Discord; assistir não exige conta
+- Criar e controlar placares exige login com Google ou Discord; assistir não exige conta
 
 ## Funcionalidades
 
@@ -17,7 +17,7 @@
 
 ## Como usar
 
-1. Entre com o Discord e crie o placar (nomes, cores e valor do ponto).
+1. Entre com o Google ou o Discord e crie o placar (nomes, cores e valor do ponto).
 2. Compartilhe o ID, o link ou o QR code com quem vai acompanhar.
 3. Marque os pontos; quem assiste vê tudo ao vivo.
 

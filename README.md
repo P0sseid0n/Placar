@@ -6,7 +6,7 @@ O Placar é um app para marcar e compartilhar, em tempo real, a pontuação de q
 
 ## Funcionalidades ✨
 
-- **Login com Discord** para criar e controlar seus placares, com um **perfil** que mostra seus números e permite sair ou excluir a conta.
+- **Login com Google ou Discord** para criar e controlar seus placares, com um **perfil** que mostra seus números e permite sair ou excluir a conta.
 - **Painel** com resumo, o último placar em destaque, busca e ordenação.
 - **Placares personalizados**: nome de cada time, 16 cores (8 sólidas e 8 duplas, como uniformes listrados) e quanto vale cada ponto.
 - **Pontuação ao vivo**: quem está assistindo vê cada ponto na hora, com animação (Supabase Realtime).
@@ -38,7 +38,7 @@ O Placar é um app para marcar e compartilhar, em tempo real, a pontuação de q
 
 - [Nuxt 4](https://nuxt.com/) + Vue 3 + TypeScript
 - [Nuxt UI 4](https://ui.nuxt.com/) + Tailwind CSS 4 (só tema escuro)
-- [Supabase](https://supabase.com/): Postgres, Auth (Discord) e Realtime
+- [Supabase](https://supabase.com/): Postgres, Auth (Google e Discord) e Realtime
 - [Vitest](https://vitest.dev/) + `@nuxt/test-utils` e [pgTAP](https://pgtap.org/) para os testes do banco
 - [Bun](https://bun.sh/) como gerenciador de pacotes
 
@@ -54,13 +54,15 @@ Requer o [Docker](https://www.docker.com/) rodando. O Supabase roda localmente v
     - `NUXT_SUPABASE_SECRET_KEY` com a `SECRET_KEY` (usada só no servidor, para excluir conta). Em produção, defina essa variável no ambiente do deploy, nunca no código.
 5. Rode o projeto com `bun run dev` e abra http://localhost:3000.
 
-### Login com Discord
+### Login com Google e Discord
 
-1. Crie um app no [Discord Developer Portal](https://discord.com/developers/applications) e adicione o redirect `http://127.0.0.1:54321/auth/v1/callback`.
-2. Crie o `supabase/.env` a partir do `supabase/.env.example` com o client id e o secret do app.
+1. Crie as credenciais e adicione nelas o redirect `http://127.0.0.1:54321/auth/v1/callback`:
+    - **Google:** um cliente OAuth do tipo "Aplicativo da Web" no [Google Cloud Console](https://console.cloud.google.com/apis/credentials);
+    - **Discord:** um app no [Discord Developer Portal](https://discord.com/developers/applications).
+2. Crie o `supabase/.env` a partir do `supabase/.env.example` com o client id e o secret de cada um.
 3. Reinicie o Supabase com `bun run db:stop` e `bun run db:start`.
 
-> Sem configurar o Discord, dá para testar com os usuários de exemplo do seed (`dono@placar.test`, `outro@placar.test` e `vazio@placar.test`). A senha está no comentário do topo de `supabase/seed.sql`.
+> Sem configurar o Google e o Discord, dá para testar com os usuários de exemplo do seed (`dono@placar.test`, `outro@placar.test` e `vazio@placar.test`). A senha está no comentário do topo de `supabase/seed.sql`.
 
 ### Comandos do banco
 

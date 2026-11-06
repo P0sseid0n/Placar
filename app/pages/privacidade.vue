@@ -21,17 +21,22 @@ const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
 		</p>
 
 		<h2>2. Dados que coletamos</h2>
-		<p><strong>Quando você entra com o Discord</strong>, o Discord nos envia:</p>
+		<p><strong>Quando você entra com o Google ou com o Discord</strong>, a conta escolhida nos envia:</p>
 		<ul>
-			<li>o ID da sua conta no Discord;</li>
-			<li>seu nome de usuário e nome de exibição;</li>
-			<li>o endereço da sua foto de perfil (avatar);</li>
+			<li>o ID da sua conta nesse serviço;</li>
+			<li>seu nome (no Discord, também o nome de usuário);</li>
+			<li>o endereço da sua foto de perfil;</li>
 			<li>seu e-mail, que o sistema de login exige para criar a conta.</li>
 		</ul>
 		<p>
-			O Placar <strong>não tem acesso</strong> às suas mensagens, servidores, amigos ou senha do Discord. As
-			permissões pedidas são só <strong>identify</strong> e <strong>email</strong>, e você as vê na tela de
-			autorização do Discord antes de aceitar.
+			Se você entrar com o Google e com o Discord usando o mesmo e-mail, as duas formas de login ficam ligadas à
+			mesma conta do Placar.
+		</p>
+		<p>
+			O Placar <strong>não tem acesso</strong> à sua senha, aos seus e-mails, arquivos ou contatos do Google, nem
+			às suas mensagens, servidores ou amigos do Discord. As permissões pedidas são só as de identificação básica
+			(no Google, <strong>nome, foto e e-mail</strong>; no Discord, <strong>identify</strong> e
+			<strong>email</strong>), e você as vê na tela de autorização antes de aceitar.
 		</p>
 		<p><strong>Quando você usa o Placar</strong>, guardamos:</p>
 		<ul>
@@ -81,7 +86,9 @@ const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
 				<a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Política da Vercel</a>.
 			</li>
 			<li>
-				<strong>Discord</strong>: login. A foto de perfil é carregada direto dos servidores do Discord.
+				<strong>Google</strong> e <strong>Discord</strong>: login. A foto de perfil é carregada direto dos
+				servidores de quem você usou para entrar.
+				<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política do Google</a> e
 				<a href="https://discord.com/privacy" target="_blank" rel="noopener">Política do Discord</a>.
 			</li>
 		</ul>
@@ -117,12 +124,12 @@ const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
 			</li>
 			<li><strong>Apagar um placar:</strong> nas configurações do próprio placar.</li>
 			<li>
-				<strong>Corrigir nome ou foto:</strong> mude no Discord; o Placar recebe os dados novos no próximo
-				login.
+				<strong>Corrigir nome ou foto:</strong> mude na sua conta do Google ou do Discord; o Placar recebe os
+				dados novos no próximo login.
 			</li>
 			<li>
-				<strong>Tirar o acesso do Placar:</strong> no Discord, em Configurações de Usuário › Aplicativos
-				Autorizados.
+				<strong>Tirar o acesso do Placar:</strong> no Google, em Conta do Google › Segurança › Apps e serviços
+				de terceiros; no Discord, em Configurações de Usuário › Aplicativos Autorizados.
 			</li>
 			<li><strong>Outros pedidos:</strong> pelo contato no fim desta página.</li>
 		</ul>
@@ -144,8 +151,8 @@ const ISSUES_URL = 'https://github.com/P0sseid0n/Placar/issues'
 
 		<h2>10. Crianças e adolescentes</h2>
 		<p>
-			Para criar placares é preciso ter conta no Discord, que exige idade mínima. Não coletamos de propósito dados
-			de quem está abaixo dessa idade.
+			Para criar placares é preciso ter conta no Google ou no Discord, que exigem idade mínima. Não coletamos de
+			propósito dados de quem está abaixo dessa idade.
 		</p>
 
 		<h2>11. Mudanças nesta política</h2>

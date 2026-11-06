@@ -10,6 +10,18 @@ const client = useSupabaseClient<Database>()
 
 const fullName = computed(() => (user.value?.user_metadata?.full_name as string | undefined) ?? '')
 
+// Contas ligadas ao usuário (app_metadata.providers): o Supabase junta Google e Discord com o mesmo e-mail
+const PROVIDERS: Record<string, { label: string; icon: string }> = {
+	google: { label: 'Google', icon: 'i-simple-icons-google' },
+	discord: { label: 'Discord', icon: 'i-simple-icons-discord' },
+}
+const providers = computed(() =>
+	((user.value?.app_metadata?.providers as string[] | undefined) ?? [])
+		.map(id => PROVIDERS[id])
+		.filter(provider => provider !== undefined),
+)
+const providersText = computed(() => providers.value.map(p => p.label).join(' e '))
+
 type Tab = 'perfil' | 'config'
 const TABS: { id: Tab; label: string }[] = [
 	{ id: 'perfil', label: 'Perfil' },
@@ -137,9 +149,18 @@ const infoItems = computed(() => [
 						<UserAvatar :size="76" class="-mt-9.5 shadow-[0_0_0_5px_var(--color-surface)]" />
 						<div class="flex min-w-0 flex-col pt-2.5">
 							<h2 class="truncate text-[22px] leading-7.5 font-bold text-white">{{ fullName }}</h2>
-							<span class="inline-flex items-center gap-1.5 text-[13px] text-fg-soft">
-								<UIcon name="i-simple-icons-discord" class="size-3.5" aria-hidden="true" />
-								Conectado com Discord
+							<span
+								v-if="providers.length"
+								class="inline-flex items-center gap-1.5 text-[13px] text-fg-soft"
+							>
+								<UIcon
+									v-for="provider in providers"
+									:key="provider.label"
+									:name="provider.icon"
+									class="size-3.5"
+									aria-hidden="true"
+								/>
+								Conectado com {{ providersText }}
 							</span>
 						</div>
 					</div>
@@ -201,7 +222,9 @@ const infoItems = computed(() => [
 								<span class="text-xs font-medium text-fg-soft">{{ item.label }}</span>
 							</div>
 						</div>
-						<p class="text-[13px] leading-5 text-fg-dim">Nome e foto vêm da sua conta do Discord.</p>
+						<p class="text-[13px] leading-5 text-fg-dim">
+							Nome e foto vêm da sua conta {{ providersText ? `do ${providersText}` : 'de login' }}.
+						</p>
 					</div>
 
 					<div

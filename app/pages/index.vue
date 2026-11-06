@@ -18,7 +18,7 @@ const steps = [
 	{
 		icon: 'i-lucide-plus',
 		title: 'Crie o placar',
-		text: 'Entre com o Discord e escolha o nome de cada time, as cores e quanto vale cada ponto.',
+		text: 'Entre com o Google ou o Discord e escolha o nome de cada time, as cores e quanto vale cada ponto.',
 	},
 	{
 		icon: 'i-lucide-share-2',
@@ -39,7 +39,7 @@ const faq = [
 	},
 	{
 		question: 'Preciso de conta para assistir a um placar?',
-		answer: 'Não. Para assistir, basta o ID de 6 caracteres, o link ou o QR code do placar. A conta, com login pelo Discord, só é necessária para criar e controlar placares.',
+		answer: 'Não. Para assistir, basta o ID de 6 caracteres, o link ou o QR code do placar. A conta, com login pelo Google ou pelo Discord, só é necessária para criar e controlar placares.',
 	},
 	{
 		question: 'Para quais jogos o Placar serve?',
@@ -116,22 +116,26 @@ watchEffect(() => {
 	}
 })
 
-const signingIn = ref(false)
+type Provider = 'google' | 'discord'
+const PROVIDER_LABEL: Record<Provider, string> = { google: 'Google', discord: 'Discord' }
 
-async function signInWithDiscord() {
-	signingIn.value = true
+// Provedor cujo login está em andamento (mostra o carregando só no botão dele)
+const signingIn = ref<Provider | null>(null)
+
+async function signIn(provider: Provider) {
+	signingIn.value = provider
 
 	const { error } = await client.auth.signInWithOAuth({
-		provider: 'discord',
+		provider,
 		options: { redirectTo: `${window.location.origin}/confirmar` },
 	})
 
 	// Em caso de sucesso o navegador sai da página; só volta aqui se der erro
 	if (error) {
-		signingIn.value = false
+		signingIn.value = null
 		useToast().add({
 			color: 'error',
-			title: 'Não foi possível entrar com o Discord',
+			title: `Não foi possível entrar com o ${PROVIDER_LABEL[provider]}`,
 			description: 'Tente novamente.',
 		})
 	}
@@ -208,16 +212,56 @@ const highlights = [
 							Entre para criar e controlar seus placares.
 						</p>
 
-						<UButton
-							color="neutral"
-							variant="solid"
-							block
-							icon="i-simple-icons-discord"
-							label="Entrar com Discord"
-							:loading="signingIn"
-							class="h-13 gap-2.5 rounded-field text-base font-semibold hover:bg-fg"
-							@click="signInWithDiscord"
-						/>
+						<div class="flex flex-col gap-2.5">
+							<UButton
+								color="neutral"
+								variant="solid"
+								block
+								label="Entrar com Google"
+								:loading="signingIn === 'google'"
+								:disabled="signingIn !== null"
+								class="h-13 gap-2.5 rounded-field text-base font-semibold hover:bg-fg"
+								@click="signIn('google')"
+							>
+								<template #leading>
+									<!-- "G" colorido do Google, como pedem as diretrizes de marca do botão de login -->
+									<svg
+										v-if="signingIn !== 'google'"
+										viewBox="0 0 48 48"
+										class="size-5 shrink-0"
+										aria-hidden="true"
+									>
+										<path
+											fill="#EA4335"
+											d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+										/>
+										<path
+											fill="#4285F4"
+											d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+										/>
+										<path
+											fill="#FBBC05"
+											d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+										/>
+										<path
+											fill="#34A853"
+											d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+										/>
+									</svg>
+								</template>
+							</UButton>
+							<UButton
+								color="neutral"
+								variant="subtle"
+								block
+								icon="i-simple-icons-discord"
+								label="Entrar com Discord"
+								:loading="signingIn === 'discord'"
+								:disabled="signingIn !== null"
+								class="h-13 gap-2.5 rounded-field bg-raised text-base font-semibold text-white ring-edge hover:bg-edge"
+								@click="signIn('discord')"
+							/>
+						</div>
 						<p class="mt-3 text-center text-xs leading-4.5 text-fg-dim">
 							Ao entrar, você concorda com os
 							<NuxtLink to="/termos" :class="consentLink">Termos de Uso</NuxtLink>

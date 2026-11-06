@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Retorno do login com Discord (redirectOptions.callback). O @nuxtjs/supabase desliga o SSR nesta rota,
+// Retorno do login com Google ou Discord (redirectOptions.callback). O @nuxtjs/supabase desliga o SSR nesta rota,
 // e o cliente do Supabase troca sozinho o ?code= da URL pela sessão. Aqui só esperamos a sessão aparecer.
 // Fica fora da "/" para a home continuar com SSR (o conteúdo dela precisa chegar no HTML para o SEO).
 useHead({ title: 'Placar | Entrando…' })
@@ -12,7 +12,7 @@ const toast = useToast()
 const TIMEOUT_MS = 15_000
 
 function fail() {
-	toast.add({ color: 'error', title: 'Não foi possível entrar com o Discord', description: 'Tente novamente.' })
+	toast.add({ color: 'error', title: 'Não foi possível entrar', description: 'Tente novamente.' })
 	navigateTo('/', { replace: true })
 }
 
@@ -27,7 +27,7 @@ watch(
 let timer: ReturnType<typeof setTimeout> | undefined
 
 onMounted(() => {
-	// O Discord e o Supabase devolvem ?error=... quando a pessoa cancela ou algo falha
+	// O provedor e o Supabase devolvem ?error=... quando a pessoa cancela ou algo falha
 	if (route.query.error || route.hash.includes('error=')) return fail()
 	timer = setTimeout(() => {
 		if (!user.value) fail()
@@ -42,7 +42,7 @@ onUnmounted(() => clearTimeout(timer))
 		<AppLogo :size="40" />
 		<p role="status" class="flex items-center gap-2 text-[15px] text-fg-soft">
 			<UIcon name="i-lucide-loader-circle" class="size-4.5 animate-spin" aria-hidden="true" />
-			Entrando com o Discord…
+			Entrando…
 		</p>
 	</main>
 </template>
